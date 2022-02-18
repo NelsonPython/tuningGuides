@@ -14,6 +14,7 @@ Tested hardware and software environment for this tuning guide:
 #### Server Configuration
 #### Hardware	
 
+|----------------------------------|------------------------------------|
 | Server Platform Name/Brand/Model | Intel® Coyote Pass Server Platform |
 | CPU | Intel® Xeon® PLATINUM 8360Y CPU @ 2.20GHz | 
 | BIOS | SE5C6200.86B.0021.D40.2101090208 | 
@@ -22,6 +23,7 @@ Tested hardware and software environment for this tuning guide:
 
 #### Software	
 
+|------------------|-------------------------------|
 | Operating System | CentOS Linux release 8.3.2011 |
 | Kernel | 4.18.0-240.22.1.el8_3.crt1.x86_64 |	
 | LAMMPS | 29Oct2020 |
