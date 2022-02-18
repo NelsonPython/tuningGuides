@@ -13,6 +13,8 @@ Tested hardware and software environment for this tuning guide:
 
 #### Server Configuration
 
+#### Hardware
+
 The configuration described in this article is based on 3rd Generation Intel® Xeon® processor hardware. The server platform, memory, hard drives, and network interface cards can be determined according to your usage requirements.
 
 | Hardware | Model |
@@ -22,6 +24,8 @@ The configuration described in this article is based on 3rd Generation Intel® X
 | BIOS | SE5C6200.86B.0021.D40.2101090208 | 
 | Memory | 256GB 16*16GB 3200MT/s DDR4, Hynix HMA82GR7CJR8N-XN | 
 | Storage/Disks | SSDSC2KG96 960GB | 
+
+#### Software
 
 | Software | Version |
 |------------------|-------------|
@@ -84,7 +88,7 @@ The “newton off” setting referred to in Section 3.5 eliminates step 7, Rever
 
 The INTEL package for LAMMPS is included in the official source code, but the package must be installed at build time along with other packages that will be used in LAMMPS simulations. The INTEL package can speed up simulations running on Intel® processors.  
 
-To download LAMMPS from the Git repository (additional downloading instructions are in the README of the LAMMPS github repository):
+Download LAMMPS from this Git repository. There are additional downloading instructions at <https://github.com/lammps/lammps>.
 
 ```
 git clone -b stable https://github.com/lammps/lammps.git lammps
@@ -108,7 +112,7 @@ After compiling an lmp_intel_cpu_intelmpi binary will be created.
 
 ## Executing LAMMPS
 
-The simplest way to take advantage of the INTEL package optimizations is to add the “-sf intel” switch to the LAMMPS command line. This will automatically use any optimizations available for the simulation. The number of OpenMP threads used can be controlled with either the OMP_NUM_THREADS environment variable or by adding:
+The simplest way to take advantage of the INTEL package optimizations is to add the ``` -sf intel ``` switch to the LAMMPS command line. This will automatically use any optimizations available for the simulation. The number of OpenMP threads used can be controlled with either the OMP_NUM_THREADS environment variable or by adding:
 
 ```-pk intel 0 omp $N” ``` for N OpenMP threads. 
 
