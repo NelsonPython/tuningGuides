@@ -1,3 +1,7 @@
+# Tuning Guides Markdown Template
+
+Answer questions in (parenthesis)
+
 ## Introduction
 
 This guide is for users who are already familiar with (the workload).  It provides settings for hardware and software that will yield the best performance for most situations. However, please note that we rely on the users to carefully consider these settings for their specific scenarios, since (the workload) can be deployed in multiple ways and this is a reference to one use-case. 
