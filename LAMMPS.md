@@ -72,7 +72,7 @@ Software configuration tuning is essential because the default settings on all s
 
 LAMMPS supports many different simulation models.  The following diagram shows an example timestep for molecular systems with long-range electrostatics:
 
-
+![LAMMPS workflow](https://github.com/NelsonPython/tuningGuides/blob/main/images/LAMMPS_workflow.jpg)
 
 Figure 1:  Example timestep for molecular systems with long-range electrostatics
 
