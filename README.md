@@ -24,7 +24,9 @@ This guide is for users who are already familiar with (the workload).  It provid
 
 Tested hardware and software for this tuning guide include:
 
-### Server Configuration	
+### Server Configuration
+
+#### Hardware
 
 The configuration described in this article is based on 3rd Generation Intel® Xeon® processor hardware. The server platform, memory, hard drives, and network interface cards can be determined according to your usage requirements.
 
@@ -37,6 +39,7 @@ The configuration described in this article is based on 3rd Generation Intel® X
 | Storage/Disks | Intel SSD S4610, 960G | 
 | NIC (if it applies) | Intel® Ethernet Controller XXV700 25GbE SFP28 | 
 
+#### Software
 
 | Software | Version |
 |------------------|-------------|
