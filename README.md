@@ -26,10 +26,11 @@ Tested hardware and software for this tuning guide include:
 
 ### Server Configuration	
 
-#### Hardware
+The configuration described in this article is based on 3rd Generation Intel® Xeon® processor hardware. The server platform, memory, hard drives, and network interface cards can be determined according to your usage requirements.
 
+| Hardware | Model |
+|----------------------------------|------------------------------------|
 | Server Platform Name/Brand/Model | Intel® Server System M50CYP1UR212 |
-|--------------------------------- | --------------------------------- |
 | CPU | Intel® Xeon® PLATINUM 8360Y CPU @ 2.20GHz | 
 | BIOS | version # | 
 | Memory | 16*32 GB DDR4, 3200 MT/s | 
@@ -37,17 +38,15 @@ Tested hardware and software for this tuning guide include:
 | NIC (if it applies) | Intel® Ethernet Controller XXV700 25GbE SFP28 | 
 
 
-#### Software
-
-| Operating System | CentOS* 7.8 | 
+| Software | Version |
 |------------------|-------------|
+| Operating System | CentOS* 7.8 | 
 | Kernel | 3.10.0-1127.el7.x86_64 | 
 | (Workload) | version # | 
 | Other SW used | version # | 
 | Other SW used | version # | 
 | Other SW used | version # | 
 
-Note: The configuration described in this article is based on 3rd Generation Intel Xeon processor hardware. Server platform, memory, hard drives, network interface cards can be determined according to your usage requirements.
 			
 ## Hardware Tuning
 
