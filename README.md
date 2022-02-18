@@ -1,406 +1,159 @@
-**Version 2.4**
+## Introduction
 
-Welcome to the full test template for the github md import feature of AEM. This document covers all the styles availalbe and how to implement.
-Note: when loading github url into your page, it may take a number of tries to get the content to refresh. I am working with IT to resolve the bug. If you have just done an update in GitHub, it's best to wait for a few minutes to make sure you sync the latest version.
+This guide is for users who are already familiar with (the workload).  It provides settings for hardware and software that will yield the best performance for most situations. However, please note that we rely on the users to carefully consider these settings for their specific scenarios, since (the workload) can be deployed in multiple ways and this is a reference to one use-case. 
+	
+(Describe the workload including version numbers used for testing and list links to get more information.)
 
-## Headers (H2)
-Make sure you don't use the single # for any headers. Only the title of your article should be an H1. This isn't just a visual thing, this will impact your SEO score in google.
-Always start with the ##.
+(Describe other software used in the guide including the version numbers and links to more information.)
+	
+(Describe pre-requisites)
+	
+3rd Generation Intel® Xeon® Scalable processors deliver industry-leading, workload-optimized platforms with built-in AI acceleration.  They provide a seamless performance foundation to help speed the transformative impact of data from the intelligent edge to the multi-cloud. Improvements of particular interest to this workload are: (select those that apply to running this workload)
+- Enhanced Performance
+- Enhanced Intel® Deep Learning Boost with VNNI
+- More Intel® Ultra Path Interconnect
+- Increased DDR4 Memory Speed & Capacity
+- Intel® Advanced Vector Extensions
+- Intel® Security Essentials and Intel® Security Libraries for Data Center 
+- Intel® Speed Select Technology
+- Support for Intel® Optane™ Persistent Memory 200 series
 
-### Sub header level 3 (H3)
-#### Sub header level 4 (H4)
-##### Sub header Level 5 (rarely used) 
+Tested hardware and software for this tuning guide include:
 
-<br><br>
-***
+### Server Configuration	
 
-## General text styling
-```markdown
-*This text will be italic*
-_This will also be italic_
+#### Hardware
 
-**This text will be bold**
-__This will also be bold__
-
-_You **can** combine them_
-```
-
-*This text will be italic*
-_This will also be italic_
-
-**This text will be bold**
-__This will also be bold__
-
-_You **can** combine them_
-
-Superscript and Subscript doesn't seem to work at the moment.
-```markdown
-Superscript
-H~2~O
-
-Subscript
-X^2^
-```
-
-Superscript example: H~2~O
-
-Subscript example: X^2^
-
-:bulb: 🖥️ :d
-
-<br><br>
-***
-### Links
-```markdown
-[Intel](https://www.intel.com).
-```
-Example:
-My favorite company is [Intel](https://www.intel.com).
-
-mailto:
-(note for spam reasons, we discourage use of email links)
-[example@gitlab.com](mailto:example@gitlab.com)
+| Server Platform Name/Brand/Model | Intel® Server System M50CYP1UR212 |
+|--------------------------------- | --------------------------------- |
+| CPU | Intel® Xeon® PLATINUM 8360Y CPU @ 2.20GHz | 
+| BIOS | version # | 
+| Memory | 16*32 GB DDR4, 3200 MT/s | 
+| Storage/Disks | Intel SSD S4610, 960G | 
+| NIC (if it applies) | Intel® Ethernet Controller XXV700 25GbE SFP28 | 
 
 
-<br><br>
-***
-### Block quotes
-This doesn't work with our template. We have requested some code updates so that block quotes actually render properly on articles. I will update this file once that is done.
+#### Software
 
-```markdown
-> We're living the future so
-> the present is our past.
-```
+| Operating System | CentOS* 7.8 | 
+|------------------|-------------|
+| Kernel | 3.10.0-1127.el7.x86_64 | 
+| (Workload) | version # | 
+| Other SW used | version # | 
+| Other SW used | version # | 
+| Other SW used | version # | 
 
-> We're living the future so
-> the present is our past.
-> 
-<br><br>
-***
-### CSS Attribution - Requested
+Note: The configuration described in this article is based on 3rd Generation Intel Xeon processor hardware. Server platform, memory, hard drives, network interface cards can be determined according to your usage requirements.
+			
+## Hardware Tuning
 
-Another Item we are exploring is the ability to call the css that is used on the site. This isn't working yet. I will update once we have the functionality in place. There are two options IT is exploring. 
-We have requested that IT add this feature so we can call certain css properties into markdown.
+(Enter any other information on general system setup and tuning.)
 
-{: .greyHighlight}
-Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+### BIOS Settings
 
+(Use this section to describe BIOS settings that should be changed in order to improve workload performance.)
 
-<br><br>
-***
-### Footnotes 
-Footnotes aren't working as expected. I have raised a ticket with IT to see if they can enable this feature.
-```markdown
-Here's a sentence with a footnote. [^1]  
-  
-[^1]: This is the footnote.
-```
-Here's a sentence with a footnote. [^2]  
-  
-[^2]: This is another footnote to go with the first.
+Begin by resetting your BIOS to default setting, then follow the suggestions below for changes to the default:
 
-<br><br>
-***
-## Examples of math in .md
+| Configuration Item | Recommended Value
+|---------------------|------------------|
+| Advanced/Power & Performance/CPU P State Control/CPU P State Control/Enhanced Intel SpeedStep® Tech | Disabled |
+| Advanced/Power & Performance/CPU Power and Performance Policy | Performance |
+| Advanced/Memory Configuration/SNC (Sub-NUMA Clusters) | Enabled |
+| Advanced/Memory Configuration/Page Policy | Closed |
+| Advanced/UPI Configuration/XPT Prefetch | Enabled |
+| Advanced/Processor Configuration/Direct-to-UPI (D2K) | Enabled |
 
-This expression $\sum_{i=1}^n X_i$ is inlined but doesn't work at the moment.
+If no specific settings apply, then use this text: (No specific BIOS setting for this this workload – just use the defaults)
 
-When this is a full expression, it works fine.
-$$
-\Gamma(z) = \int_0^\infty t^{z-1}e^{-t}dt\,.
-$$
+If you recommend a BIOS setting, give an explanation of what the setting does and why it matters to the workload.  Here is an example from the HPC Cluster Tuning Guide:
 
+### Description of Settings
 
-<br><br>
-***
-## Code on your page
-Adding code into your sentence is simple. 
-```markdown
-`this is your code`
-```
+#### Sub-NUMA Cluster (SNC) 
 
-Example
-Some `inline code` if you need to put inside a sentence.
+SNC is a feature that provides similar localization benefits as Cluster-On-Die (COD), a feature found in previous processor families, without some of COD’s downsides. SNC breaks up the last level cache (LLC) into disjoint clusters based on address range, with each cluster bound to a subset of the memory controllers in the system. SNC improves average latency to the LLC and is a replacement for the COD feature found in previous processor families.
 
+#### Direct-to-UPI (D2K)
 
-If you have javascript:
-```javascript
-// An highlighted block
-var foo = 'bar';
-```
+D2U is a latency-saving feature for remote read transactions. With D2U enabled, the IMC will send the data directly to the UPI instead of going through the Caching and Home Agent (CHA), reducing latency. Keep enabled, although workloads that are highly NUMA-optimized or that use high levels of memory bandwidth are less likely to be affected by disabling D2U.
 
-A very common one on the DevZone is bash
-```bash
-export I_MPI_ROOT=/opt/intel/oneapi/lib/intel64
-export PATH=${I_MPI_ROOT}/libfabric/bin:${I_MPI_ROOT}/bin:$PATH
-export LD_LIBRARY_PATH=${I_MPI_ROOT}/libfabric:${I_MPI_ROOT}:$LD_LIBRARY_PATH
-export FI_PROVIDER_PATH=${I_MPI_ROOT}/libfabric
-```
+#### XPT (eXtended Prediction Table) Prefetch
 
-<details>
-  <summary>Expand to see the full list of available skins</summary>
-  <br>
+Extended prediction table (XPT) Prefetch is a new capability that is designed to reduce local memory access latency. XPT Prefetch is an “LLC miss predictor” in each core that will issue a speculative DRAM read request in parallel to an LLC lookup, but only when XPT predicts a “miss” from the LLC lookup.
+For more information, refer to the BIOS Setup Utility User Guide for the Intel® Server Board D50TNP and M50CYP Family.
 
-* plaintext
-* abap
-* actionscript
-* apacheconf
-* applescript
-* aspnet
-* bash
-* basic
-* c
-* coffeescript
-* cpp
-* csharp
-* css
-* d
-* dart
-* diff
-* docker
-* erlang
-* fortran
-* fsharp
-* git
-* go
-* groovy
-* haskell
-* html
-* http
-* ini
-* java
-* javascript
-* lua
-* makefile
-* markdown
-* matlab
-* nginx
-* objectivec
-* pascal
-* perl
-* php
-* prolog
-* python
-* puppet
-* r
-* ruby
-* rust
-* sas
-* scala
-* scheme
-* sql
-* swift
-* twig
-* vim
-* xmlxhtml
-* yaml
-</details>
+### Memory Configuration/Settings
 
+(Use this section to describe the optimum memory configuration.  Here are some questions to consider:  How many DIMMS per channel?  How many channels are used?  Is PMem appropriate for this workload?  If so how should it be configured?)
 
-<br><br>
-***
-## Lists
-### Creating an ordered list
-1. First item  
-2. Second item  
-3. Third item  
-4. Fourth item
+Example: At least 1 DIMM per memory channel needs to be populated. Lower cpu-utilization could be an issue if there are no DIMMs in a memory channel because of the contention from database cache.
 
-This will also do the same thing
-1. First item  
-1. Second item  
-1. Third item  
-1. Fourth item
+If no specific settings apply, then use this text: (No specific workload setting)
 
-This will also do the same thing
-1. First item  
-8. Second item  
-3. Third item  
-5. Fourth item
+### Storage/Disk Configuration/Settings
 
-Most of the time a MD editor will try to fix your list numbering
-You can also indent by adding a few spaces.
+(Are there any specific settings or recommendations for storage media?)
 
+If no specific suggestions apply, then use this text: (No specific workload setting)
 
-An example of a horizontal rule
-```markdown
-***
-```
-***
+### Network Configuration/Setting
 
+(Are there any specific settings or recommendations for the network setup?  Does your workload use multiple systems? Any advice on how many clients? For example, how much CPU and memory will they need and how they should it be setup?). 
 
-<br><br>
-***
-### Creating Unordered Lists
-- First item  
-- Second item  
-- Third item  
-- Fourth item
+Example: In the Redis application scenario, performance is usually restricted more by the bandwidth of the network than the performance of memory and Intel persistent memory. Therefore, when you run Redis across networks, you need an NIC with a highest possible network bandwidth. It is recommended that the value is above 10GB/s
 
-**Split Lists**
-- list one - item 1
-- list one - item 2
-     - sub item 1
-     - sub item 2
-- list one - item 3
-<br><br>
-- list two - item A
-- list two - item B
+If no specific suggestions apply, then use this text: (No specific workload setting for this topic)
 
+## Software Tuning 
 
-<br><br>
-***
-## Tables
+Software configuration tuning is essential. From the operating system to (the workload) configuration settings, they are all designed for general purpose applications and default settings are almost never tuned for best performance.
 
-```markdown
-| Syntax | Description |  
-| ----------- | ----------- |  
-| Header | Title |  
-| Paragraph | Text |
-```
+### Linux Kernel Optimization Settings (Replace Linux with another OS if applicable)
 
-| Syntax | Description |  
-| ----------- | ----------- |  
-| Header | Title |  
-| Paragraph | Text |
+Use this section to describe and list commands to issue for OS optimization.  
 
+### (The Workload) Architecture
 
-<br><br>
-***
-## A collapsible section with markdown
-This does work within the article template. THe arrow is a bit large, but I will see if there is a way to get it updated.
-Code:
-```markdown
-<details>
-  <summary>Click to expand!</summary>
-  <br>
-  1. A numbered
-  2. list
-     * With some
-     * Sub bullets
-</details>
-```
-Example
-<details>
-  <summary>Click to expand!</summary>
-  <br>
-  1. A numbered
-  2. list
-     * With some
-     * Sub bullets
-</details>
-
-
-<br><br>
-***
-
-## Images
-
-To include an image from intel.com, you can do a relative link. Make sure you put all stock imagery, marketing imagery, logos, and photos of people in intel.com where we monitor licensing and expiry dates. You can use the relative path to your image.
-
-```markdown
-![This is your Alt Text](/content/dam/www/central-libraries/us/en/images/oneapi-kits20211-4x3-rwd.png)
-```
-
-![This is your Alt Text](/content/dam/www/central-libraries/us/en/images/oneapi-kits20211-4x3-rwd.png)
-
-<br>
-You can also choose to host your screenshots, diagrams, terminal window images in your repo. Just remember, you are now supporting the live site. Don't move or delete images without updating your article. Also, make sure to use the full github URL and not a relative path.
+Use this section to describe the workload architecture and how it works. Insert pictures or drawings as appropriate.  You may choose to host your screenshots, diagrams, terminal window images in your github repo. Just remember, you are now supporting the live site. Don't move or delete images without updating your article. Also, make sure to use the full github URL and not a relative path.
 
 ![This is your Alt Text](https://raw.githubusercontent.com/tracyjohnsonidz/devzone-articles/main/diagram-full-workflow-16x9.webp)
+ 
 
-<br><br>
-code graphis are not available for IDZ articles.
-```plantuml
-!define ICONURL https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/v2.1.0
-skinparam defaultTextAlignment center
-!include ICONURL/common.puml
-!include ICONURL/font-awesome-5/gitlab.puml
-!include ICONURL/font-awesome-5/java.puml
-!include ICONURL/font-awesome-5/rocket.puml
-!include ICONURL/font-awesome/newspaper_o.puml
-FA_NEWSPAPER_O(news,good news!,node) #White {
-FA5_GITLAB(gitlab,GitLab.com,node) #White
-FA5_JAVA(java,PlantUML,node) #White
-FA5_ROCKET(rocket,Integrated,node) #White
-}
-gitlab ..> java
-java ..> rocket
-```
-<br><br>
-***
-## Videos
-Go to the youtube video and copy the embed code. Just replace the iframe src url with your youtube video URL.
+### (The Workload) Tuning
 
-```markdown
-<div>
-  <div style="position:relative;padding-top:56.25%;">
-    <iframe src="https://www.youtube.com/embed/c7st0drv54U" frameborder="0" allowfullscreen
-      style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
-  </div>
-</div>
-```
-
-<div>
-  <div style="position:relative;padding-top:56.25%;">
-    <iframe src="https://www.youtube.com/embed/c7st0drv54U" frameborder="0" allowfullscreen
-      style="position:absolute;top:0;left:0;width:100%;height:100%;"></iframe>
-  </div>
-</div>
-
-<br>
-
-You can also use this embed code for brightcove videos. Just replace the videoid= # in the embed code below
-To find the video ID, simply right click on the video on developer.intel.com and select **Player Information**. Video ID value is listed under Source.
-
-```markdown
-<div style="position: relative; display: block; max-width: 900px;">
-    <div style="padding-top: 56.25%;">
-      <iframe src="https://players.brightcove.net/740838651001/default_default/index.html?videoId=6286027295001" allowfullscreen="" allow="encrypted-media" style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; width: 100%; height: 100%;"></iframe>
-  </div>
-</div>
-```
-
-<div style="position: relative; display: block; max-width: 900px;">
-  <div style="padding-top: 56.25%;">
-    <iframe src="https://players.brightcove.net/740838651001/default_default/index.html?videoId=6286027295001" allowfullscreen="" allow="encrypted-media" style="position: absolute; top: 0px; right: 0px; bottom: 0px; left: 0px; width: 100%; height: 100%;"></iframe>
-  </div>
-</div>
-
-multiple videos being added
-<!-- blank line -->
-<figure class="video_container">
-  <iframe src="https://drive.google.com/file/d/0B6m34D8cFdpMZndKTlBRU0tmczg/preview" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
-
-<figure class="video_container">
-  <iframe src="https://drive.google.com/file/d/0B6m34D8cFdpMZndKTlBRU0tmczg/preview" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
-
-<figure class="video_container">
-  <iframe src="https://drive.google.com/file/d/0B6m34D8cFdpMZndKTlBRU0tmczg/preview" frameborder="0" allowfullscreen="true"> </iframe>
-</figure>
-<!-- blank line -->
-
-this is an anchor
-{: #hello-world}
-```markdown
-{: #hello-world}
+Enter settings, configurations, to consider. List any commands to be typed into a console with black text and highlight them with a blue background. Example:
 
 ```
-**Note:** a note is something that needs to be mentioned but is apart from the context.
-{: .note}
+sysctl -w kernel.sched_domain.cpu(x).domain0.max_newidle_lb_cost=0
+sysctl -w kernel.sched_domain.cpu(x).domain1.max_newidle_lb_cost=0
+```
 
-Can we embed code from github, here is a gitlab test.
-<!-- leave a blank line here -->
-<script src="https://gitlab.com/gitlab-org/gitlab-ce/snippets/1717978.js"></script>
-<!-- leave a blank line here -->
+## Related Tools and Information (optional section)
 
-{::options parse_block_html="false" /}
+In this section you can list tools that are related to the workload or solution such as performance monitoring/testing tools, or configuration checking tools, or platform utility tools. It is up to you if there are any tools you want to tell users about, listing appropriate code examples and screenshots.
 
-<div class="center">
+## Best Practices for Testing and Verification (optional section)
 
-<blockquote class="twitter-tweet" data-partner="tweetdeck"><p lang="en" dir="ltr">Thanks to <a href="https://twitter.com/gitlab">@gitlab</a> for joining <a href="https://twitter.com/RailsGirlsCluj">@RailsGirlsCluj</a>! <a href="https://t.co/NOoiqDWKVY">pic.twitter.com/NOoiqDWKVY</a></p>&mdash; RailsGirlsCluj (@RailsGirlsCluj) <a href="https://twitter.com/RailsGirlsCluj/status/784847271645028352">October 8, 2016</a></blockquote>
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+In this section you can list any BKMs you have for running the workload. Example below is from the WorkPress Tuning Guide:
 
-</div>
+Example: Note that the recommendations in the guide for WordPress workload are only a reference, and the tunings here should be carefully adopted by someone who is well-versed with the workload and the system settings.
+
+- Since this is a CPU-bound web front-end workload, when all the requests are appropriately distributed, we expect ~90+% CPU-utilization. Use tools like sar/htop to verify you get the expected CPU utilization.
+- Execute at least 7 runs to ensure the standard deviation is within 5%.
+- Restart MariaDB service after every run to clear query cache. This is specific to the workload and not a recommendation for the real-world web deployments.
+
+## Conclusion
+
+Use this section as a brief wrap-up for the guide. 
+
+Example: We understand every application is unique. We shared many of our experiences with MySQL and PostgreSQL hoping that some of our learnings could be applied to your specific application. Both Open-Source relational database management systems have been well tested on Intel platforms. With 3rd Generation Intel® Xeon® Scalable processor, Intel takes it even further by optimizing the platform as a whole -- CPU, memory, storage, and networking working together for the best user experience.
+
+## Additional Resources (optional, as needed)
+
+## References (optional, as needed)
+
+## Feedback (required section)
+
+We value your feedback. If you have comments (positive or negative) on this guide or are seeking something that is not part of this guide, please reach out and let us know what you think. 
+ 
