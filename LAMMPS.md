@@ -72,7 +72,7 @@ Software configuration tuning is essential because the default settings on all s
 
 LAMMPS supports many different simulation models.  The following diagram shows an example timestep for molecular systems with long-range electrostatics:
 
-![LAMMPS workflow](https://github.com/NelsonPython/tuningGuides/blob/main/images/LAMMPS_workflow.jpg)
+![LAMMPS workflow:  1. Initial time integration, 2. MPI Communications, 3. Neighbor list build, 4. Non-bonded force calculation, 5. Bonded force calculation, 6. Long-range electrostatics calculation, 7. Reverse MPI communications, 8. Final time integration, 9. Data output to disk](https://github.com/NelsonPython/tuningGuides/blob/main/images/LAMMPS_workflow.jpg)
 
 Figure 1:  Example timestep for molecular systems with long-range electrostatics
 
