@@ -8,7 +8,7 @@ This guide is for users who are already familiar with (the workload).  It provid
 	
 (Describe pre-requisites)
 	
-3rd Generation Intel® Xeon® Scalable processors deliver industry-leading, workload-optimized platforms with built-in AI acceleration, providing a seamless performance foundation to help speed data’s transformative impact, from the multi-cloud to the intelligent edge and back. Improvements of particular interest to this workload applications are: (select those that might apply to running this workload)
+3rd Generation Intel® Xeon® Scalable processors deliver industry-leading, workload-optimized platforms with built-in AI acceleration.  They provide a seamless performance foundation to help speed the transformative impact of data from the intelligent edge to the multi-cloud. Improvements of particular interest to this workload are: (select those that apply to running this workload)
 - Enhanced Performance
 - Enhanced Intel® Deep Learning Boost with VNNI
 - More Intel® Ultra Path Interconnect
@@ -18,7 +18,7 @@ This guide is for users who are already familiar with (the workload).  It provid
 - Intel® Speed Select Technology
 - Support for Intel® Optane™ Persistent Memory 200 series
 
-Tested hardware and software environment for this tuning guide:
+Tested hardware and software for this tuning guide include:
 
 ### Server Configuration	
 
@@ -43,15 +43,15 @@ Tested hardware and software environment for this tuning guide:
 | Other SW used | version # | 
 | Other SW used | version # | 
 
-Note: The configuration described in this article is based on 3rd Generation Intel Xeon processor hardware. Server platform, memory, hard drives, network interface cards can be determined according to customer usage requirements.
+Note: The configuration described in this article is based on 3rd Generation Intel Xeon processor hardware. Server platform, memory, hard drives, network interface cards can be determined according to your usage requirements.
 			
 ## Hardware Tuning
 
-Enter any other information on general system setup and tuning or things to consider.
+(Enter any other information on general system setup and tuning.)
 
 ### BIOS Settings
 
-(Use this section to describe BIOS settings that should be changed in order to improve workload performance.  List the path to the item within BIOS like is shown below)
+(Use this section to describe BIOS settings that should be changed in order to improve workload performance.)
 
 Begin by resetting your BIOS to default setting, then follow the suggestions below for changes to the default:
 
@@ -65,7 +65,8 @@ Begin by resetting your BIOS to default setting, then follow the suggestions bel
 | Advanced/Processor Configuration/Direct-to-UPI (D2K) | Enabled |
 
 If no specific settings apply, then use this text: (No specific BIOS setting for this this workload – just use the defaults)
-If you do recommend selecting a BIOS setting that is not default, it is helpful if you give the user some explanation of what the setting does and why it matters to the workload, as in the example below from the HPC Cluster Tuning Guide:
+
+If you recommend a BIOS setting, give an explanation of what the setting does and why it matters to the workload.  Here is an example from the HPC Cluster Tuning Guide:
 
 ### Description of Settings
 
@@ -84,21 +85,21 @@ For more information, refer to the BIOS Setup Utility User Guide for the Intel®
 
 ### Memory Configuration/Settings
 
-(Use this section to describe the optimum memory configuration -i.e. how many DIMMS per channel, how many channels used, is PMem appropriate for this workload and if so what config, etc.)
+(Use this section to describe the optimum memory configuration.  Here are some questions to consider:  How many DIMMS per channel?  How many channels are used?  Is PMem appropriate for this workload?  If so how should it be configured?)
 
 Example: At least 1 DIMM per memory channel needs to be populated. Lower cpu-utilization could be an issue if there are no DIMMs in a memory channel because of the contention from database cache.
 
-If no specific settings apply, then use this text: (No specific workload setting for this topic)
+If no specific settings apply, then use this text: (No specific workload setting)
 
 ### Storage/Disk Configuration/Settings
 
-(Are there any specific settings or recommendations for disks?)
+(Are there any specific settings or recommendations for storage media?)
 
-If no specific suggestions apply, then use this text: (No specific workload setting for this topic)
+If no specific suggestions apply, then use this text: (No specific workload setting)
 
 ### Network Configuration/Setting
 
-(Are there any specific settings or recommendations for the network setup if your workload uses multiple systems? Any advice on how many clients?  For example, how much CPU and memory will they need and how they should be setup?). 
+(Are there any specific settings or recommendations for the network setup?  Does your workload use multiple systems? Any advice on how many clients? For example, how much CPU and memory will they need and how they should it be setup?). 
 
 Example: In the Redis application scenario, performance is usually restricted more by the bandwidth of the network than the performance of memory and Intel persistent memory. Therefore, when you run Redis across networks, you need an NIC with a highest possible network bandwidth. It is recommended that the value is above 10GB/s
 
@@ -106,9 +107,9 @@ If no specific suggestions apply, then use this text: (No specific workload sett
 
 ## Software Tuning 
 
-Software configuration tuning is essential. From the Operating System to (the workload) configuration settings, they are all designed for general purpose applications and default settings are almost never tuned for best performance.
+Software configuration tuning is essential. From the operating system to (the workload) configuration settings, they are all designed for general purpose applications and default settings are almost never tuned for best performance.
 
-### Linux Kernel Optimization Settings (Replace with other OS if applicable) (required section)
+### Linux Kernel Optimization Settings (Replace Linux with another OS if applicable)
 
 Use this section to describe and list commands to issue for OS optimization.  
 
@@ -136,7 +137,7 @@ In this section you can list tools that are related to the workload or solution 
 
 In this section you can list any BKMs you have for running the workload. Example below is from the WorkPress Tuning Guide:
 
-(Example) Note that the recommendations in the guide for WordPress workload are only a reference, and the tunings here should be carefully adopted by someone who is well-versed with the workload and the system settings.
+Example: Note that the recommendations in the guide for WordPress workload are only a reference, and the tunings here should be carefully adopted by someone who is well-versed with the workload and the system settings.
 
 - Since this is a CPU-bound web front-end workload, when all the requests are appropriately distributed, we expect ~90+% CPU-utilization. Use tools like sar/htop to verify you get the expected CPU utilization.
 - Execute at least 7 runs to ensure the standard deviation is within 5%.
