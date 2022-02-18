@@ -10,16 +10,21 @@ LAMMPS is open-source code for classical molecular dynamics simulation with a fo
 - Intel® Advanced Vector Extensions
 
 Tested hardware and software environment for this tuning guide:
-Server Configuration	Hardware	Server Platform Name/Brand/Model	Intel® Coyote Pass Server Platform
-				
-		CPU	Intel® Xeon® PLATINUM 8360Y CPU @ 2.20GHz	
-				
-		BIOS	SE5C6200.86B.0021.D40.2101090208	
-		Memory	256GB 16*16GB 3200MT/s DDR4, Hynix HMA82GR7CJR8N-XN	
-		Storage/Disks	SSDSC2KG96 960GB	
-	Software	Operating System	CentOS Linux release 8.3.2011	
-		Kernel	4.18.0-240.22.1.el8_3.crt1.x86_64	
-		LAMMPS	29Oct2020	
+
+#### Server Configuration
+#### Hardware	
+
+| Server Platform Name/Brand/Model | Intel® Coyote Pass Server Platform |
+| CPU | Intel® Xeon® PLATINUM 8360Y CPU @ 2.20GHz | 
+| BIOS | SE5C6200.86B.0021.D40.2101090208 | 
+| Memory | 256GB 16*16GB 3200MT/s DDR4, Hynix HMA82GR7CJR8N-XN | 
+| Storage/Disks | SSDSC2KG96 960GB | 
+
+#### Software	
+
+| Operating System | CentOS Linux release 8.3.2011 |
+| Kernel | 4.18.0-240.22.1.el8_3.crt1.x86_64 |	
+| LAMMPS | 29Oct2020 |
 
 Note: The configuration described in this article is based on 3rd Generation Intel® Xeon® processor hardware. Server platform, memory, hard drives, network interface cards can be determined according to customer usage requirements.
 
@@ -29,10 +34,10 @@ Note: The configuration described in this article is based on 3rd Generation Int
 
 Reset BIOS to the default settings, then follow these suggestions:
 
-Setting	Recommendation
-Advanced/Power & Performance/CPU P State Control/CPU P State Control/Intel® Turbo Boost Technology	Enabled
-Advanced/Processor Configuration/Intel® Hyper-Threading Tech	Enabled
-SNC (Sub-Numa Cluster)	Enabled
+| Setting | Recommendation |
+| Advanced/Power & Performance/CPU P State Control/CPU P State Control/Intel® Turbo Boost Technology | Enabled |
+| Advanced/Processor Configuration/Intel® Hyper-Threading Tech | Enabled |
+| SNC (Sub-Numa Cluster) | Enabled |
 
 ### Description of BIOS Settings
 
@@ -64,10 +69,13 @@ Software configuration tuning is essential because the default settings on all s
 ### LAMMPS Architecture 
 
 LAMMPS supports many different simulation models.  The following diagram shows an example timestep for molecular systems with long-range electrostatics:
- 
+
+
+
 Figure 1:  Example timestep for molecular systems with long-range electrostatics
 
 Typically, steps 3 Neighbor list build, 9 Data output to disk, and optionally 6 Long-range electrostatics calculation, don’t happen every timestep. 
+
 The “newton off” setting referred to in Section 3.5 eliminates step 7, Reverse MPI communications, in trade for increased computation.  The LRT setting also referred to in Section 3.5 runs step 6, Long-range electrostatics calculation, on a separate hyperthread in parallel with steps 4, Non-bonded force calculation, and 5, Bonded force calculation.  This can improve performance.
 
 ### Building LAMMPS with Optimizations for Intel® Processors 
@@ -122,6 +130,7 @@ Changing the newton setting to “off” can improve performance and/or scalabil
 #### LRT
 
 Long-Range Thread (LRT) mode is an option in the INTEL package for LAMMPS that can improve performance when using PPPM for long-range electrostatics on processors with hyperthreading.  It generates an extra pthread for each MPI task.  The thread is dedicated to performing some of the PPPM calculations and the MPI communications.  This feature requires setting the pre-processor flag -DLMP_INTEL_USELRT in the makefile when compiling LAMMPS (default for Makefile.intel_cpu_intelmpi).  
+
 When using LRT, set the environment variable “KMP_AFFINITY=none”. 
 
 To enable LRT mode, specify that the number of OpenMP threads to be one less than would normally be used for the run.  Then, add the “lrt yes” option: 
@@ -134,6 +143,7 @@ Running with LRT mode:		-pk intel 0 omp 3 lrt yes
 ### Running Standard LAMMPS Benchmarks
 
 Benchmarks covering a variety of different simulation models are included with LAMMPS. The following steps will run benchmarks for 1) an atomic fluid, 2) a protein, 3) copper with the embedded-atom method, 4) dissipative particle dynamics, 5) polyethylene with the AIREBO force-field, 6) silicon with 3-body Tersoff model, 7) silicon with 3-body Stillinger-Weber potential, 8) coarse grain water using a 3-body potential, and 9) a liquid crystal simulation.
+
 To run the benchmarks, the following packages must be installed for LAMMPS before building:
 
 ```
@@ -157,11 +167,12 @@ sed -i "s/36/$PCORES/g" run_benchmarks.sh; sed -i 's/"2"/"1 2"/g' run_benchmarks
 ### Download, Build, and Benchmark with a Single Line
 
 On some systems with standard oneAPI installations, the following single line will follow the steps in this document to download, build, and benchmark with LAMMPS (modifications may be needed for some configurations):
+
+```
 source /opt/intel/oneapi/setvars.sh; git clone -b stable https://github.com/lammps/lammps.git lammps; cd lammps/src; make yes-asphere yes-class2 yes-dpd-basic yes-kspace yes-manybody yes-misc yes-molecule yes-mpiio yes-opt yes-replica yes-rigid yes-openmp yes-intel; make intel_cpu_intelmpi -j; cd INTEL/TEST; PCORES=`lscpu | awk '$1=="Core(s)"{t=NF; cores=$t}$1=="Socket(s):"{t=NF;
 sockets=$t}END{print cores*sockets}'`; sed -i "s/36/$PCORES/g" run_benchmarks.sh; sed -i
 's/"2"/"1 2"/g' run_benchmarks.sh; ./run_benchmarks.sh
-4. Related Tools
-(No specific workload setting).
+```
 
 ## Best Practices for Testing and Verification
 
