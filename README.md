@@ -4,7 +4,7 @@ Answer questions in (parenthesis)
 
 ## Introduction
 
-This guide is for users who are already familiar with (the workload).  It provides settings for hardware and software that will yield the best performance for most situations. However, please note that we rely on the users to carefully consider these settings for their specific scenarios, since (the workload) can be deployed in multiple ways and this is a reference to one use-case. 
+This guide is for users who are already familiar with (the workload).  It provides recommendations for configuring hardware and software that will provide the best performance in most situations. However, please note that we rely on the users to carefully consider these settings for their specific scenarios, since (the workload) can be deployed in multiple ways. 
 	
 (Describe the workload including version numbers used for testing and list links to get more information.)
 
