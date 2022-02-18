@@ -12,8 +12,10 @@ LAMMPS is open-source code for classical molecular dynamics simulation with a fo
 Tested hardware and software environment for this tuning guide:
 
 #### Server Configuration
-#### Hardware	
 
+The configuration described in this article is based on 3rd Generation Intel® Xeon® processor hardware. The server platform, memory, hard drives, and network interface cards can be determined according to your usage requirements.
+
+| Hardware | Model |
 |----------------------------------|------------------------------------|
 | Server Platform Name/Brand/Model | Intel® Coyote Pass Server Platform |
 | CPU | Intel® Xeon® PLATINUM 8360Y CPU @ 2.20GHz | 
@@ -21,14 +23,11 @@ Tested hardware and software environment for this tuning guide:
 | Memory | 256GB 16*16GB 3200MT/s DDR4, Hynix HMA82GR7CJR8N-XN | 
 | Storage/Disks | SSDSC2KG96 960GB | 
 
-#### Software	
-
-|------------------|-------------------------------|
+| Software | Version |
+|------------------|-------------|
 | Operating System | CentOS Linux release 8.3.2011 |
 | Kernel | 4.18.0-240.22.1.el8_3.crt1.x86_64 |	
 | LAMMPS | 29Oct2020 |
-
-Note: The configuration described in this article is based on 3rd Generation Intel® Xeon® processor hardware. Server platform, memory, hard drives, network interface cards can be determined according to customer usage requirements.
 
 ## Tuning Hardware
 
@@ -37,6 +36,7 @@ Note: The configuration described in this article is based on 3rd Generation Int
 Reset BIOS to the default settings, then follow these suggestions:
 
 | Setting | Recommendation |
+|---------|---------------|
 | Advanced/Power & Performance/CPU P State Control/CPU P State Control/Intel® Turbo Boost Technology | Enabled |
 | Advanced/Processor Configuration/Intel® Hyper-Threading Tech | Enabled |
 | SNC (Sub-Numa Cluster) | Enabled |
