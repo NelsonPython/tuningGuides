@@ -194,16 +194,3 @@ LAMMPS includes optimizations for Intel® AVX-512 on Intel® Xeon® Scalable Pro
 
 [2] LAMMPS documentation at https://docs.lammps.org/Speed_intel.html#tuning-for-performance as of August 23, 2021
 
-
-#### Notices & Disclaimers
-
-Intel technologies may require enabled hardware, software or service activation.
-
-No product or component can be absolutely secure.
-
-Your costs and results may vary.
-
-Code names are used by Intel to identify products, technologies, or services that are in development and not publicly available. These are not "commercial" names and not intended to function as trademarks
-
-The products described may contain design defects or errors known as errata which may cause the product to deviate from published specifications. Current characterized errata are available on request.
-© Intel Corporation. Intel, the Intel logo, and other Intel marks are trademarks of Intel Corporation or its subsidiaries. Other names and brands may be claimed as the property of others.
