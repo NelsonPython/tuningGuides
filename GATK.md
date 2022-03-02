@@ -1,4 +1,3 @@
-<p style="text-align:center"><img alt="Genomics Architecture" height="382" src="/content/dam/develop/external/us/en/images/Genomics-Architecture-diagram.jpg" width="700"/></p>
 ## Introducing Intel® Select Solutions for Genomics Analytics
 
 This guide focuses on software configuration recommendations for users who are already familiar with the Intel® Select Solutions for Genomics Analytics.  The following guide contains the hardware configuration for the HPC clusters that are used to run this software:  HPC Cluster Tuning on 3rd Generation Intel® Xeon® Scalable Processors.    However, please carefully consider all of these settings based on your specific scenarios.  Intel® Select Solutions for Genomics Analytics can be deployed in multiple ways and this is a reference to one use-case. 
