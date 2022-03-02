@@ -52,7 +52,7 @@ Via Slurm, the PAM (pluggable authentication module) restricts normal user SSH a
  groupadd sshallowlist  
 ```
 
-2.	Add the dedicated Intel® Cluster Checker user to the whitelist. This user account should be able to run the Cluster Checker both inside and outside of a resource manager job.
+2.	Add the dedicated Intel® Cluster Checker user to the trust-list (previously called whitelist). This user account should be able to run the Cluster Checker both inside and outside of a resource manager job.
 
 ```
  usermod -aG sshallowlist clck   
