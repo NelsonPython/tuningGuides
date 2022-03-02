@@ -105,78 +105,104 @@ Complete the following tasks to create a Slurm configuration file for a cluster 
 
 2.	Open the /etc/slurm/slurm.conf file and make the following changes:
 
-a.	Locate and update the line beginning with "ControlMachine" to:
+	a.	Locate and update the line beginning with "ControlMachine" to:
 
+```
 ControlMachine=frontend
+```
 
-b.	The SLURM configuration that ships with OpenHPC has a default set-up.  The  SLURM control daemon will only make a node available after it goes into the DOWN state if the node was in the DOWN state because it was non-responsive.  You can refer to the documentation on the ReturnToService configuration option in:  https://slurm.schedmd.com/slurm.conf.html
+ b.	The SLURM configuration that ships with OpenHPC has a default set-up.  The  SLURM control daemon will only make a node available after it goes into the DOWN state if the node was in the DOWN state because it was non-responsive.  You can refer to the documentation on the ReturnToService configuration option in:  https://slurm.schedmd.com/slurm.conf.html  This configuration is reasonable for a large cluster under constant supervision by a system administrator.  For a smaller cluster or a cluster that is  not under constant supervision by a system administrator, a different configuration is preferable.  SLURM should make a compute node available again when a node with a valid configuration registers with the SLURM control daemon.  To enable this type of return to service, locate this line:
 
-This configuration is reasonable for a large cluster under constant supervision by a system administrator.  For a smaller cluster or a cluster that is  not under constant supervision by a system administrator, a different configuration is preferable.  SLURM should make a compute node available again when a node with a valid configuration registers with the SLURM control daemon.  To enable this type of return to service, locate this line:
-
+```
 ReturnToService=1
+```
 
-Replace it with:
+		Replace it with:
 
+```
 ReturnToService=2
+```
 
-c.	The SLURM configuration that ships with OpenHPC permits sharing a compute node if the specified resource requirements allow it.  Adjust this so that jobs can be scheduled based on CPU and memory requirements.
+	c.	The SLURM configuration that ships with OpenHPC permits sharing a compute node if the specified resource requirements allow it.  Adjust this so that jobs can be scheduled based on CPU and memory requirements.
 
-Locate the line:
-
+		Locate the line:
+  
+```
 SelectType=select/cons_tres
+```
 
-Replace it with the following.  Take care to drop the “t” from tres and use the setting: select/cons_res:
+		Replace it with the following.  Take care to drop the “t” from tres and use the setting: select/cons_res:
 
+```
 SelectType=select/cons_res
+```
 
-Locate the line:
+		Locate the line:
 
+```
 SelectTypeParameters=CR_Core
+```
 
-Replace it with:
+		Replace it with:
 
+```
 SelectTypeParameters=CR_Core_Memory
+```
 
-d.	Update the node information to reflect the cluster configuration.  Locate the NodeName tag.  For compute nodes based on 3rd Generation Intel® Xeon® Scalable Gold 6348 processors, replace the existing line with the following line:
+	d.	Update the node information to reflect the cluster configuration.  Locate the NodeName tag.  For compute nodes based on 3rd Generation Intel® Xeon® Scalable Gold 6348 processors, replace the existing line with the following line:
 
-NodeName=c[01-04] Sockets=2 CoresPerSocket=28 ThreadsPerCore=2RealMemory=480000 state=UNKNOWN
+```
+		NodeName=c[01-04] Sockets=2 CoresPerSocket=28 ThreadsPerCore=2RealMemory=480000 state=UNKNOWN
+```
 
-When configured for use with Cromwell, bwa,all and haplo will be used to provide improved performance.  Locate the PartitionName tag and replace the existing line with the following lines.
+		When configured for use with Cromwell, bwa,all and haplo will be used to provide improved performance.  Locate the PartitionName tag and replace the existing line with the following lines.
 
+```
 PartitionName=xeon Nodes=c[01-04] Priority=10000 default=YES MaxTime=24:00:00 State=UP
 PartitionName=bwa Nodes=c[01-04] Priority=4000 Default=NO MaxTime=24:00:00 State=UP 
 PartitionName=all Nodes=c[01-04] Priority=6000 Default=NO MaxTime=24:00:00 State=UP 
 PartitionName=haplo Nodes=c[01-04] Priority=5000 default=NO MaxTime=24:00:00 State=UP
+```
 
-e.	The openHPC slurm.conf example has a typo that prevents slurmctld and slurmd from starting.  Fix that typo by locating the following line and using a “#” symbol to make it a comment:
+	e.	The openHPC slurm.conf example has a typo that prevents slurmctld and slurmd from starting.  Fix that typo by locating the following line and using a “#” symbol to make it a comment:
 
-Caution:  A second line starting with JobCompType exists. DO NOT change that line!
+		*Caution:  A second line starting with JobCompType exists. DO NOT change that line!*
+	
+		Locate this line:
 
-Locate this line:
-
+```
 JobCompType=jobcomp/none
+```
 
-Add the “#” in front to comment it, so that it reads as follows:
+		Add the “#” in front to comment it, so that it reads as follows:
 
+```
 #JobCompType=jobcomp/none
+```
 
-f.	Save and close the file.
+	f.	Save and close the file.
 
 3.	Import the new configuration files into Warewulf:
 
- wwsh -y file import /etc/slurm/slurm.conf 
+```
+wwsh -y file import /etc/slurm/slurm.conf 
+```
 
 4.	Update the /etc/warewulf/defaults/provision.conf file:
 
-a.	Open the /etc/warewulf/defaults/provision.conf file and located the line starting with:
+	a.	Open the /etc/warewulf/defaults/provision.conf file and located the line starting with:
 
+```
 files = dynamic_hosts, passwd, group ...
+```
 
-Note:  Do not change any part of the existing line.  Append the following to the end of the line.  Remember to include a comma at the beginning of the added text.
+*Note:  Do not change any part of the existing line.  Append the following to the end of the line.  Remember to include a comma at the beginning of the added text.*
 
+```
 , slurm.conf, munge.key
+```
 
-b.	Save and close the file.  
+	b.	Save and close the file.  
 
 5.	Enable MUNGE and Slurm controller services on the frontend node:
 
@@ -232,30 +258,39 @@ dnf -y --installroot=$CHROOT install ohpc-slurm-client
 ```
 systemctl --root=$CHROOT enable munge.service
 ```
+
 5.	Allow unrestricted SSH access for the root user and the users in the sshallowlist group.  Other users will be subject to SSH restrictions.
 
-a.	Open $CHROOT/etc/security/access.conf and append the following lines, in order, to the end of the file.
+	a.	Open $CHROOT/etc/security/access.conf and append the following lines, in order, to the end of the file.
 
+```
 + : root : ALL
 + : sshallowlist : ALL
 - : ALL : ALL
+```
 
-b.	Save and close the file.  
+	b.	Save and close the file.  
 
 6.	Enable SSH control via the Slurm workload manager.  Enabling PAM in the chroot environment limits  SSH access to only those nodes where the user has active jobs.
 
-a.	Open $CHROOT/etc/pam.d/sshd and append the following lines, in order, to the end of the file:
+	a.	Open $CHROOT/etc/pam.d/sshd and append the following lines, in order, to the end of the file:
 
+```
 account sufficient pam_access.so 
 account required pam_slurm.so
+```
 
-b.	Save and close the file.
+	b.	Save and close the file.
 
- echo "account sufficient pam_access.so" >> $CHROOT/etc/pam.d/sshd 
+```
+echo "account sufficient pam_access.so" >> $CHROOT/etc/pam.d/sshd 
+```
 
 7.	Update the VNFS image:
 
+```
  wwvnfs --chroot $CHROOT –hybridize 
+```
 
 ##### Summary of the commands
 
@@ -266,37 +301,49 @@ echo "+ : sshallowlist : ALL">>$CHROOT/etc/security/access.conf echo "- : ALL : 
 echo "account sufficient pam_access.so" >> $CHROOT/etc/pam.d/sshd
 wwvnfs --chroot $CHROOT –hybridize
 ```
+
 #### Optional – Installing the Slurm client on the frontend node
 
-If you also want to use the cluster frontend node for compute tasks that are scheduled           via Slurm, enable it as follows:
+If you also want to use the cluster frontend node for compute tasks that are scheduled via Slurm, enable it as follows:
+
 1.	Add Slurm client package to the frontend node:
 ```
  dnf -y install ohpc-slurm-client 
 ```
 2.	Add the frontend node as a compute node to the SLURM:
 
-a.  Open /etc/slurm/slurm.conf and locate the NodeName tag.  For compute nodes based on 3rd Generation Intel® Xeon® Scalable Gold 6348  processors, replace the existing line with the following line.  This should be one single line:
-
+	a.  Open /etc/slurm/slurm.conf and locate the NodeName tag.  For compute nodes based on 3rd Generation Intel® Xeon® Scalable Gold 6348  processors, replace the existing line with the following line.  This should be one single line:
+ 
+```
 NodeName=frontend,c[01-04] Sockets=2 CoresPerSocket=28 ThreadsPerCore=2 State=UNKNOWN
+```
 
-Locate the PartitionName tag and replace the existing line with these two lines  as two single lines:
+	Locate the PartitionName tag and replace the existing line with these two lines  as two single lines:
 
+```
 PartitionName=xeon Nodes=frontend,c[01-04] Default=YES MaxTime=24:00:00 State=UP PartitionName=cluster Nodes=frontend,c[01-04] Default=NO MaxTime=24:00:00 State=UP
+```
 
-b.  Save and close the file.  
+	b.  Save and close the file.  
 
 3.	Restart the Slurm control daemon:
+
 ```
  systemctl restart slurmctld 
 ```
+
 4.	Enable and start the Slurm daemon on the frontend node:
+
 ```
  systemctl enable --now slurmd
 ```
+
 5.	Update the initial Slurm configuration on the compute nodes:
+
 ```
  \cp -fa /etc/slurm/slurm.conf $CHROOT/etc/slurm/
 ```
+
 6.	Update the VNFS image:
 ```
  wwvnfs --chroot $CHROOT --hybridize
@@ -316,23 +363,32 @@ wwvnfs --chroot $CHROOT --hybridize
 
 1.	The resource allocation in Slurm version 20.11.X has been changed. This has direct implications for certain types of MPI based jobs.  For details, see the Slurm release notes at:  https://slurm.schedmd.com/archive/slurm-20.11.6/news.html
 In order to allow applications to use the resource allocation method from Slurm version 20.02.X and earlier, set the "SLURM_OVERLAP" environment variable on the frontend node to allow all users:
+
 ```
- cat >> /etc/environment << EOFSLURM export SLURM_OVERLAP=1 EOFSLURM 
+cat >> /etc/environment << EOFSLURM export SLURM_OVERLAP=1 EOFSLURM 
 ```
+
 2.	Re-start the Munge and Slurm controller services on the frontend node:
+
 ```
- systemctl restart munge 
+systemctl restart munge 
 ```
+
 3.	Reboot the compute nodes:
+
 ```
- pdsh -w c[01-XX] reboot 
+pdsh -w c[01-XX] reboot 
 ```
+
 4.	Ensure that the compute nodes are available in Slurm after they have been re- provisioned.  In order to ensure that the compute nodes are available for resource allocation in  Slurm, they need to be put into the "idle" state.
+
 ```
- scontrol reconfig                                 
- scontrol update NodeName=c[01-XX] State=Idle 
+scontrol reconfig                                 
+scontrol update NodeName=c[01-XX] State=Idle 
 ```
+
 5.	Check the Slurm status.  All nodes should have the state "idle".
+
 ```
 [root@frontend ~]# sinfo                                       
                                                                     
@@ -342,7 +398,9 @@ cluster			up 1-00:00:00	  4      idle   c[01-04]
 ```
 
 ##### Summary of the commands  
+
 Here are all the commands in this section:
+
 ```
 cat >> /etc/environment << EOFSLURM export SLURM_OVERLAP=1 EOFSLURM
 systemctl restart munge
@@ -386,20 +444,28 @@ mpicc -o test /opt/intel/oneapi/mpi/latest/test/test.c
 ```
 
 8.	When the MPI job rans successfully, exit as the "test" user and continue with the cluster setup:
-
+```
 exit
-2.3. Installing the genomics software stack
+```
+
+### Installing the genomics software stack
+
 Install the genomics software stack.  This software stack is based on the Genome Analysis ToolKit (GATK) suite of tools along with the Cromwell workflow management system.
-2.3.1. Checking the setup of the genomics cluster environment
+
+#### Checking the setup of the genomics cluster environment
+
 First, check that the cluster setup used to run the Genomics solution is properly configured.
 
 1.	Make sure that Cromwell users on every node are limited to opening no more than 500,000 files:
+
 ```
 pdsh -w frontend,c0[1-4] "su - cromwell -c 'ulimit -n'"
 ```
-Note: This should be at least 500,000 on every node because workflow settings require many files to be open during runtime.
+
+*Note: This should be at least 500,000 on every node because workflow settings require many files to be open during runtime.*
 
 2.	Check that the /genomics_local is a mounted filesystem with the correct ownership and permissions.  The pdsh command should produce output identical to the one shown, except the order of compute nodes may vary.
+
 ```
 [root@frontend ~]# pdsh -w c0[1-4] "stat -c '%A %U:%G %m' /genomics_local" 
  c01: drwxr-xr-x cromwell:cromwell /genomics_local                              
@@ -407,33 +473,45 @@ Note: This should be at least 500,000 on every node because workflow settings re
  c04: drwxr-xr-x cromwell:cromwell /genomics_local                              
  c02: drwxr-xr-x cromwell:cromwell /genomics_local                              
 ```
+
 #### Configuring MariaDB
 
 Cromwell uses MariaDB for storing job information.  Since Warewulf also uses MariaDB, the database may have been setup according to the HPC Cluster guide during the hardware configuration.  If not, follow these instructions to set it up.  You will need the MariaDB database administrator password.
+
 1.	Enable the database service to start automatically at system boot
+
 ```
 systemctl enable mariadb.service
 ```
+
 2.	Enable the web server service to start automatically at system boot
+
 ```
 systemctl enable httpd.service
 ```
+
 3.	Restart the database service
 ```
 systemctl restart mariadb
 ```
+
 4.	Restart web services
 ```
 systemctl restart httpd
 ```
 5.	Update the Warewulf database password.  This step must be done manually.
-a.	Edit this file:  /etc/warewulf/database-root.conf
+	a.	Edit this file:  /etc/warewulf/database-root.conf
+
 b.	Replace the "changeme" password with a password that you choose based on your password policy:
 
-  database password = <new_password>
+```
+	database password = <new_password>
+```
 
 c.	We recommend that this password be different than the password for the root superuser.
+
 6.	Save and exit the file.
+
 7.	Secure database.  MariaDB ships with a tool that allows the administrator to manually setup database access.  This includes setting a password for the root user of the database.  We recommend that this password be different from the password of the root user of the system and password for the Warewulf database administrator.  Please follow your password policy when choosing passwords.  Execute the following command and respond to the prompts.  We strongly recommend using the default answers for all questions.
 ```
 /usr/bin/mysql_secure_installation
@@ -470,83 +548,114 @@ MariaDB [(none)]> GRANT ALL PRIVILEGES ON `cromwell`.* TO 'cromwell'@'localhost'
 Install the Cromwell Workflow Management system and configure it to use the local scratch device on the compute nodes.
 
 1.	In order to install Cromwell, the "sbt" build tool is required.  Install sbt:
-a.	Add the sbt online repository
+
+	a.	Add the sbt online repository
+
 ```
 dnf config-manager --add-repo https://www.scala-sbt.org/sbt-rpm.repo
 ```
-b.	Install sbt build tool:
+
+	b.	Install sbt build tool:
+
 ```
 dnf -y install sbt
 ```
+
 2.	Download Cromwell from the git repository:
-a.	Create a directory for installing Cromwell:
+
+	a.	Create a directory for installing Cromwell:
+
 ```
 mkdir -p ${GENOMICS_PATH}/cromwell
 ```
-b.	Set the owner of that directory to the cromwell user and the cromwell group.  Change the ownership permissions in order to allow access.
+
+	b.	Set the owner of that directory to the cromwell user and the cromwell group.  Change the ownership permissions in order to allow access.
+
 ```
- chmod 775 -R ${GENOMICS_PATH}/Cromwell                   
- chown -R cromwell:cromwell ${GENOMICS_PATH}/Cromwell  
+chmod 775 -R ${GENOMICS_PATH}/Cromwell                   
+chown -R cromwell:cromwell ${GENOMICS_PATH}/Cromwell  
 ```
-c.	Login to the cromwell user account:
+
+	c.	Login to the cromwell user account:
+
 ```
 su - cromwell
 ```
-d.	Use git to clone the Cromwell git repository:
+
+	d.	Use git to clone the Cromwell git repository:
+
 ```
- cd ${GENOMICS_PATH}/cromwell                                   
- git clone https://github.com/broadinstitute/cromwell.git 
+cd ${GENOMICS_PATH}/cromwell                                   
+git clone https://github.com/broadinstitute/cromwell.git 
 ```
-e.	This guide was tested and validated with version 52 of Cromwell.  Checkout version 52 from the repository:
+
+	e.	This guide was tested and validated with version 52 of Cromwell.  Checkout version 52 from the repository:
+
 ```
 cd cromwell
 git checkout 52
 ```
+
 3.	Configure Cromwell to use the local NVMe disk as scratch space:
 
-a.	Open this file for editing:
+	a.	Open this file for editing:
+
 ```
-  	backend/src/main/scala/cromwell/backend/RuntimeEnvironment.scala
+backend/src/main/scala/cromwell/backend/RuntimeEnvironment.scala
 ```
-b.	Comment out line 3, so it reads:
+
+ b.	Comment out line 3, so it reads:
+
 ```
 //import java.util.UUID
 ```
-c.	Update lines 23 through 27 as shown below:
+	c.	Update lines 23 through 27 as shown below:
+
 ```
 val tempPath: String = {
 val uuid = UUID.randomUUID().toString
 val hash = uuid.substring(0, uuid.indexOf('-')) callRoot.resolve(s"tmp.$hash").pathAsString
 }
 ```
-d.	Add the following text in line 23:
+
+ d.	Add the following text in line 23:
+
 ```
 def tempPath: String = "/genomics_local"
 ```
-e.	Save the file and exit
+	e.	Save the file and exit
+	
+	f.	Open this file: 
 
-f.	Open this file: 
 ```
 backend/src/main/scala/cromwell/backend/standard/ StandardAsyncExecutionActor.scala 
 ```
+
 g.	Go to line number 380 to find the following content:
+
 ```
 |export _JAVA_OPTIONS=-Djava.io.tmpdir="$$tmpDir"
 |export TMPDIR="$$tmpDir"
 ```
+
 h.	Replace those two lines with the following text:
+
 ```
 |mkdir -p $$tmpDir/tmp.$$$$
 |export _JAVA_OPTIONS=-Djava.io.tmpdir="$$tmpDir/tmp.$$$$"
 |export TMPDIR="$$tmpDir/tmp.$$$$
 ```
+
 i.	Save the file and exit.  
 
 4.	Build Cromwell with the patches:
+
 ```
 sbt clean
 ```
+
 5.	When the build is successful, move the new jar file into the ${GENOMICS_PATH}/cromwell directory
+
 ```
 cp server/target/scala-2.12/cromwell-52-*-SNAP.jar \
 ${GENOMICS_PATH}/cromwell/cromwell-52-fix.jar
@@ -555,6 +664,7 @@ ${GENOMICS_PATH}/cromwell/cromwell-52-fix.jar
 ##### Summary of the commands
 
 Here are all the commands for this section
+
 ```
 sed -i "s/^\(import\ java.util.UUID\)/\/\/\1/" \                                      
 backend/src/main/scala/cromwell/backend/RuntimeEnvironment.scala                   
@@ -594,9 +704,12 @@ Configure the Cromwell execution environment.  Use the default configuration fil
 wget https://raw.githubusercontent.com/broadinstitute/cromwell/52_hotfix/core/\
 ```
 2.	Add MariaDB as the database for Cromwell to use.
-a.	Open this file:  ${GENOMICS_PATH}/cromwell/reference.conf 
-b.	Add the following lines at the end of the file:
 
+ a.	Open this file:  ${GENOMICS_PATH}/cromwell/reference.conf 
+ 
+ b.	Add the following lines at the end of the file:
+
+```
 database {
 profile = "slick.jdbc.MySQLProfile$" db {
 driver = "com.mysql.cj.jdbc.Driver"
@@ -604,31 +717,41 @@ url = "jdbc:mysql://localhost/cromwell?rewriteBatchedStatements=true&serverTimez
 password = "cromwell" connectionTimeout = 5000
 }
 }
+```
 
 c.	Save the file and exit.
 
 3.	Add SLURM as the backend for Cromwell:
-a.	Open this file:	 ${GENOMICS_PATH}/cromwell/reference.conf 
-b.	Go to line 479 to find:
 
+ a.	Open this file:	 ${GENOMICS_PATH}/cromwell/reference.conf 
+
+ b.	Go to line 479 to find:
+
+``` 
 default = "Local"
+```
 
-c.	Change "Local" to "SLURM"
+	c.	Change "Local" to "SLURM"
 
+```
 default = "SLURM"
+```
 
-d.	Remove the following five lines (line numbers 480 through 484)
+	d.	Remove the following five lines (line numbers 480 through 484)
 
+```
 providers { 
 Local {
 actor-factory = "cromwell.backend.impl.sfs.config.ConfigBackendLifecycleActorFactory" 
 config {
 include required(classpath("reference_local_provider_config.inc.conf"))
+```
 
-e.	Now add the following text after line 479, the line that has  default = "SLURM". 
+	e.	Now add the following text after line 479, the line that has  default = "SLURM". 
+	
+	*Note:  Ensure that the lines that show line-breaks in this document are, in fact, single lines in reference.conf*
 
-Note:  Ensure that the lines that show line-breaks in this document are, in fact, single lines in reference.conf
- 
+``` 
 providers { SLURM {
 # Modifying temp directory to write to local disk temporary-directory = "$(/genomics_local/)"
 actor-factory = "cromwell.backend.impl.sfs.config.ConfigBackendLifecycleActorFactory" config {
@@ -674,8 +797,8 @@ sbatch -J ${job_name} -D ${cwd} -o ${out} -e ${err} -t ${runtime_minutes} -p ${q
 kill = "scancel ${job_id}"
 check-alive = "squeue -j ${job_id}"
 job-id-regex = "Submitted batch job (\\d+).*"
-
-f.	Save the file and exit.  
+```
+	f.	Save the file and exit.  
 
 ##### Summary of the commands
 
@@ -763,12 +886,14 @@ Note:  In order to stop the Cromwell server, use the "kill -9 <PID>" command whe
 
 5.	Now that the Cromwell server process is running, execute an example workflow.  This workflow was designed using the Workflow Description Language (WDL).  It will ensure that Cromwell is configured correctly with the job scheduler.
 
-a.	Navigate to your working directory:
+ a.	Navigate to your working directory:
+
 ```
 cd ${GENOMICS_PATH}/cromwell/
 ```
-b.	Open a new file named HelloWorld.wdl and add the following text:
-
+ 
+	b.	Open a new file named HelloWorld.wdl and add the following text:
+```
 task hello {
 String name command {
 echo 'Hello ${name}!'
@@ -778,23 +903,28 @@ File response = stdout()
 }
 runtime {
 memory: "2MB" disk: "2MB"
+```
+ 
+	c.	Save the file and exit.  
 
+	d.	Open a new file called:  HelloWorld.json
 
-c.	Save the file and exit.  
-
-d.	Open a new file called:  HelloWorld.json
-
-e.	Add the following text to that file:
-
+	e.	Add the following text to that file:
+ 
+```
 {"helloWorld.hello.name": "World"}
+```
+ 
+	f.	Save the file and exit.  
 
-f.	Save the file and exit.  
+	g.	We can now submit the workflow to the Cromwell server using the WDL and JSON input files that were just created:
 
-g.	We can now submit the workflow to the Cromwell server using the WDL and JSON input files that were just created:
 ```
 curl -v http://127.0.0.1:8000/api/workflows/v1 -F \ workflowSource=@${GENOMICS_PATH}/cromwell/HelloWorld.wdl -F \ workflowInputs=@${GENOMICS_PATH}/cromwell/HelloWorld.json
 ```
-h.	Use the job id provided by the output to check the status of the workflow:
+
+	h.	Use the job id provided by the output to check the status of the workflow:
+
 ```
 curl -v http://127.0.0.1:8000/api/workflows/v1/<id>/status
 #After a few minutes, the above command should return a “succeeded” message.
