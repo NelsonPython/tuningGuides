@@ -747,52 +747,8 @@ Now add the following text after line 479, the line that has  default = "SLURM".
 	
 *Note:  Ensure that the lines that show line-breaks in this document are, in fact, single lines in reference.conf*
 
-``` 
-providers { SLURM {
-actor-factory = "cromwell.backend.impl.sfs.config.ConfigBackendLifecycleActorFactory" config {
-root = "cromwell-slurm-exec" runtime-attributes = """
-Int runtime_minutes = 600 Int cpu = 2
-Int memory_mb = 1024 String queue = "all"
-String? docker """
-submit = """
-sbatch -J ${job_name} -D ${cwd} -o ${out} -e ${err} -t ${runtime_minutes} -p ${queue} ${"-c " + cpu} --mem ${memory_mb} --wrap "/bin/bash ${script}"
-"""
-kill = "scancel ${job_id}"
-check-alive = "squeue -j ${job_id}"
-job-id-regex = "Submitted batch job (\\d+).*"
-}
-}
-SLURM-BWA {
-temporary-directory = "$(/genomics_local/)"
-actor-factory = "cromwell.backend.impl.sfs.config.ConfigBackendLifecycleActorFactory" config {
-root = "cromwell-slurm-exec" runtime-attributes = """
-Int runtime_minutes = 600 Int cpu = 2
-Int memory_mb = 1024 String queue = "bwa"
-String? docker """
-submit = """
 
 
-sbatch -J ${job_name} -D ${cwd} -o ${out} -e ${err} -t ${runtime_minutes} -p ${queue} ${"-c " + cpu} --mem ${memory_mb} --wrap "/bin/bash ${script}"
-"""
-kill = "scancel ${job_id}"
-check-alive = "squeue -j ${job_id}"
-job-id-regex = "Submitted batch job (\\d+).*"
-}
-}
-SLURM-HAPLO {
-temporary-directory = "$(/genomics_local/)"
-actor-factory = "cromwell.backend.impl.sfs.config.ConfigBackendLifecycleActorFactory" config {
-root = "cromwell-slurm-exec" runtime-attributes = """
-Int runtime_minutes = 600 Int cpu = 2
-Int memory_mb = 1024 String queue = "haplo"
-String? docker """
-submit = """
-sbatch -J ${job_name} -D ${cwd} -o ${out} -e ${err} -t ${runtime_minutes} -p ${queue} ${"-c " + cpu} --mem ${memory_mb} --wrap "/bin/bash ${script}"
-"""
-kill = "scancel ${job_id}"
-check-alive = "squeue -j ${job_id}"
-job-id-regex = "Submitted batch job (\\d+).*"
-```
 
 	f.	Save the file and exit.  
 
