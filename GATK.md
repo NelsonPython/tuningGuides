@@ -32,6 +32,7 @@ These prerequisites are required:
 Scientists use tools such as, the Genomic Analysis Toolkit, along with WDL scripts to process DNA and RNA data.  Cromwell is used to manage the workflow.  SLURM is used to schedule jobs and to allocate cluster resources to those jobs.  This diagram shows the software and hardware used in the Intel® Select Solutions for Genomics Analytics.
 
 ![GATK data flow described above](https://github.com/NelsonPython/tuningGuides/blob/main/images/Genomics-Architecture-diagram.png)
+
  
 ## Tuning the Intel® Select Solutions for Genomics Analytics
 
@@ -738,6 +739,7 @@ Remove the following five lines (line numbers 480 through 484)
 ```
 providers { 
 Local {
+# Modifying temp directory to write to local disk temporary-directory = "$(/genomics_local/)"
 actor-factory = "cromwell.backend.impl.sfs.config.ConfigBackendLifecycleActorFactory" 
 config {
 include required(classpath("reference_local_provider_config.inc.conf"))
