@@ -31,7 +31,7 @@ These prerequisites are required:
 
 Scientists use tools such as, the Genomic Analysis Toolkit, along with WDL scripts to process DNA and RNA data.  Cromwell is used to manage the workflow.  SLURM is used to schedule jobs and to allocate cluster resources to those jobs.  This diagram shows the software and hardware used in the Intel® Select Solutions for Genomics Analytics.
 
-![GATK data flow described above](https://github.com/NelsonPython/tuningGuides/blob/main/images/Genomics-Architecture-diagram.jpg)
+![GATK data flow described above](https://github.com/NelsonPython/tuningGuides/blob/main/images/Genomics-Architecture-diagram.png)
  
 ## Tuning the Intel® Select Solutions for Genomics Analytics
 
