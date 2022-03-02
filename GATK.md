@@ -518,7 +518,7 @@ systemctl restart httpd
 	database password = <new_password>
 ```
 
-* Note:  We recommend that this password be different than the password for the root superuser. *
+*Note:  We recommend that this password be different than the password for the root superuser. *
 
 6.	Save and exit the file.
 
@@ -534,7 +534,7 @@ wwinit DATASTORE
 ```
 mysql -h localhost -u root -p
 ```
-Note: If you are unable to log into MariaDB see the Troubleshooting of the genomics software stack section of this guide for suggestions
+*Note: If you are unable to log into MariaDB see the Troubleshooting of the genomics software stack section of this guide for suggestions
 
 10.	Create a new database named “cromwell”:
 ```
@@ -732,7 +732,7 @@ Change "Local" to "SLURM"
 default = "SLURM"
 ```
 
-Remove the following five lines (line numbers 480 through 484)
+Remove line numbers 480 through 484
 
 ```
 providers { 
@@ -795,6 +795,7 @@ job-id-regex = "Submitted batch job (\\d+).*"
 ```
 
 	f.	Save the file and exit.  
+
 
 ##### Summary of the commands
 
@@ -860,25 +861,33 @@ sed -i "479i \ \ default\ =\ \"SLURM\"" reference.conf
 Validate that the Cromwell installation is working properly by executing a simple smoke test.
 
 1.	Change to the "cromwell" user
+
 ```
 su - cromwell
 ```
+
 2.	Change to the Cromwell directory
+
 ```
 cd ${GENOMICS_PATH}/cromwell
 ```
+
 3.	Start the Cromwell server as a detached process in the background.      By default the Cromwell server will be accessible via port 8000.  The cromwell.log file will contain the messages the Cromwell server generates during execution.
+
 ```
 nohup java -jar -Dconfig.file=reference.conf cromwell-52-fix.jar server 2>&1 >>cromwell.log &
 ```
+
 4.	Confirm that the Cromwell server is running by checking the process list by using the "ps" command:
 
-Note: The output of the "ps" command will output the PID and other information that we are not concerned with.  We are using <…> as a placeholder for that information.
+* Note: The output of the "ps" command will output the PID and other information that we are not concerned with.  We are using <…> as a placeholder for that information.*
+
 ```
 [cromwell@frontend cromwell]$ ps aux | grep cromwell | grep server
 cromwell <PID> <…> java -jar -Dconfig.file=reference.conf cromwell-52-fix.jar server
 ```
-Note:  In order to stop the Cromwell server, use the "kill -9 <PID>" command where <PID> is the process ID running Cromwell.
+
+*Note:  In order to stop the Cromwell server, use the "kill -9 <PID>" command where <PID> is the process ID running Cromwell.
 
 5.	Now that the Cromwell server process is running, execute an example workflow.  This workflow was designed using the Workflow Description Language (WDL).  It will ensure that Cromwell is configured correctly with the job scheduler.  Navigate to your working directory:
 
@@ -922,6 +931,7 @@ curl -v http://127.0.0.1:8000/api/workflows/v1/<id>/status
 ##### Summary of the commands
 
 Here are all the commands in this section:
+
 ```
 su – Cromwell
 
@@ -961,32 +971,44 @@ curl -v http://127.0.0.1:8000/api/workflows/v1/<id>/status
 BWA is a software package for mapping low-divergent sequences against a large reference genome, such as the human genome. In order to install the Burrows- Wheeler Aligner requires you must compile it.
 
 1.	Login to the cromwell user account:
+
 ```
 su - cromwell
 ```
+
 2.	Create the tools subdirectory in the GENOMICS_PATH directory and enter that directory:
+
 ```
 mkdir ${GENOMICS_PATH}/tools
 ```
+
 3.	Download the recommended version of the BWA software package:
+
 ```
 wget https://github.com/lh3/bwa/releases/download/v0.7.17/bwa-0.7.17.tar.bz2
 ```
+
 4.	Unpack the tarball:
+
 ```
 tar -xjf bwa-0.7.17.tar.bz2
 ```
+
 5.	Compile BWA:
+
 ```
 cd bwa-0.7.17
 ```
 6.	Make a symlink:
+
 ```
 cd ${GENOMICS_PATH}/tools
 ```
+
 ##### Summary of the commands
 
 Here are all the commands in this section:
+
 ```
 su - cromwell
 
@@ -1005,23 +1027,32 @@ cd ${GENOMICS_PATH}/tools
 The Genome Analysis ToolKit (GATK) is the industry standard for identifying SNPs and indels in germline DNA and RNAseq data.  It is a collection of command-line tools for analyzing high-throughput sequencing data with a primary focus on variant discovery. The tools can be used individually or chained together into complete workflows. The Broad Institute provides end-to-end workflows, called GATK Best Practices, tailored for specific use cases. The Intel® Genomics Kernel Library with AVX-512 performance improvements is directly integrated into GATK.
 
 1.	Navigate to the staging folder:
+
 ```
 cd ${GENOMICS_PATH}/tools
 ```
+
 2.	Download the latest version of GATK:
+
 ```
 wget \
 https://github.com/broadinstitute/gatk/releases/download/4.1.9.0/gatk-4.1.9.0.zip
 ```
+
 3.	Unpack the zip file:
+
 ```
 unzip gatk-4.1.9.0.zip
 ```
+
 4.	Add the PATH to the default user environment:
+
 ```
 echo "export PATH=\${GENOMICS_PATH}/tools/gatk-4.1.9.0:\$PATH" >> /etc/bashrc
 ```
+
 5.	Make tools symlink:
+
 ```
 cd ${GENOMICS_PATH}/tools 
 ln -s gatk-4.1.9.0 gatk
@@ -1031,6 +1062,7 @@ ln -s gatk-4.1.9.0/gatk-package-4.1.9.0-local.jar gatk-jar
 ##### Summary of the commands
 
 Here are all the commands in this section:
+
 ```
 cd ${GENOMICS_PATH}/tools
 wget \
@@ -1041,12 +1073,15 @@ cd ${GENOMICS_PATH}/tools
 ln -s gatk-4.1.9.0 gatk
 ln -s gatk-4.1.9.0/gatk-package-4.1.9.0-local.jar gatk-jar
 ```
+
 #### Installing Picard
 
 1.	When logged on as user, Cromwell, navigate to the staging folder:
+
 ```
 cd ${GENOMICS_PATH}/tools
 ```
+
 2.	Download the recommended version of Picard
 
 wget https://github.com/broadinstitute/picard/releases/download/2.23.8/picard.jar
@@ -1054,31 +1089,42 @@ wget https://github.com/broadinstitute/picard/releases/download/2.23.8/picard.ja
 ##### Summary of the commands
 
 Here are all the commands in this section:
+
 ```
 cd ${GENOMICS_PATH}/tools
 wget https://github.com/broadinstitute/picard/releases/download/2.23.8/picard.jar
 ```
-#### 2.3.9. Installing Samtools
+
+#### Installing Samtools
 
 1.	Change to the tools directory
+
 ```
 cd ${GENOMICS_PATH}/tools
 ```
+
 2.	Download the recommended version of the SAMtools software:
+
 ```
 wget https://github.com/samtools/samtools/releases/download/1.9/samtools-1.9.tar.bz2
 ```
+
 3.	Unpack the tarball:
+
 ```
 tar -xjf samtools-1.9.tar.bz2
 ```
+
 4.	Compile and install Samtools:
+
 ```
 cd samtools-1.9
 ./configure -prefix=${GENOMICS_PATH}/tools 
 make
 ```
+
 5.	Make a symlink:
+
 ```
 ${GENOMICS_PATH}/tools
 ln -s samtools-1.9 samtools
@@ -1093,15 +1139,18 @@ make
 ${GENOMICS_PATH}/tools
 ln -s samtools-1.9 samtools
 ```
-#### 2.3.10. Installing VerifyBamID2
+#### Installing VerifyBamID2
 
 You must build the project from the source code.  See the details at: https:// github.com/Griffan/VerifyBamID
 
 1.	Navigate to the tools folder:
+
 ```
 cd ${GENOMICS_PATH}/tools
 ```
+
 2.	Create the file build_verify.sh and add the following contents:
+
 ```
 #https://github.com/broadinstitute/warp/tree/cec97750e3819fd88ba382534aaede8e05ec52df/dockers/broad/ VerifyBamId
 cd $GENOMICS_PATH/tools
@@ -1119,7 +1168,9 @@ make && \
 make test && \ cd ../../
 mv $GENOMICS_PATH/tools/VerifyBamID-$GIT_HASH $GENOMICS_PATH/tools/VerifyBamID && \ rm -rf $GENOMICS_PATH/tools/$GIT_HASH.zip $GENOMICS_PATH/tools/VerifyBamID-$GIT_HASH
 ```
+
 3.	Run the new script to build and install VerifyBamID2:
+
 ```
 sh ./build_verify.sh
 ```
@@ -1129,38 +1180,55 @@ sh ./build_verify.sh
 The 20K Sample Test provides a quick end-to-end smoke test.  It runs a Broad Best Practices Workflow with a short input dataset.  A single Whole Genome Sequence (WGS) can take hours to run.  Using the recommended hardware, this test should complete in 30-40 minutes. 
 
 1.	Login to the cromwell user account:
+
 ```
 su - cromwell
 ```
+
 2.	Navigate to the cromwell installation folder:
+
 ```
 cd ${GENOMICS_PATH}/cromwell
 ```
+
 3.	Clone the workflow repo (as a user).   Configure Git proxy settings as needed for your environment.
+
 ```
 git clone https://github.com/Intel-HLS/BIGstack.git
 ```
+
 4.	Review the values in the "configure" values for proper DATA and TOOL paths on your system. DATA should be a filesystem all worker nodes can reach and have at least 2TB of free space. The benchmark Step2 will download data from the Broad Institute and configure the proxy settings as setup in configure.
+
 ```
 vim configure
 ```
+
 5.	Configure the test based on the detail in the "configure" file:
+
 ```
 ./step01_Configure_20k_Throughput-run.sh
 ```
+
 6.	Download data in the DATA_PATH provided in the configure file:
+
 ```
 ./step02_Download_20k_Data_Throughput-run.sh
 ```
+
 7.	Run the Throughput benchmark:
+
 ```
 ./step03_Cromwell_Run_20k_Throughput-run.sh
 ```
+
 8.	Monitor the workflow for the Workflow status - Failed, Succeeded, Running:
+
 ```
 ./step04_Cromwell_Monitor_Single_Sample_20k_Workflow.sh
 ```
+
 9.	To view the final output of 20k Throughput run, execute
+
 ```
 step05_Single_Sample_20k_Workflow_Output.sh
 
@@ -1169,31 +1237,42 @@ Total Elapsed Time for 64 workflows: 'X' minutes: 'Y' seconds
 Average Elapsed Time for Mark Duplicates: 'X.YZ' minutes
 ```
 ## Troubleshooting the genomics software stack
+
 The following section describes steps for troubleshooting issues that may arise during the installation of the genomics software stack.
 
 ### Troubleshooting failure to log into MariaDB
 
 1.	Stop MariaDB:
+
 ```
 systemctl stop mariadb
 ```
+
 2.	Start a safe session and login:
+
 ```
 mysqld_safe --skip-grant-tables --skip-networking & mysql -u root
 ```
+
 3.	Set a new password for root user or change password as desired:
+
 ```
 MariaDB [(none)]> FLUSH PRIVILEGES;
 MariaDB [(none)]> SET PASSWORD FOR 'root'@'localhost' = PASSWORD('password'); MariaDB [(none)]> EXIT;
 ```
+
 4.	Cleanup and restart MariaDB:
+
 ```
-kill cat /var/run/mariadb/mariadb.pid` systemctl start mariadb
+kill `cat /var/run/mariadb/mariadb.pid` systemctl start mariadb
 ```
+
 5.	Log into the MariaDB server as the database administrator.  Enter the root password when prompted and resume the setup process:
+
 ```
 mysql -h localhost -u root -p
 ```
+
 ## Installing optional components
 
 The Intel® System Configuration Utility, Save and Restore System Configuration Utility (syscfg), is a command-line utility that can be used to display or set several BIOS and management firmware settings.
@@ -1201,7 +1280,6 @@ The Intel® System Configuration Utility, Save and Restore System Configuration 
 ## Conclusion
 
 This guide contains recommendations for tuning software used in the Intel® Select Solutions for Genomics Analytics on the 3rd Generation Intel® Xeon® Scalable Processors Based Platform.  HPC Cluster Tuning on 3rd Generation Intel® Xeon® Scalable Processors describes the hardware configuration. 
-
 
 ## Feedback 
 
