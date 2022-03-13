@@ -32,12 +32,9 @@ Los procesadores escalables Intel® Xeon® de 3a Generación contienen plataform
 
 ### 1.1 La arquitectura 
 
-El diagrama de abajo muestra el flujo de los datos por Intel® Select Solutions for Genomics Analytics.  Los científicos usan aplicaciones como el kit de herramientas de análisis genómico y los códigos WDL para procesar los datos ADN.  El Cromwell se usa para manejar el flujo de trabajo.  El Slurm se usa para crear una agenda de trabajo y para manejar los recursos del clúster del HPC.
+El diagrama de abajo muestra el flujo de los datos por Intel® Select Solutions for Genomics Analytics.  Los científicos usan aplicaciones como el kit de herramientas de análisis genómico y los códigos WDL para procesar los datos ADN.  El Cromwell se usa para manejar el flujo de trabajo.  El Slurm se usa para crear una agenda de trabajo y para manejar los recursos del clúster del HPC.  El diagrama de abajo muestra el software y el hardware que se usa en Intel® Select Solutions for Genomics Analytics.
 
-
-
-El diagrama de abajo muestra el software y el hardware que se usa en Intel® Select Solutions for Genomics Analytics.
-
+![Diagram showing tools explained in this paragraph](images/Genomics-Architecture-diagram.png)
 
 ## 2. Optimización del Intel® Select Solutions for Genomics Analytics
 
