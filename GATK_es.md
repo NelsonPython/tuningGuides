@@ -654,7 +654,7 @@ d. Copie el repositorio git Cromwell:
 ```
 cd ${GENOMICS_PATH}/cromwell                   
 git clone https://github.com/broadinstitute/cromwell.git 
-``
+```
 
 e. Esta guía se ha verificado usando la versión Cromwell 52.  Le recomendamos que use esta versión. 
 
@@ -723,7 +723,7 @@ i. Guarde el archivo y salga.
 
 ```
 sbt clean
-``
+```
 
 5. Después de compilar, mueva el archivo nuevo a ${GENOMICS_PATH}/cromwell
 
