@@ -1,6 +1,6 @@
 # La Guía para optimizar Intel® Select Solutions for Genomics Analytics en la Plataforma de Procesadores Escalables Intel® Xeon® de 3a Generación
 
-## Introducción Intel® Select Solutions for Genomics Analytics
+## 1. Introducción Intel® Select Solutions for Genomics Analytics
 
 Esta guía es para usuarios del Intel® Select Solutions for Genomics Analytics.  Incluye las recomendaciones para configurar el BIOS, el sistema operativo (OS) y el software de análisis genómico con los ajustes que se puede aumentar el rendimiento en muchas situaciones.  En la guía llamada, HPC Cluster Tuning on 3rd Generation Intel® Xeon® Scalable Processors, le recomienda que aumente el rendimiento usando las configuraciones del hardware.  En esta guía, le recomendamos que aumente el rendimiento usando estas configuraciones del software.  Tenemos en cuenta que confiamos en que los usuarios consideren cuidadosamente todas las configuraciones porque los escenarios específicos del Intel® Select Solutions for Genomics Analytics se pueden implementar de varias maneras.
 
@@ -31,7 +31,7 @@ Los procesadores escalables Intel® Xeon® de 3a Generación contienen plataform
 - Intel® Advanced Vector Extensions
 - Intel® Genomics Kernel Library con AVX-512
 
-### La arquitectura 
+### 1.1 La arquitectura 
 
 El diagrama de abajo muestra el flujo de los datos por Intel® Select Solutions for Genomics Analytics.  Los científicos usan aplicaciones como el kit de herramientas de análisis genómico y los códigos WDL para procesar los datos ADN.  El Cromwell se usa para manejar el flujo de trabajo.  El Slurm se usa para crear una agenda de trabajo y para manejar los recursos del clúster del HPC.
 
@@ -40,19 +40,19 @@ El diagrama de abajo muestra el flujo de los datos por Intel® Select Solutions 
 El diagrama de abajo muestra el software y el hardware que se usa en Intel® Select Solutions for Genomics Analytics.
 
 
-## Optimización del Intel® Select Solutions for Genomics Analytics
+## 2. Optimización del Intel® Select Solutions for Genomics Analytics
 
 La optimización de la configuración del software es necesario.  La configuración base fue diseñado para aplicaciones generales.  Tiene que optimizar su software para lograr un mejor rendimiento del sistema.  Las secciones siguientes tienen instrucciones paso a paso para ajustar el Intel® Select Solutions for Genomics Analytics.
 
-### Optimizar el clúster de computación de alto rendimiento (HPC)
+### 2.1 Optimizar el clúster de computación de alto rendimiento (HPC)
 
 Las recomendaciones que se usa para optimizar el hardware se encuentran en esta guía:  HPC Cluster Tuning on 3rd Generation Intel® Xeon® Scalable Processors, https://www.intel.com/content/www/us/en/developer/articles/guide/hpc-cluster-tuning-on-3rd-generation-xeon.html  
 
-### Configurar el Gestionador de Carga de Trabajo Slurm
+### 2.2 Configurar el Gestionador de Carga de Trabajo Slurm
 
 Cuando se agrega el Slurm al HPC clúster, se instala el servidor de Slurm en el primer nodo.
 
-### Instalar el servidor Slurm en el primer nodo
+### 2.2.1 Instalar el servidor Slurm en el primer nodo
 
 El Slurm necesita un usuario del sistema para ejecutar los procesos que manejan los recursos.  La configuración predeterminada de OpenHPC requiere un usuario “slurm”.  PAM (Pluggable Authentication Module) prohíbe a un usuario normal usar SSH para obtener el acceso a los nodos a través de Slurm.    La biblioteca Munge de autenticación tiene el archivo con la configuración Slurm global y la clave cifrada instalan en todos los nodos. 
 
@@ -99,7 +99,7 @@ dnf -y install ohpc-slurm-server
 wwsh file sync
 ```
 
-### Actualizar la información de los recursos del nodo informático
+### 2.2.2 Actualizar la información de los recursos del nodo informático
 
 Actualice el archivo que contiene la configuración Slurm.  Agregue los nombres de los nodos informáticos, las propiedades de sus procesadores y las particiones o colas que se usa con su clúster HPC.  Agregue las siguientes especificaciones: 
 
@@ -264,7 +264,7 @@ sed -i "s/^files\(.*\)/files\1, slurm.conf, munge.key/" /etc/warewulf/defaults/p
 syssystemctl enable slurmctld.service 
 ```
 
-### Instalar el cliente Slurm en una imagen del nodo informático: 
+### 2.2.3 Instalar el cliente Slurm en una imagen del nodo informático: 
 
 1. Agregue el cliente Slurm:
 
@@ -334,7 +334,7 @@ echo "account sufficient pam_access.so" >> $CHROOT/etc/pam.d/sshd
 wwvnfs --chroot $CHROOT –hybridize
 ```
 
-### Opcional – Instalar el cliente Slurm en el primer nodo
+### 2.2.4 Opcional – Instalar el cliente Slurm en el primer nodo
 
 Si quisiera usar el primer nodo en su clúster ejecutar las tareas que están programadas por Slurm, entonces use estas instrucciones para instalar el cliente Slurm:
 
@@ -396,7 +396,7 @@ systemctl enable --now slurmd
 wwvnfs --chroot $CHROOT --hybridize
 ```
 
-### Completar la configuración de Slurm
+### 2.2.5 Completar la configuración de Slurm
 
 1. La asignación de recursos en la versión Slurm 20.11.X ha cambiado.  Varios tipos de trabajos MPI han sido afectados.  Puede obtener más información:  https://slurm.schedmd.com/archive/slurm-20.11.6/news.html 
 
@@ -447,7 +447,7 @@ scontrol update NodeName=c[01-XX] State=Idle
 [root@frontend ~]# sinfo
 ```
 
-### Verificar la configuración de Slurm
+### 2.2.6 Verificar la configuración de Slurm
 
 Verifique que los usuarios normales puedan ejecutar trabajos en el entorno de producción.  Cree una cuenta de usuario normal nueva.   Por ejemplo, este usuario no permite usar SSH fuera de un trabajo Slurm.  Siga las siguientes instrucciones para crear una aplicación llamada “hola mundo de MPI”.  Este se usa para verificar la configuración.  Ejecute esta aplicación de forma interactiva.  Nota:  se usa srun para ejecutar los trabajos en paralelo porque srun puede verificar que el trabajo nativo se está usando para iniciar esta tarea.
 
@@ -495,11 +495,11 @@ Hello world: rank 0 of 4 running on c01.cluster
 exit
 ```
 
-## Instalar las herramientas de análisis genómico  
+## 2.3 Instalar las herramientas de análisis genómico  
 
 Las herramientas incluyen el kit de herramientas de análisis genómico (GATK por su sigla en inglés) y el sistema Cromwell de gestión de flujo de trabajo. 
 
-### Verificar la configuración del entorno del clúster genómico
+### 2.3.1 Verificar la configuración del entorno del clúster genómico
 
 Primero, verifique que la configuración del clúster que usa para ejecutar el análisis genómico sea correcta.
 
@@ -519,7 +519,7 @@ pdsh -w frontend,c0[1-4] "su - cromwell -c 'ulimit -n'"
  c02: drwxr-xr-x cromwell:cromwell /genomics_local                              
 ```
 
-### Configurar la base de datos, MariaDB
+### 2.3.2 Configurar la base de datos, MariaDB
 
 Cromwell usa MariaDB para guardar información de los trabajos.  Porque Warewulf ya usa MariaDB, la base de datos debería configurar.  Las instrucciones de configuración están en la guía, HPC Cluster Tuning on 3rd Generation Intel® Xeon® Scalable Processors.  Si no están, entonces use las siguientes instrucciones para configurarla.  Necesita la contraseña del administrador.
 
@@ -610,7 +610,7 @@ MariaDB [(none)]> GRANT ALL PRIVILEGES ON `cromwell`.* TO 'cromwell'@'localhost'
  MariaDB [(none)]> exit               
 ```
 
-### Instalar el sistema de gestión de flujo de trabajo del Cromwell
+### 2.3.3 Instalar el sistema de gestión de flujo de trabajo del Cromwell
 
 Instalar el sistema de gestión de flujo de trabajo del Cromwell.  Configurarlo para utilizar el disco duro que está conectado físicamente a los nodos informáticos (en inglés:  local scratch device) .
 
@@ -759,7 +759,7 @@ cp server/target/scala-2.12/cromwell-52-*-SNAP.jar ${GENOMICS_PATH}/cromwell/cro
 
 ==============================
 
-## Verificar la configuración
+## 3. Verificar la configuración
 
 La prueba de alto rendimiento ejecuta 20.000 veces (en el inglés:  20K Throughput Run) para hacer una evaluación comparativa.  Se usa para verificar que las funcionas más importantes puedan funcionar bien.  Se usa para ejecutar las Mejores Prácticas de la Cargas de Trabajo Broad con una base de datos cortos.  Mientras una secuencia de genoma completo individual puede ejecutar por horas, esta prueba lo puede completar en 30 o 40 minutos.      
 
@@ -820,11 +820,11 @@ Average Elapsed Time for Mark Duplicates: 'X.YZ' minutes
 ```
 
 
-## Resolviendo problemas con el software genómicas
+## 4. Resolviendo problemas con el software genómicas
 
 La siguiente sección contiene los pasos que pueden ayudar a resolver problemas durante la instalación del software genómicas.
 
-### Resolviendo problemas iniciando una sesión con MariaDB
+### 4.1 Resolviendo problemas iniciando una sesión con MariaDB
 
 1. Pare MariaDB:
 
@@ -857,10 +857,10 @@ kill `cat /var/run/mariadb/mariadb.pid` systemctl start mariadb
 mysql -h localhost -u root -p
 ```
 
-## Instalar componentes opcionales
+## 5. Instalar componentes opcionales
 
 El Intel® System Configuration Utility (SYSCFG) es una utilidad de línea de comandos para cargar y recargar el sistema BIOS y para gestionar los ajustes del firmware.
 
-## Conclusión
+## 6. Conclusión
 
 Esta guía incluye las recomendaciones para configurar el Intel® Select Solutions for Genomics Analytics que se puede aumentar el rendimiento en muchas situaciones.  En la guía llamada, HPC Cluster Tuning on 3rd Generation Intel® Xeon® Scalable Processors, le recomienda que aumente el rendimiento usando las configuraciones del hardware.  En esta guía, le recomendamos que aumente el rendimiento usando estas configuraciones del software.
