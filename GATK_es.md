@@ -1,5 +1,4 @@
 # La Guía para optimizar Intel® Select Solutions for Genomics Analytics en la Plataforma de Procesadores Escalables Intel® Xeon® de 3a Generación
-
 ## 1. Introducción Intel® Select Solutions for Genomics Analytics
 
 Esta guía es para usuarios del Intel® Select Solutions for Genomics Analytics.  Incluye las recomendaciones para configurar el BIOS, el sistema operativo (OS) y el software de análisis genómico con los ajustes que se puede aumentar el rendimiento en muchas situaciones.  En la guía llamada, HPC Cluster Tuning on 3rd Generation Intel® Xeon® Scalable Processors, le recomienda que aumente el rendimiento usando las configuraciones del hardware.  En esta guía, le recomendamos que aumente el rendimiento usando estas configuraciones del software.  Tenemos en cuenta que confiamos en que los usuarios consideren cuidadosamente todas las configuraciones porque los escenarios específicos del Intel® Select Solutions for Genomics Analytics se pueden implementar de varias maneras.
@@ -761,8 +760,519 @@ sbt clean
 cp server/target/scala-2.12/cromwell-52-*-SNAP.jar ${GENOMICS_PATH}/cromwell/cromwell-52-fix.jar
 ```
 
+### 2.3.4. Configurar el entorno Cromwell
 
-==============================
+Use la configuración predeterminada para iniciar, entonces puede hacer cambios si es necesario.
+
+- Configure la base de datos de MariaDB con la misma base de datos que usa Cromwell.
+- Agregue los programas de Slurm para que Cromwell pueda usar Slurm para crear un horario de trabajos
+
+Instrucciones paso a paso
+
+1. Primero, descargue el archivo de configuración predeterminada, reference.conf
+
+```
+wget https://raw.githubusercontent.com/broadinstitute/cromwell/52_hotfix/core/\
+```
+
+2. Configure la base de datos de MariaDB con la misma base de datos que usa Cromwell:
+
+a. Abra esto archivo:  ${GENOMICS_PATH}/cromwell/reference.conf 
+
+b. Agregue las siguientes líneas después de otras líneas:
+
+```
+database {
+profile = "slick.jdbc.MySQLProfile$" db {
+driver = "com.mysql.cj.jdbc.Driver"
+url = "jdbc:mysql://localhost/cromwell?rewriteBatchedStatements=true&serverTimezone=UTC" user = "cromwell"
+password = "cromwell" connectionTimeout = 5000
+}
+}
+```
+c. Guarde el archivo y salga.
+
+3. Cambie la configuración de Cromwell para usar los programas Slurm
+
+a. Abra este archivo:  ${GENOMICS_PATH}/cromwell/reference.conf 
+
+b. Vaya a la línea 479:
+
+```
+default = "Local"
+```
+
+c. Actualice esta línea y cambie "Local" a "SLURM":
+
+
+```
+default = "SLURM"
+```
+
+d. Elimine las siguientes cinco líneas (las líneas con números de 480 a 484)
+
+```
+providers { 
+Local {
+actor-factory = "cromwell.backend.impl.sfs.config.ConfigBackendLifecycleActorFactory" 
+config {
+include required(classpath("reference_local_provider_config.inc.conf"))
+```
+
+e. Encuentre la línea 479:  
+
+```
+default = "SLURM"  
+```
+
+Agregue el siguiente texto después de la línea 479.   
+
+Nota:  Verifique que las líneas que tiene saltos de línea "CRLF" (en inglés:  line-breaks) en esta guía, son también líneas individuales in reference.conf
+
+```
+providers { SLURM {
+# Modifying temp directory to write to local disk temporary-directory = "$(/genomics_local/)"
+actor-factory = "cromwell.backend.impl.sfs.config.ConfigBackendLifecycleActorFactory" config {
+root = "cromwell-slurm-exec" runtime-attributes = """
+Int runtime_minutes = 600 Int cpu = 2
+Int memory_mb = 1024 String queue = "all"
+String? docker """
+submit = """
+sbatch -J ${job_name} -D ${cwd} -o ${out} -e ${err} -t ${runtime_minutes} -p ${queue} ${"-c " + cpu} --mem ${memory_mb} --wrap "/bin/bash ${script}"
+"""
+kill = "scancel ${job_id}"
+check-alive = "squeue -j ${job_id}"
+job-id-regex = "Submitted batch job (\\d+).*"
+}
+}
+SLURM-BWA {
+temporary-directory = "$(/genomics_local/)"
+actor-factory = "cromwell.backend.impl.sfs.config.ConfigBackendLifecycleActorFactory" config {
+root = "cromwell-slurm-exec" runtime-attributes = """
+Int runtime_minutes = 600 Int cpu = 2
+Int memory_mb = 1024 String queue = "bwa"
+String? docker """
+submit = """
+
+
+sbatch -J ${job_name} -D ${cwd} -o ${out} -e ${err} -t ${runtime_minutes} -p ${queue} ${"-c " + cpu} --mem ${memory_mb} --wrap "/bin/bash ${script}"
+"""
+kill = "scancel ${job_id}"
+check-alive = "squeue -j ${job_id}"
+job-id-regex = "Submitted batch job (\\d+).*"
+}
+}
+SLURM-HAPLO {
+temporary-directory = "$(/genomics_local/)"
+actor-factory = "cromwell.backend.impl.sfs.config.ConfigBackendLifecycleActorFactory" config {
+root = "cromwell-slurm-exec" runtime-attributes = """
+Int runtime_minutes = 600 Int cpu = 2
+Int memory_mb = 1024 String queue = "haplo"
+String? docker """
+submit = """
+sbatch -J ${job_name} -D ${cwd} -o ${out} -e ${err} -t ${runtime_minutes} -p ${queue} ${"-c " + cpu} --mem ${memory_mb} --wrap "/bin/bash ${script}"
+"""
+kill = "scancel ${job_id}"
+check-alive = "squeue -j ${job_id}"
+job-id-regex = "Submitted batch job (\\d+).*"
+
+f. Guarde el archivo y salga.  
+Un resumen de los comandos
+Todos los comandos en esta sección están aquí: 
+sed -i '$ a database {' reference.conf
+sed -i '$ a \ \ profile = \"slick.jdbc.MySQLProfile$\"' reference.conf sed -i '$ a \ \ db {' reference.conf
+sed -i '$ a \ \ \ \ driver = \"com.mysql.cj.jdbc.Driver\"' reference.conf
+sed -i '$ a \ \ \ \ url = \"jdbc:mysql:\/\/localhost\/cromwell\?rewriteBatched\ Statements=true&serverTimezone=UTC\"' reference.conf
+sed -i '$ a \ \ \ \ user = \"cromwell\"' reference.conf
+sed -i '$ a \ \ \ \ password = \"cromwell\"' reference.conf sed -i '$ a \ \ \ \ connectionTimeout = 5000' reference.conf sed -i '$ a \ \ }' reference.conf
+sed -i '$ a }' reference.conf
+sed -i '479,484d' reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ job-id-regex\ =\ \"Submitted\ batch\ job\ (\\\\\\\\d+).*\"" \ reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ check-alive\ =\ \"squeue\ -j\ \${job_id}\"" reference.conf sed -i "479i \ \ \ \ \ \ \ \ kill\ =\ \"scancel\ \${job_id}\"" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ \"\"\"" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ sbatch\ -J\ \${job_name}\ -D\ \${cwd}\ -o\ \${out}\ -e\ \${err}\ \
+-t\ \${runtime_minutes}\ -p\ \${queue}\ \${\"-c\ \"\ +\ cpu}\ --mem\ \${memory_mb}\ \
+--wrap\ \"\/bin\/bash\ \${script}\"" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ submit\ =\ \"\"\"" reference.conf sed -i "479i \ \ \ \ \ \ \ \ \"\"\"" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ String?\ docker" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ String\ queue\ =\ \"haplo\"" reference.conf sed -i "479i \ \ \ \ \ \ \ \ Int\ memory_mb\ =\ 1024" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ Int\ cpu\ =\ 2" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ Int\ runtime_minutes\ =\ 600" reference.conf sed -i "479i \ \ \ \ \ \ \ \ runtime-attributes\ =\ \"\"\"" reference.conf sed -i "479i \ \ \ \ \ \ \ \ root\ =\ \"cromwell-slurm-exec\"" reference.conf sed -i "479i \ \ \ \ \ \ config\ {" reference.conf
+
+sed -i "479i \ \ \ \ \ \ actor-factory\ =\ \"cromwell.backend.impl.sfs.config.\ ConfigBackendLifecycleActorFactory\"" reference.conf
+sed -i "479i \ \ \ \ \ \ temporary-directory\ =\ \"\$(\/genomics_local\/)\"" reference.conf sed -i "479i \ \ \ \ SLURM-HAPLO\ {" reference.conf
+sed -i "479i \ \ \ \ }\ \ " reference.conf sed -i "479i \ \ \ \ \ \ }" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ job-id-regex\ =\ \"Submitted\ batch\ job\ (\\\\\\\\d+).*\"" \ reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ check-alive\ =\ \"squeue\ -j\ \${job_id}\"" reference.conf sed -i "479i \ \ \ \ \ \ \ \ kill\ =\ \"scancel\ \${job_id}\"" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ \"\"\"" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ sbatch\ -J\ \${job_name}\ -D\ \${cwd}\ -o\ \${out}\ -e\ \${err}\ \
+-t\ \${runtime_minutes}\ -p\ \${queue}\ \${\"-c\ \"\ +\ cpu}\ --mem\ \${memory_mb}\ \
+--wrap\ \"\/bin\/bash\ \${script}\"" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ submit\ =\ \"\"\"" reference.conf sed -i "479i \ \ \ \ \ \ \ \ \"\"\"" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ String?\ docker" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ String\ queue\ =\ \"bwa\"" reference.conf sed -i "479i \ \ \ \ \ \ \ \ Int\ memory_mb\ =\ 1024" reference.conf sed -i "479i \ \ \ \ \ \ \ \ Int\ cpu\ =\ 2" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ Int\ runtime_minutes\ =\ 600" reference.conf sed -i "479i \ \ \ \ \ \ \ \ runtime-attributes\ =\ \"\"\"" reference.conf sed -i "479i \ \ \ \ \ \ \ \ root\ =\ \"cromwell-slurm-exec\"" reference.conf sed -i "479i \ \ \ \ \ \ config\ {" reference.conf
+sed -i "479i \ \ \ \ \ \ actor-factory\ =\ \"cromwell.backend.impl.sfs.config.\ ConfigBackendLifecycleActorFactory\"" reference.conf
+sed -i "479i \ \ \ \ \ \ temporary-directory\ =\ \"\$(\/genomics_local\/)\"" reference.conf sed -i "479i \ \ \ \ SLURM-BWA\ {" reference.conf
+sed -i "479i \ \ \ \ }" reference.conf
+sed -i "479i \ \ \ \ \ \ }\ \ " reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ job-id-regex\ =\ \"Submitted\ batch\ job\ (\\\\\\\\d+).*\"" \ reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ check-alive\ =\ \"squeue\ -j\ \${job_id}\"" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ kill\ =\ \"scancel\ \${job_id}\"" reference.conf sed -i "479i \ \ \ \ \ \ \ \ \"\"\"" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ sbatch\ -J\ \${job_name}\ -D\ \${cwd}\ -o\ \${out}\ -e\ \${err}\ \
+-t\ \${runtime_minutes}\ -p\ \${queue}\ \${\"-c\ \"\ +\ cpu}\ --mem\ \${memory_mb}\ \
+--wrap\ \"\/bin\/bash\ \${script}\"" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ submit\ =\ \"\"\"" reference.conf sed -i "479i \ \ \ \ \ \ \ \ \"\"\"" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ String?\ docker" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ String\ queue\ =\ \"all\"" reference.conf sed -i "479i \ \ \ \ \ \ \ \ Int\ memory_mb\ =\ 1024" reference.conf sed -i "479i \ \ \ \ \ \ \ \ Int\ cpu\ =\ 2" reference.conf
+sed -i "479i \ \ \ \ \ \ \ \ Int\ runtime_minutes\ =\ 600" reference.conf sed -i "479i \ \ \ \ \ \ \ \ runtime-attributes\ =\ \"\"\"" reference.conf sed -i "479i \ \ \ \ \ \ \ \ root\ =\ \"cromwell-slurm-exec\"" reference.conf sed -i "479i \ \ \ \ \ \ config\ {" reference.conf
+sed -i "479i \ \ \ \ \ \ actor-factory\ =\ \"cromwell.backend.impl.sfs.config.\ ConfigBackendLifecycleActorFactory\"" reference.conf
+sed -i "479i \ \ \ \ \ \ temporary-directory\ =\ \"\$(\/genomics_local\/)\"" reference.conf
+sed -i "479i \ \ \ \ \ \ #\ Modifying\ temp\ directory\ to\ write\ to\ local\ disk" reference.conf sed -i "479i \ \ \ \ SLURM\ {" reference.conf
+sed -i "479i \ \ providers\ {" reference.conf
+sed -i "479i \ \ default\ =\ \"SLURM\"" reference.conf
+```
+
+
+### 2.3.5. Verificar la configuración de Cromwell
+
+Verifique que la instalación Cromwell este trabajando correctamente.
+
+1. Cambie a otro usuario, "cromwell":
+
+```
+su - cromwell
+```
+
+2. Cambie a la carpeta, cromwell
+
+```
+cd ${GENOMICS_PATH}/cromwell
+```
+
+3. Inicie el servidor Cromwell como un proceso separado que está ejecutándose en el fondo.  El servidor Cromwell pueda obtener el acceso a través de un puerto 8000.  El archivo, cromwell.log, estará contenido de los mensajes que el servidor Cromwell reportará durante la ejecución.
+ 
+```
+nohup java -jar -Dconfig.file=reference.conf cromwell-52-fix.jar server 2>&1 >>cromwell.log &
+```
+
+4. Use el mandato “ps” para ver una lista de los procesos para confirmar que el servidor Cromwell está ejecutando 
+
+Nota:  El mandato “ps” reporta el PID y otra información.  En este ejemplo, <...> es un sustitución de esa información.
+
+```
+[cromwell@frontend cromwell]$ ps aux | grep cromwell | grep server
+cromwell <PID> <…> java -jar -Dconfig.file=reference.conf cromwell-52-fix.jar server
+```
+
+Nota:  Para dejar el servidor Cromwell, use el mandato: "kill -9 <PID>".  <PID> es el número del proceso que está ejecutando el servidor Cromwell.
+
+5. Cuando el proceso del servidor Cromwell está ejecutándose, entonces ejecute un ejemplo de carga de trabajo.  Esta carga de trabajo se ha diseñado para usar el Lenguaje de Descripción del Flujo de Trabajo (WDL por su sigla en inglés). 
+
+a. Vaya a la carpeta proyecto:
+
+```
+cd ${GENOMICS_PATH}/cromwell/
+```
+
+b. Abra un archivo nuevo que se llama, HelloWorld.wdl.  Agregue el siguiente texto:
+
+```
+task hello {
+String name command {
+echo 'Hello ${name}!'
+}
+output {
+File response = stdout()
+}
+runtime {
+memory: "2MB" disk: "2MB"
+```
+
+c. Guarde el archivo y salga.  
+
+d. Abra un archivo nuevo que se llama:  HelloWorld.json
+
+e. Agregue el siguiente texto:
+
+```
+{"helloWorld.hello.name": "World"}
+```
+
+f. Guarde el archivo y salga.  
+
+g. Envié una carga de trabajo al servidor Cromwell.  Esta carga de trabajo contiene los archivos WDL y los archivos JSON, que se acaban de crear:
+
+```
+curl -v http://127.0.0.1:8000/api/workflows/v1 -F \ workflowSource=@${GENOMICS_PATH}/cromwell/HelloWorld.wdl -F \ workflowInputs=@${GENOMICS_PATH}/cromwell/HelloWorld.json
+```
+
+h. Después de ejecutar una carga de trabajo, verá una identificación de trabajo en los resultados.  Para verificar el éxito de la carga de trabajo, use esta identificación de trabajo en este mandato:
+
+```
+curl -v http://127.0.0.1:8000/api/workflows/v1/<id>/status
+
+#After a few minutes, the above command should return a “succeeded” message.
+```
+
+#### Un resumen de los comandos
+
+Todos los comandos en esta sección están aquí:
+
+```
+su – Cromwell
+
+cd ${GENOMICS_PATH}/cromwell
+
+nohup java -jar -Dconfig.file=reference.conf cromwell-52-fix.jar server 2>&1 >>cromwell.log &
+[cromwell@frontend cromwell]$ ps aux | grep cromwell | grep server
+cromwell <PID> <…> java -jar -Dconfig.file=reference.conf cromwell-52-fix.jar server
+cd ${GENOMICS_PATH}/cromwell/
+
+cat >> HelloWorld.wdl << EOFwdl task hello {
+String name command {
+echo 'Hello ${name}!'
+}
+output {
+File response = stdout()
+}
+runtime {
+memory: "2MB" disk: "2MB"
+}
+}
+workflow helloWorld { call hello
+}
+EOFwdl
+
+echo {\"helloWorld.hello.name\":\ "World\"}" >> HelloWorld.json
+
+curl -v http://127.0.0.1:8000/api/workflows/v1 -F \ workflowSource=@${GENOMICS_PATH}/cromwell/HelloWorld.wdl -F \ workflowInputs=@${GENOMICS_PATH}/cromwell/HelloWorld.json
+
+curl -v http://127.0.0.1:8000/api/workflows/v1/<id>/status
+
+#After a few minutes, the above command should return a “succeeded” message.
+```
+
+### 2.3.6. Instalar el paquete software Burrows-Wheeler Aligner (BWA)
+
+Burrows-Wheeler Aligner (BWA) 0.7.17 se usa para comparar las secuencias del ADN con un genoma de referencia como el genoma de referencia humano.  Antes de que pueda usarlo, tiene que compilarlo.
+
+1. Cambie a otro usuario, "cromwell":
+
+```
+su - cromwell
+```
+2. Cree una subcarpeta, tools, en la carpeta:  GENOMICS_PATH.  Vaya a esta subcarpeta: 
+
+```
+mkdir ${GENOMICS_PATH}/tools
+cd tools
+```
+
+3. Descargue la versión de BWA que se recomienda:
+
+```
+wget https://github.com/lh3/bwa/releases/download/v0.7.17/bwa-0.7.17.tar.bz2
+```
+
+4. Desempaqueta el software de su formato de distribución (normalmente en un “tarball”):
+
+```
+tar -xjf bwa-0.7.17.tar.bz2
+```
+
+5. Compile BWA:
+
+```
+cd bwa-0.7.17
+```
+
+6. Haga un symlink:
+
+```
+cd ${GENOMICS_PATH}/tools
+```
+
+#### Un resumen de los comandos
+
+Todos los comandos en esta sección están aquí:
+
+```
+su - cromwell
+
+mkdir ${GENOMICS_PATH}/tools
+
+wget https://github.com/lh3/bwa/releases/download/v0.7.17/bwa-0.7.17.tar.bz2
+
+tar -xjf bwa-0.7.17.tar.bz2
+
+cd bwa-0.7.17
+
+cd ${GENOMICS_PATH}/tools
+```
+
+### 2.3.7. Instalar el kit de herramientas de análisis genómico (GATK)
+
+El kit de herramientas de análisis genómico (GATK por su sigla en inglés) es usando para analizar datos de secuenciación genética y para el descubrimiento de variantes.  Es la norma para identificación de SNPs e “indels” en el ADN de la línea germinal y datos ARNseq.  Incluye utilidades para hacer tareas como procesar y controlar la calidad de datos de secuencia de alto rendimiento.
+
+Estas herramientas se pueden usar individualmente o juntos en las cargas de trabajo.  El Instituto Broad provee las cargas de trabajo y se llaman “Mejores Prácticas GATK”.  Hay diferentes cargas de trabajo dependiendo de sus necesidades.  Las mejoras de rendimiento del Intel® Genomics Kernel Library with AVX-512 están incluidas en GATK. 
+
+1. Vaya a su carpeta proyecto:
+
+```
+cd ${GENOMICS_PATH}/tools
+```
+
+2. Descargue la última versión de GATK:
+
+```
+wget \
+https://github.com/broadinstitute/gatk/releases/download/4.1.9.0/gatk-4.1.9.0.zip
+```
+
+3. Desempaquetar el archivo zip:
+
+```
+unzip gatk-4.1.9.0.zip
+```
+
+4. Agregue la ruta del archivo al entorno del usuario predeterminado.
+
+```
+echo "export PATH=\${GENOMICS_PATH}/tools/gatk-4.1.9.0:\$PATH" >> /etc/bashrc
+```
+
+5. Haga el /tools symlink:
+
+```
+cd ${GENOMICS_PATH}/tools 
+ln -s gatk-4.1.9.0 gatk
+ln -s gatk-4.1.9.0/gatk-package-4.1.9.0-local.jar gatk-jar
+```
+
+#### Un resumen de los comandos
+
+Todos los comandos en esta sección están aquí:
+
+```
+cd ${GENOMICS_PATH}/tools
+wget \
+https://github.com/broadinstitute/gatk/releases/download/4.1.9.0/gatk-4.1.9.0.zip
+unzip gatk-4.1.9.0.zip
+echo "export PATH=\${GENOMICS_PATH}/tools/gatk-4.1.9.0:\$PATH" >> /etc/bashrc
+cd ${GENOMICS_PATH}/tools 
+ln -s gatk-4.1.9.0 gatk
+ln -s gatk-4.1.9.0/gatk-package-4.1.9.0-local.jar gatk-jar
+```
+
+### 2.3.8. Instalar Picard
+
+1. Vaya a su carpeta proyecto:
+
+```
+cd ${GENOMICS_PATH}/tools
+```
+
+2. Descargue la versión recomendada de Picard:
+
+```
+wget https://github.com/broadinstitute/picard/releases/download/2.21.1/picard.jar
+```
+
+### Un resumen de los comandos
+
+Todos los comandos en esta sección están aquí:
+
+```
+cd ${GENOMICS_PATH}/tools
+wget https://github.com/broadinstitute/picard/releases/download/2.21.1/picard.jar
+```
+
+
+### 2.3.9. Instalar Samtools
+
+1. Cambie a la carpeta, tools
+
+```
+cd ${GENOMICS_PATH}/tools
+```
+
+2. Descargue la versión recomendada de SAMtools:
+
+```
+wget https://github.com/samtools/samtools/releases/download/1.9/samtools-1.9.tar.bz2
+```
+
+3. Desempaquetar el archivo tarball:
+
+```
+tar -xjf samtools-1.9.tar.bz2
+```
+
+4. Compile y instale Samtools:
+
+```
+cd samtools-1.9
+./configure -prefix=${GENOMICS_PATH}/tools 
+make
+```
+
+5. Haga un symlink:
+
+``
+${GENOMICS_PATH}/tools
+ln -s samtools-1.9 samtools
+```
+
+### Un resumen de los comandos
+
+Todos los comandos en esta sección están aquí:
+
+```
+cd ${GENOMICS_PATH}/tools
+wget https://github.com/samtools/samtools/releases/download/1.9/samtools-1.9.tar.bz2
+tar -xjf samtools-1.9.tar.bz2
+cd samtools-1.9
+./configure -prefix=${GENOMICS_PATH}/tools 
+make
+${GENOMICS_PATH}/tools
+ln -s samtools-1.9 samtools
+```
+
+### 2.3.10. Instalar VerifyBamID2
+
+Tiene que compilar el proyecto del código original.  Puede obtener más información:  https:// github.com/Griffan/VerifyBamID
+
+1. Vaya a su carpeta proyecto:
+
+```
+\cd ${GENOMICS_PATH}/tools
+```
+2. Cree un archivo, build_verify.sh
+
+```
+#https://github.com/broadinstitute/warp/tree/cec97750e3819fd88ba382534aaede8e05ec52df/dockers/broad/ VerifyBamId
+cd $GENOMICS_PATH/tools
+
+VERIFY_BAM_ID_COMMIT="c1cba76e979904eb69c31520a0d7f5be63c72253" GIT_HASH=$VERIFY_BAM_ID_COMMIT
+HTS_INCLUDE_DIRS=$GENOMICS_PATH/tools/samtools-1.9/htslib-1.9/ HTS_LIBRARIES=$GENOMICS_PATH/tools/samtools-1.9/htslib-1.9/libhts.a
+
+wget -nc https://github.com/Griffan/VerifyBamID/archive/$GIT_HASH.zip && \ unzip -o $GIT_HASH.zip && \
+cd VerifyBamID-$GIT_HASH && \ mkdir build && \
+cd build && \
+echo cmake -DHTS_INCLUDE_DIRS=$HTS_INCLUDE_DIRS -DHTS_LIBRARIES=$HTS_LIBRARIES .. && \
+CC=$(which gcc) CXX=$(which g++) \
+cmake -DHTS_INCLUDE_DIRS=$HTS_INCLUDE_DIRS -DHTS_LIBRARIES=$HTS_LIBRARIES .. && \
+make && \
+make test && \ cd ../../
+mv $GENOMICS_PATH/tools/VerifyBamID-$GIT_HASH $GENOMICS_PATH/tools/VerifyBamID && \ rm -rf $GENOMICS_PATH/tools/$GIT_HASH.zip $GENOMICS_PATH/tools/VerifyBamID-$GIT_HASH
+```
+
+## 3. Instale VerifyBamID2:
+
+```
+sh ./build_verify.sh
+```
 
 ## 3. Verificar la configuración
 
