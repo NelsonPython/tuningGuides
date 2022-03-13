@@ -4,9 +4,9 @@
 
 Esta guía es para usuarios del LAMMPS.  Incluye las recomendaciones para configurar el BIOS, el sistema operativo (OS) y el software LAMMPS con los ajustes que pueden acelerar las simulaciones LAMMPS en muchas situaciones.  Les recomendamos que aumenten el rendimiento usando estas configuraciones del hardware y software.  Tengan en cuenta que confiamos en que los usuarios consideren cuidadosamente todas las configuraciones porque los escenarios específicos del LAMMPS se pueden implementar de varias maneras.
 
-En el inglés, el acrónimo LAMMPS significa:  Large-scale Atomic/Molecular Massively Parallel Simulator.  Según el departamento de Informática Aplicada a la Investigación de la Universidad del País Vasco, “el LAMMPS es un código de dinámica molecular clásica que modela conjuntos de partículas en estado líquido, sólido o gaseoso”. [1]    El LAMMPS se puede usar para simular los movimientos físicos de átomos y de moléculas.   Se requieren muchos cálculos para crear estas simulaciones por lo que el LAMMPS fue diseñado para ejecutar de manera eficiente computadoras pralelas para acelerar los cálculos y mantener resultados precisos.  Puede obtener más información:  https://lammps.sandia.gov/doc/Packages_details.html.  En el paquete llamado INTEL® para el LAMMPS hay métodos para acelerar las simulaciones usando los procesadores de Intel®.  Este artículo le recomienda cómo optimizar la plataforma de los procesadores escalables Intel® Xeon® de 3a Generación.  
+En el inglés, el acrónimo LAMMPS significa:  Large-scale Atomic/Molecular Massively Parallel Simulator.  Según el departamento de Informática Aplicada a la Investigación de la Universidad del País Vasco, “el LAMMPS es un código de dinámica molecular clásica que modela conjuntos de partículas en estado líquido, sólido o gaseoso”. [1]    El LAMMPS se puede usar para simular los movimientos físicos de átomos y de moléculas.   Se requieren muchos cálculos para crear estas simulaciones por lo que el LAMMPS fue diseñado para ejecutar de manera eficiente computadoras paralelas para acelerar los cálculos y mantener resultados precisos.  Puede obtener más información:  https://lammps.sandia.gov/doc/Packages_details.html.  En el paquete llamado INTEL® para el LAMMPS hay métodos para acelerar las simulaciones usando los procesadores de Intel®.  Este artículo le recomienda cómo optimizar la plataforma de los procesadores escalables Intel® Xeon® de 3a Generación.  
 
-Los procesadores escalables Intel® Xeon® de 3a Generación contienen plataformas que permiten optimización de las cargas de trabajo con aceleración de la IA (Inteligencia Artificial) incorporada.  Estos procesadores tienen el rendimiento que ayudan acelerar el impacto transformador de los datos desde el perímetro (Edge) a la nube (Cloud).  Los mejoramientos específicos del LAMMPS incluyen:   
+Los procesadores escalables Intel® Xeon® de 3a Generación contienen plataformas optimizadas para cargas de trabajo con aceleración de IA (Inteligencia Artificial) integrada.  Estos procesadores tienen el rendimiento que ayudan acelerar el impacto transformador de los datos desde el perímetro (Edge) a la nube (Cloud).  Las mejora específicas del LAMMPS incluyen:   
 
 - Rendimiento mejorado
 - Más Intel® Ultra Path Interconnect
@@ -83,7 +83,7 @@ Figure 1:  Ejemplo de un paso temporal para sistemas moleculares con electrostá
 
 Generalmente, paso 3, paso 9 y, opcionalmente, paso 6 no ocurren en todos los pasos a seguir. 
 
-Para mejorar el rendimiento del cálculos, use el ajuste, “newton off” (Sección 3.5) para que el paso 7 no se ejecute.  También, use el ajuste LRT (Sección 3.5) para ejecutar el paso 6 en paralelo con pasos 4 y 5.  El paso 6 ejecutara en un proceso hyperthread que es separado de los otros.
+Para mejorar el rendimiento del cálculos, use el ajuste, “newton off” (Sección 3.5) para que el paso 7 no se ejecute.  También, use el ajuste LRT (Sección 3.5) para ejecutar el paso 6 en paralelo con pasos 4 y 5.  El paso 6 se ejecutara en un proceso hyperthread que es separado de los otros.
 
 ## 3.3. Compilar el LAMMPS con las optimizaciones de procesadores de Intel® 
 
@@ -140,7 +140,7 @@ Para algunos potenciales simples de 2-cuerpos tal como lj/cut, el rendimiento y 
 
 #### LRT
 
-El modo de “Long-Range Thread (LRT)” es una opción en el paquete INTEL para el LAMMPS que puede mejorar el rendimiento cuando se usa PPPM para  electrostática de larga distancia en procesadoras con hyperthreading.  Se crea un pthread más para cada tarea de MPI.  Este subproceso se dedica a realizar algunos de los cálculos de PPPM y las comunicaciones de MPI.  Para usar esta característica, encender este indicador en el makefile antes de compilar:   a -DLMP_INTEL_USELRT.  
+El modo de “Long-Range Thread (LRT)” es una opción en el paquete INTEL para el LAMMPS que puede mejorar el rendimiento cuando se usa PPPM para electrostática de larga distancia en procesadoras con hyperthreading.  Se crea un pthread más para cada tarea de MPI.  Este subproceso se dedica a realizar algunos de los cálculos de PPPM y las comunicaciones de MPI.  Para usar esta característica, encender este indicador en el makefile antes de compilar:   a -DLMP_INTEL_USELRT.  
   
 Cuando se usa LRT, enciende la variable “KMP AFFINITY=none”.  
 
@@ -153,7 +153,7 @@ Ejecutar con el modod de LRT:	-pk intel 0 omp 3 lrt yes
 
 ## 3.6. Hacer una evaluación comparativa LAMMPS estándar
 
-Las evaluaciones comparativas o puntos de referencia disponibles para probar varios modelos de standard LAMMPS simulaciones diferentes.  Los siguientes pasos son instrucciones para ejecutar estas evaluaciones comparativas:  1) un fluido atómico, 2) una proteína, 3) cobre con el atomo incrustado del átomo incrustado, 4) dinámica de partículas disipativas, 5) polietileno con el campo de fuerza AIREBO, 6) silicio con modelo Tersoff de 3 cuerpos, 7) silicio con potencial Stillinger-Weber de 3 cuerpos, 8) agua de grano grueso utilizando un potencial de 3 cuerpos, y 9) una simulación de cristal líquido.    
+Los puntos de referencia disponibles para probar varios modelos de standard LAMMPS simulaciones diferentes.  Los siguientes pasos son instrucciones para ejecutar estas evaluaciones comparativas:  1) un fluido atómico, 2) una proteína, 3) el método del cobre con el átomo incrustado, 4) dinámica de partículas disipativas, 5) polietileno con el campo de fuerza AIREBO, 6) silicio con modelo Tersoff de 3 cuerpos, 7) silicio con potencial Stillinger-Weber de 3 cuerpos, 8) agua de grano grueso utilizando un potencial de 3 cuerpos, y 9) una simulación de cristal líquido.    
 Para ejecutar estas evaluaciones comparativas, instale los siguientes paquetes antes de compilar el LAMMPS:
 
 ```
@@ -176,7 +176,7 @@ sed -i "s/36/$PCORES/g" run_benchmarks.sh; sed -i 's/"2"/"1 2"/g' run_benchmarks
 
 ## 3.7. Descargar, compilar y hacer una evaluación comparativo con un comando
 
-En unos sistemas con oneAPI instalaciones estándar, el siguiente comando pueda usar para descargar, compilar y hacer una evaluación comparativo.  Unas configuraciones podría necesitar modificaciones. 
+En algunos sistemas con instalaciones estándar de oneAPI, el siguiente comando puede usar para descargar, compilar y hacer una evaluación comparativa.  Algunas configuraciones podría necesitar modificaciones. 
 
 ```
 source /opt/intel/oneapi/setvars.sh; git clone -b stable https://github.com/lammps/lammps.git lammps; cd lammps/src; make yes-asphere yes-class2 yes-dpd-basic yes-kspace yes-manybody yes-misc yes-molecule yes-mpiio yes-opt yes-replica yes-rigid yes-openmp yes-intel; make intel_cpu_intelmpi -j; cd INTEL/TEST; PCORES=`lscpu | awk '$1=="Core(s)"{t=NF; cores=$t}$1=="Socket(s):"{t=NF;
@@ -195,7 +195,7 @@ sockets=$t}END{print cores*sockets}'`; sed -i "s/36/$PCORES/g" run_benchmarks.sh
 
 ##    6. Conclusión
 
-Hemos investigado la optimización del LAMMPS cuando se ejecuta en Procesadores Escalables Intel® Xeon®.  Hemos recomendado las configuraciones que se puede usar para ganar el mejor rendimiento.
+LAMMPS incluye optimizaciones para Intel Xeon que pueden acelerar las simulacaiones.  Estas optimizationes se deben habilitar con las opciones de compilacion y ejecusion adecuadas tal como se describen en este documento.
 
 ## 7. Fuentes
 
