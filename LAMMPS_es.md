@@ -77,7 +77,11 @@ La optimización de la configuración del software es necesario.  La configuraci
 
 ### 3.2. La arquitectura del LAMMPS 
 
-EL LAMMPS apoyo varias modelos simulaciones diferentes.  El diagrama de abajo muestra un ejemplo de un paso de tiempo para sistemas moleculares con electrostática de largo alcance. 
+EL LAMMPS apoyo varias modelos simulaciones diferentes.  
+
+![El diagrama de abajo muestra un ejemplo de un paso de tiempo para sistemas moleculares con electrostática de largo alcance.](images/LAMMPS_es.png)
+
+El diagrama de abajo muestra un ejemplo de un paso de tiempo para sistemas moleculares con electrostática de largo alcance. 
 
 Figure 1:  Ejemplo de un paso temporal para sistemas moleculares con electrostática de largo alcance
 
