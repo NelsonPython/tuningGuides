@@ -639,8 +639,8 @@ mkdir -p ${GENOMICS_PATH}/cromwell
 b. Cambie la propiedad de la carpeta al usuario, cromwell.  También, agregue el grupo, cromwell, a la propiedad de la carpeta.  Cambie los derechos de propiedad para permitir el acceso.
 
 ```
- chmod 775 -R ${GENOMICS_PATH}/Cromwell                   
- chown -R cromwell:cromwell ${GENOMICS_PATH}/Cromwell  
+chmod 775 -R ${GENOMICS_PATH}/Cromwell                   
+chown -R cromwell:cromwell ${GENOMICS_PATH}/Cromwell  
 ```
 
 c. Inicie sesión usando la cuenta, cromwell:
@@ -652,8 +652,8 @@ su - cromwell
 d. Copie el repositorio git Cromwell:
 
 ```
- cd ${GENOMICS_PATH}/cromwell                   
- git clone https://github.com/broadinstitute/cromwell.git 
+cd ${GENOMICS_PATH}/cromwell                   
+git clone https://github.com/broadinstitute/cromwell.git 
 ``
 
 e. Esta guía se ha verificado usando la versión Cromwell 52.  Le recomendamos que use esta versión. 
@@ -668,13 +668,15 @@ git checkout 52
 a. Edite este archivo:
 
 ```
-  	backend/src/main/scala/cromwell/backend/RuntimeEnvironment.scala
+backend/src/main/scala/cromwell/backend/RuntimeEnvironment.scala
 ```
 
 b. Debe cambiar la línea 3 por una acotación:
+
 ```
-		//import java.util.UUID
+//import java.util.UUID
 ```
+
 c. Actualice las líneas de 23 a 27:
 
 ```
@@ -683,6 +685,7 @@ val uuid = UUID.randomUUID().toString
 val hash = uuid.substring(0, uuid.indexOf('-')) callRoot.resolve(s"tmp.$hash").pathAsString
 }
 ```
+
 d. Agregue este texto a la línea 23:
 
 ```
