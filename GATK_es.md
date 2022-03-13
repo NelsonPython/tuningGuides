@@ -694,6 +694,7 @@ def tempPath: String = "/genomics_local"
 
 e. Guarde el archivo y salga
 
+
 f. Abra este archivo: 
 
 ```
@@ -716,6 +717,7 @@ h. Elimine las dos líneas y agregue este texto:
 ```
 
 i. Guarde el archivo y salga.  
+
 
 4. Compile Cromwell con los parches:
 
