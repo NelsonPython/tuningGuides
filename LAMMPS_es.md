@@ -177,9 +177,11 @@ sed -i "s/36/$PCORES/g" run_benchmarks.sh; sed -i 's/"2"/"1 2"/g' run_benchmarks
 
 En unos sistemas con oneAPI instalaciones estándar, el siguiente comando pueda usar para descargar, compilar y hacer una evaluación comparativo.  Unas configuraciones podría necesitar modificaciones. 
 
+```
 source /opt/intel/oneapi/setvars.sh; git clone -b stable https://github.com/lammps/lammps.git lammps; cd lammps/src; make yes-asphere yes-class2 yes-dpd-basic yes-kspace yes-manybody yes-misc yes-molecule yes-mpiio yes-opt yes-replica yes-rigid yes-openmp yes-intel; make intel_cpu_intelmpi -j; cd INTEL/TEST; PCORES=`lscpu | awk '$1=="Core(s)"{t=NF; cores=$t}$1=="Socket(s):"{t=NF;
 sockets=$t}END{print cores*sockets}'`; sed -i "s/36/$PCORES/g" run_benchmarks.sh; sed -i
 's/"2"/"1 2"/g' run_benchmarks.sh; ./run_benchmarks.sh
+```
 
 ##    4. Herramientas Relacionados
 
