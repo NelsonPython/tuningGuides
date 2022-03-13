@@ -1219,7 +1219,7 @@ make
 
 5. Haga un symlink:
 
-``
+```
 ${GENOMICS_PATH}/tools
 ln -s samtools-1.9 samtools
 ```
