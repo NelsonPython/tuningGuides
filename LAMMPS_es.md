@@ -184,20 +184,11 @@ sockets=$t}END{print cores*sockets}'`; sed -i "s/36/$PCORES/g" run_benchmarks.sh
 's/"2"/"1 2"/g' run_benchmarks.sh; ./run_benchmarks.sh
 ```
 
-##    4. Herramientas Relacionadas
-
-< No hay ninguna configuración de carga de trabajo específico para este tema. >
-
-##    5. Prácticas recomendadas para pruebas y verificaciones
-
-< No hay ninguna configuración de carga de trabajo específico para este tema. >
-
-
-##    6. Conclusión
+## 4. Conclusión
 
 LAMMPS incluye optimizaciones para Intel Xeon que pueden acelerar las simulacaiones.  Estas optimizationes se deben habilitar con las opciones de compilacion y ejecusion adecuadas tal como se describen en este documento.
 
-## 7. Fuentes
+## 5. Fuentes
 
 [1] Molecular Dynamics at https://en.wikipedia.org/wiki/Molecular_dynamics as of August 23, 2021 
 
