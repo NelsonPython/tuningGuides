@@ -1,3 +1,3 @@
-# Tuning Guides Markdown Template
+# Tuning Guides
 
 Selected guides in English and Spanish
