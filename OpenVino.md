@@ -45,11 +45,9 @@ Intel&reg; Distribution of OpenVINO&trade; toolkit includes the following compon
   - <a href="https://docs.openvinotoolkit.org/latest/openvino_inference_engine_tools_compile_tool_README.html">Compile tool</a>.
 
 - <a href="https://docs.openvinotoolkit.org/latest/omz_models_group_intel.html">Open Model Zoo</a>
-       - <a href="https://docs.openvinotoolkit.org/latest/omz_demos.html">Demos</a> - Console applications that provide robust application templates to help you implement specific deep learning scenarios.
-
-- Additional Tools - A set of tools to work with your models including <a href="https://docs.openvinotoolkit.org/latest/omz_tools_accuracy_checker.html">Accuracy Checker Utility</a> and <a href="https://docs.openvinotoolkit.org/latest/omz_tools_downloader.html">Model Downloader</a>.
-
-- <a href="https://docs.openvinotoolkit.org/latest/omz_models_group_intel.html">Documentation for Pretrained Models</a> - Documentation for pretrained models that are available in the <a href="https://github.com/opencv/open_model_zoo">Open Model Zoo repository</a>.
+	- <a href="https://docs.openvinotoolkit.org/latest/omz_demos.html">Demos</a> - Console applications that provide robust application templates to help you implement specific deep learning scenarios.
+	- Additional Tools - A set of tools to work with your models including <a href="https://docs.openvinotoolkit.org/latest/omz_tools_accuracy_checker.html">Accuracy Checker Utility</a> and <a href="https://docs.openvinotoolkit.org/latest/omz_tools_downloader.html">Model Downloader</a>.
+	- <a href="https://docs.openvinotoolkit.org/latest/omz_models_group_intel.html">Documentation for Pretrained Models</a> - Documentation for pretrained models that are available in the <a href="https://github.com/opencv/open_model_zoo">Open Model Zoo repository</a>.
 
 - Deep Learning Streamer (DL Streamer) &ndash; Streaming analytics framework, based on GStreamer, for constructing graphs of media analytics components. DL Streamer can be installed by the Intel&reg; Distribution of OpenVINO&trade; toolkit installer. Its open source version is available on <a href="https://github.com/opencv/gst-video-analytics">GitHub</a>. For the DL Streamer documentation, see:
 		- <a href="https://docs.openvinotoolkit.org/latest/gst_samples_README.html">DL Streamer Samples</a>
