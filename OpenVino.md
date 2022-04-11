@@ -106,39 +106,28 @@ python3 /opt/intel/openvino_2021/deployment_tools/open_model_zoo/tools/downloade
 usage: downloader.py [-h] [--name PAT[,PAT...]] [--list FILE.LST] [--all]
 
 [--print_all] [--precisions PREC[,PREC...]] [-o DIR]
-
 [--cache_dir DIR] [--num_attempts N]
-
 [--progress_format {text,json}] [-j N]
 
-optional arguments:--help show this help message and exit
-
+optional arguments:
+--help show this help message and exit
 --name PAT[,PAT...] download only models whose names match at least one ofspecified patterns
-
 --list FILE.LST download only models whose names match at least one ofpatterns in the specified file
-
---all download all available models
-
+--all  download all available models
 --print_all print all available models
-
 --precisions PREC[,PREC...]
 
-download only models with the specified precisions
-
+download only models with the specified precisions:
 (actual for DLDT networks)
 
 -o DIR, --output_dir DIR
 
-path where to save models
-
+path for saving models:
 --cache_dir DIR directory to use as a cache for downloaded files
-
 --num_attempts N attempt each download up to N times
-
 --progress_format {text,json}
 
-
-which format to use for progress reporting
+which format to use for progress reporting:
 
 -j N, --jobs N how many downloads to perform concurrently</code>
 ```
@@ -173,13 +162,9 @@ The Model Downloader also contains another handy script &#39;converter.py&#39; t
 
 ``` 
 python3 /opt/intel/openvino_2021/deployment_tools/open_model_zoo/tools/downloader/converter.py \
-
 --download_dir=. \
-
 --output_dir=. \
-
 --name=ssd_mobilenet_v1_coco \
-
 --dry_run
 ```
 
@@ -187,26 +172,15 @@ We can either let &ldquo;converter.py&rdquo; convert the model directly or use t
 
 ``` 
 python3 /opt/intel/openvino/deployment_tools/model_optimizer/mo.py \
-
 --framework=tf \
-
 --data_type=FP32 \
-
 --output_dir=public/ssd_mobilenet_v1_coco/FP32 \
-
 --model_name=ssd_mobilenet_v1_coco \
-
 --reverse_input_channels \
-
 --input_shape=[1,300,300,3] \
-
 --input=image_tensor \
-
 --output=detection_scores,detection_boxes,num_detections \
-
 --transformations_config=/opt/intel/openvino/deployment_tools/model_optimizer/extensions/front/tf/ssd_v2_support.json \
-
 --tensorflow_object_detection_api_pipeline_config=public/ssd_mobilenet_v1_coco/ssd_mobilenet_v1_coco_2018_01_28/pipeline.config \
-
 --input_model=public/ssd_mobilenet_v1_coco/ssd_mobilenet_v1_coco_2018_01_28/frozen_inference_graph.pb
 ```
