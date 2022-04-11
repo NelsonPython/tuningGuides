@@ -91,11 +91,120 @@ The Open Model Zoo is part of Intel&reg; Distribution of OpenVINO&trade; toolkit
 
 To check the currently available models, you can use <a href="https://docs.openvinotoolkit.org/latest/omz_tools_downloader.html">Model Downloader</a> as a very handy tool. It is a set of python scripts that can help you browse and download these pre-trained models. Other automation tools also available to leverage:
 
-	- downloader.py (model downloader) downloads model files from online sources and, if necessary, patches them to make them more usable with Model Optimizer.
+- downloader.py (model downloader) downloads model files from online sources and, if necessary, patches them to make them more usable with Model Optimizer.
+- converter.py (model converter) converts the models that are not in the Inference Engine IR format into that format using Model Optimizer.
+- quantizer.py (model quantizer) quantizes full-precision models in the IR format into low-precision versions using Post-Training Optimization Toolkit.
+- info_dumper.py (model information dumper) prints information about the models in a stable machine-readable format
 
-	- converter.py (model converter) converts the models that are not in the Inference Engine IR format into that format using Model Optimizer.
+You can run the downloader.py as shown below. Note that the following example is conducted on a Linux* machine with source installation. If you plan to use it on a different setting, please change the path of the tools accordingly.
 
-	- quantizer.py (model quantizer) quantizes full-precision models in the IR format into low-precision versions using Post-Training Optimization Toolkit.
+``` 
+python3 /opt/intel/openvino_2021/deployment_tools/open_model_zoo/tools/downloader/downloader.py --help
 
-	- info_dumper.py (model information dumper) prints information about the models in a stable machine-readable format
+usage: downloader.py [-h] [--name PAT[,PAT...]] [--list FILE.LST] [--all]
 
+[--print_all] [--precisions PREC[,PREC...]] [-o DIR]
+
+[--cache_dir DIR] [--num_attempts N]
+
+[--progress_format {text,json}] [-j N]
+
+optional arguments:--help show this help message and exit
+
+--name PAT[,PAT...] download only models whose names match at least one ofspecified patterns
+
+--list FILE.LST download only models whose names match at least one ofpatterns in the specified file
+
+--all download all available models
+
+--print_all print all available models
+
+--precisions PREC[,PREC...]
+
+download only models with the specified precisions
+
+(actual for DLDT networks)
+
+-o DIR, --output_dir DIR
+
+path where to save models
+
+--cache_dir DIR directory to use as a cache for downloaded files
+
+--num_attempts N attempt each download up to N times
+
+--progress_format {text,json}
+
+
+which format to use for progress reporting
+
+-j N, --jobs N how many downloads to perform concurrently</code>
+```
+
+You can use the parameter --print_all to see which pre-trained models are supported by the current version of OpenVINO for download. We will choose a classical computer vision network to detect the target picture. With the command below, we will download ssd_mobilenet_v1_coco using <a href="https://docs.openvinotoolkit.org/latest/omz_tools_downloader.html">Model Downloader</a>.
+
+``` 
+python3 /opt/intel/openvino_2021/deployment_tools/open_model_zoo/tools/downloader/downloader.py --name ssd_mobilenet_v1_coco</code>
+```
+
+## OpenVINO&trade; Model Optimizer<a id="inpage-nav-3"></a>
+
+Model Optimizer is a cross-platform command-line tool that facilitates the transition between the training and deployment environment, performs static model analysis, and adjusts deep learning models for optimal execution on end-point target devices.<sup> (</sup><a href="https://docs.openvinotoolkit.org/2021.3/openvino_docs_MO_DG_Deep_Learning_Model_Optimizer_DevGuide.html"><sup>https://docs.openvinotoolkit.org/2021.3/openvino_docs_MO_DG_Deep_Learning_Model_Optimizer_DevGuide.html</sup></a><sup>)</sup>
+
+Model Optimizer process assumes you have a network model trained using a supported deep learning framework. The scheme below illustrates the typical workflow for deploying a trained deep learning model:
+
+<img alt="" height="218" src="/content/dam/develop/external/us/en/images/openvino-workflow.jpg" width="750"/>
+
+Figure 2. Typical workflow for deploying a trained deep learning model<a href="https://docs.openvinotoolkit.org/2021.3/openvino_docs_MO_DG_Deep_Learning_Model_Optimizer_DevGuide.html">[2]</a>
+
+These file formats are used:
+- .xml - Describes the network topology
+- .bin - Contains the weights and biases binary data.
+
+To be able to convert ssd_mobilenet_v1_coco model into IR, some model specific parameters are needed to be provided the Model Optimizer. Since we downloaded this model from Open Model Zoo, we also have created a yml file to provide model specific information in each file. Here is an example for ssd_mobilenet_v1_coco:
+
+``` 
+cat /opt/intel/openvino_2021/deployment_tools/open_model_zoo/models/public/ssd_mobilenet_v1_coco/model.yml
+```
+
+The Model Downloader also contains another handy script &#39;converter.py&#39; that helps us to accurately input the parameters of the downloaded model to the Model Optimizer (MO). We can use this script directly for model conversion and reduce the workload considerably.
+
+``` 
+python3 /opt/intel/openvino_2021/deployment_tools/open_model_zoo/tools/downloader/converter.py \
+
+--download_dir=. \
+
+--output_dir=. \
+
+--name=ssd_mobilenet_v1_coco \
+
+--dry_run
+```
+
+We can either let &ldquo;converter.py&rdquo; convert the model directly or use the MO execution parameters that are generated by the command above and use it when running MO.
+
+``` 
+python3 /opt/intel/openvino/deployment_tools/model_optimizer/mo.py \
+
+--framework=tf \
+
+--data_type=FP32 \
+
+--output_dir=public/ssd_mobilenet_v1_coco/FP32 \
+
+--model_name=ssd_mobilenet_v1_coco \
+
+--reverse_input_channels \
+
+--input_shape=[1,300,300,3] \
+
+--input=image_tensor \
+
+--output=detection_scores,detection_boxes,num_detections \
+
+--transformations_config=/opt/intel/openvino/deployment_tools/model_optimizer/extensions/front/tf/ssd_v2_support.json \
+
+--tensorflow_object_detection_api_pipeline_config=public/ssd_mobilenet_v1_coco/ssd_mobilenet_v1_coco_2018_01_28/pipeline.config \
+
+--input_model=public/ssd_mobilenet_v1_coco/ssd_mobilenet_v1_coco_2018_01_28/frozen_inference_graph.pb
+```
