@@ -233,7 +233,6 @@ Model Optimizer version: 2021.3.0-2787-60059f2c755-releases/2021/3Preprocessor b
 [ SUCCESS ] Memory consumed: 455 MB.
 ```
 
-4:35 PM 4/11/2022
 ## Practice Inference Engine API<a id="inpage-nav-4"></a>
 
 After creating Intermediate Representation (IR) files using the Model Optimizer, use the Inference Engine to infer the result for a given input data. The Inference Engine is a 2C++ library with a set of C++ classes to infer input data (images) and get a result. The C++ library provides an API to read the Intermediate Representation, set the input and output formats, and execute the model on devices.
@@ -393,7 +392,7 @@ Now run the Accuracy checker tool and POT tool to create your quantized IR files
 
 This topic demonstrates how to run the Benchmark Python* Tool, which performs inference using convolutional networks. Performance can be measured for two inference modes: synchronous (latency-oriented) and asynchronous (throughput-oriented).
 
-Upon start-up, the application reads command-line parameters and loads a network and images/binary files to the Inference Engine plugin, which is chosen depending on a specified device. The number of infer requests and execution approach depend on the mode defined with the -api command-line parameter. <sup>(</sup><a href="https://docs.openvinotoolkit.org/2020.4/openvino_inference_engine_tools_benchmark_tool_README.html"><sup>https://docs.openvinotoolkit.org/2020.4/openvino_inference_engine_tools_benchmark_tool_README.html</sup></a><sup>)</sup>
+Upon start-up, the application reads command-line parameters and loads a network and images/binary files to the Inference Engine plugin, which is chosen depending on a specified device. The number of infer requests and execution approach depend on the mode defined with the -api command-line parameter. For more information see <a href="https://docs.openvinotoolkit.org/2020.4/openvino_inference_engine_tools_benchmark_tool_README.html">Openvino Inference Engine Tools Benchmark Tool README</a>
 
 Please run both of your FP32 and INT8 models on <a href="https://docs.openvinotoolkit.org/latest/openvino_inference_engine_tools_benchmark_tool_README.html">Benchmark Python* Tool</a> and compare your results.
 
