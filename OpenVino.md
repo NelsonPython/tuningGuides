@@ -255,9 +255,9 @@ Read a model IR created by the Model Optimizer.
 
 <img alt="Real Model IR" height="260" src="/content/dam/develop/external/us/en/images/openvino-code2.jpg" width="950"/>
 
-### Configure Input &amp; Output<a id="inpage-nav-4-2"></a>
+### Configure Input and Output<a id="inpage-nav-4-2"></a>
 
-The information about the input and output layers of the network is stored in the loaded neural network object <strong>net</strong>, and we need to obtain the information about the input and output layers and set the inference execution accuracy of the network by the following two parameters.
+The information about the input and output layers of the network is stored in the loaded neural network object <strong>net</strong>, and we need to obtain the information about the  ef layers and set the inference execution accuracy of the network by the following two parameters:
 
  - input_info
  - outputs
@@ -266,7 +266,7 @@ The information about the input and output layers of the network is stored in th
 
 ### Load Model<a id="inpage-nav-4-3"></a>
 
-Load the model to the device using
+Load the model to the device using:
 
  - InferenceEngine::Core::LoadNetwork()
 
