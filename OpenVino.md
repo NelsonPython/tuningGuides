@@ -55,8 +55,9 @@ Intel&reg; Distribution of OpenVINO&trade; toolkit includes the following compon
 		- <a href="https://github.com/opencv/gst-video-analytics/wiki/Elements">Elements</a>
 		- <a href="https://github.com/opencv/gst-video-analytics/wiki/DL%20Streamer%20Tutorial">Tutorial</a>
 
-	- <a href="https://docs.opencv.org/master/">OpenCV</a> - OpenCV* community version compiled for Intel&reg; hardware
-	- <a href="/content/www/us/en/developer/tools/media-sdk/overview.html">Intel&reg; Media SDK</a> (in Intel&reg; Distribution of OpenVINO&trade; toolkit for Linux only) (<a href="https://docs.openvinotoolkit.org/2021.1/index.html">https://docs.openvinotoolkit.org/2021.1/index.html</a>)
+- <a href="https://docs.opencv.org/master/">OpenCV</a> - OpenCV* community version compiled for Intel&reg; hardware
+
+- <a href="/content/www/us/en/developer/tools/media-sdk/overview.html">Intel&reg; Media SDK</a> (in Intel&reg; Distribution of OpenVINO&trade; toolkit for Linux only) (<a href="https://docs.openvinotoolkit.org/2021.1/index.html">https://docs.openvinotoolkit.org/2021.1/index.html</a>)
 
 For building the Inference Engine from the source code, see the <a href="https://github.com/openvinotoolkit/openvino/wiki/BuildingCode">build instructions</a>.
 
