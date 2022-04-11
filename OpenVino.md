@@ -230,9 +230,10 @@ Model Optimizer version: 2021.3.0-2787-60059f2c755-releases/2021/3Preprocessor b
 [ SUCCESS ] XML file: /root/jupyter_root/public/ssd_mobilenet_v1_coco/FP32/ssd_mobilenet_v1_coco.xml
 [ SUCCESS ] BIN file: /root/jupyter_root/public/ssd_mobilenet_v1_coco/FP32/ssd_mobilenet_v1_coco.bin
 [ SUCCESS ] Total execution time: 47.92 seconds.
-[ SUCCESS ] Memory consumed: 455 MB.</code></pre>
+[ SUCCESS ] Memory consumed: 455 MB.
+```
 
-
+4:35 PM 4/11/2022
 ## Practice Inference Engine API<a id="inpage-nav-4"></a>
 
 After creating Intermediate Representation (IR) files using the Model Optimizer, use the Inference Engine to infer the result for a given input data. The Inference Engine is a 2C++ library with a set of C++ classes to infer input data (images) and get a result. The C++ library provides an API to read the Intermediate Representation, set the input and output formats, and execute the model on devices.
@@ -418,4 +419,3 @@ This article describes an overview of Intel&reg; Distribution of OpenVINO&trade;
 [2] Typical workflow for deploying a trained deep learning model from <a href="https://docs.openvinotoolkit.org/2021.3/openvino_docs_MO_DG_Deep_Learning_Model_Optimizer_DevGuide.html">https://docs.openvinotoolkit.org/2021.3/openvino_docs_MO_DG_Deep_Learning_Model_Optimizer_DevGuide.html</a> on 8/5/21
 
 [3] <em>Integration process </em>from <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_Deep_Learning_Inference_Engine_DevGuide.html%20on%208/5/21">https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_Deep_Learning_Inference_Engine_DevGuide.html on 8/5/21</a>
-
