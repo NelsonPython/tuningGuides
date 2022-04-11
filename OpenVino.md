@@ -148,9 +148,7 @@ Model Optimizer process assumes you have a network model trained using a support
 
 Figure 2. Typical workflow for deploying a trained deep learning model<a href="https://docs.openvinotoolkit.org/2021.3/openvino_docs_MO_DG_Deep_Learning_Model_Optimizer_DevGuide.html">[2]</a>
 
-These file formats are used:
-- .xml - Describes the network topology
-- .bin - Contains the weights and biases binary data.
+Network topology files are described in .xml format.  Weights and biases are stored in binary format in .bin files.
 
 To be able to convert ssd_mobilenet_v1_coco model into IR, some model specific parameters are needed to be provided the Model Optimizer. Since we downloaded this model from Open Model Zoo, we also have created a yml file to provide model specific information in each file. Here is an example for ssd_mobilenet_v1_coco:
 
