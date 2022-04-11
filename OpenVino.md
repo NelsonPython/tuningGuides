@@ -56,12 +56,9 @@ Intel&reg; Distribution of OpenVINO toolkit includes the following components:
 
 - Intel&reg; Media SDK: Intel&reg; Distribution of OpenVINO toolkit for Linux only 
 
-For building the Inference Engine from the source code, see the&nbsp;<a href="https://github.com/openvinotoolkit/openvino/wiki/BuildingCode">build instructions.
+For building the Inference Engine from the source code, see the build instructions.
 
 ## Installation Guides
 
 Please follow the steps below to install OpenVINO and configure the third-party dependencies based on your preference. Please look at the Target System Platform requirements before installation.
-
-
-
 
