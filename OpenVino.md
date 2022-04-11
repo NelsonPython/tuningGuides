@@ -65,58 +65,24 @@ For building the Inference Engine from the source code, see the <a href="https:/
 
 Please follow the steps below to install OpenVINO&trade; and configure the third-party dependencies based on your preference. Please look at the <a href="/content/www/us/en/develop/tools/openvino-toolkit/system-requirements.html">Target System Platform requirements</a> before installation.
 
-<table border="1" cellpadding="1" cellspacing="1" style="width:500px">
-
-	<tbody>
-
-		<tr>
-
-			<td>OS Based</td>
-
-			<td>Install from Images and Repositories</td>
-
-		</tr>
-
-		<tr>
-
-			<td>
+#### OS Based: 
 
 Download Page: <a href="https://software.intel.com/en-us/openvino-toolkit/choose-download">https://software.intel.com/en-us/openvino-toolkit/choose-download</a>
 
-        - <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_linux.html">Linux</a>
+- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_linux.html">Linux</a>
+- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_windows.html">Windows</a>
+- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_macos.html">macOS</a>
+- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_raspbian.html">Raspbian OS</a>
 
-				- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_windows.html">Windows</a>
+#### Install from Images or Repositories:
 
-				- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_macos.html">macOS</a>
-
-			<a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_raspbian.html">Raspbian OS</a>
-
-			</td>
-
-			<td>
-
-				- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_docker_linux.html">Docker</a>
-
-				- <a href="https://docs.openvinotoolkit.org/latest/workbench_docs_Workbench_DG_Install_from_Docker_Hub.html">Docker with DL Workbench</a>
-
-				- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_apt.html">APT</a>
-
-				- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_yum.html">YUM</a>
-
-				- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_conda.html">Anaconda Cloud</a>
-
-				- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_yocto.html">Yocto</a>
-
-			<a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_pip.html">PyPI</a>
-
-			</td>
-
-		</tr>
-
-	</tbody>
-
-</table>
-
+- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_docker_linux.html">Docker</a>
+- <a href="https://docs.openvinotoolkit.org/latest/workbench_docs_Workbench_DG_Install_from_Docker_Hub.html">Docker with DL Workbench</a>
+- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_apt.html">APT</a>
+- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_yum.html">YUM</a>
+- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_conda.html">Anaconda Cloud</a>
+- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_yocto.html">Yocto</a>
+- <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_pip.html">PyPI</a>
 
 
 <h2>Get Started with OpenVINO&trade; Model Zoo<a id="inpage-nav-2"></a></h2>
