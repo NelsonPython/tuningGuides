@@ -36,9 +36,9 @@ Intel&reg; Distribution of OpenVINO&trade; toolkit includes the following compon
 - [Optimizing models post-training](https://docs.openvino.ai/latest/pot_introduction.html) - A tool to calibrate a model and then execute it in the INT8 precision.
 
 - Additional Tools - A set of tools to work with your models including:
-  - [Benchmark Python* Tool](https://docs.openvino.ai/latest/openvino_inference_engine_tools_benchmark_tool_README.html)
-  - [Cross Check Tool](https://docs.openvino.ai/latest/openvino_inference_engine_tools_cross_check_tool_README.html)
-  - [Compile Tool](https://docs.openvino.ai/latest/openvino_inference_engine_tools_compile_tool_README.html)
+	- [Benchmark Python* Tool](https://docs.openvino.ai/latest/openvino_inference_engine_tools_benchmark_tool_README.html)
+	- [Cross Check Tool](https://docs.openvino.ai/latest/openvino_inference_engine_tools_cross_check_tool_README.html)
+	- [Compile Tool](https://docs.openvino.ai/latest/openvino_inference_engine_tools_compile_tool_README.html)
 
 - [Open Model Zoo](https://docs.openvino.ai/latest/model_zoo.html)
 	- [Demos](https://docs.openvino.ai/latest/omz_demos.html) - Console applications that provide robust application templates to help you implement specific deep learning scenarios.
