@@ -45,7 +45,7 @@ Intel&reg; Distribution of OpenVINO&trade; toolkit includes the following compon
 	- Additional Tools - A set of tools to work with your models including:
 		- [Deep Learning accuracy validation framework](https://docs.openvino.ai/latest/omz_tools_accuracy_checker.html)
 		- [Model Downloader and other automation tools](https://docs.openvino.ai/latest/omz_tools_downloader.html)
-	- [Overview of OpenVINO&trade; Toolkit Pre-Trained Models](https://docs.openvino.ai/2019_R1/_docs_Pre_Trained_Models.html) - Documentation for pretrained models that are available in the (https://github.com/opencv/open_model_zoo)Open Model Zoo repository].
+	- [Overview of OpenVINO&trade; Toolkit Pre-Trained Models](https://docs.openvino.ai/2019_R1/_docs_Pre_Trained_Models.html) - Documentation for pretrained models that are available in the [Open Model Zoo repository](https://github.com/opencv/open_model_zoo).
 
 - Intel® DL Streamer is a streaming analytics framework, based on GStreamer, for constructing graphs of media analytics components. Intel® DL Streamer can be installed by the Intel&reg; Distribution of OpenVINO&trade; toolkit installer. Its open source version is available on [Github](https://github.com/opencv/gst-video-analytics). For more information see [Intel® DL Streamer documentation](https://docs.openvino.ai/nightly/openvino_docs_dlstreamer.html).
 
