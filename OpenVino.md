@@ -25,20 +25,20 @@ Figure 1. [Typical OpenVINO&trade; workflow](https://docs.openvinotoolkit.org/la
 
 Intel&reg; Distribution of OpenVINO&trade; toolkit includes the following components:
 
-- [Deep Learning Model Optimizer](https://docs.openvinotoolkit.org/latest/openvino_docs_MO_DG_Deep_Learning_Model_Optimizer_DevGuide.html) - A cross-platform command-line tool for importing models and preparing them for optimal execution with the Inference Engine. The Model Optimizer imports, converts, and optimizes models, which were trained in popular frameworks, such as Caffe*, TensorFlow*, MXNet*, Kaldi*, and ONNX*.
+- [Deep Learning Model Optimizer](https://docs.openvino.ai/latest/openvino_docs_model_optimization_guide.html) - A cross-platform command-line tool for importing models and preparing them for optimal execution with the Inference Engine. The Model Optimizer imports, converts, and optimizes models, which were trained in popular frameworks, such as Caffe*, TensorFlow*, MXNet*, Kaldi*, and ONNX*.
 
-- [Deep Learning Inference Engine](https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_Deep_Learning_Inference_Engine_DevGuide.html) - A unified API to allow high performance inference on many hardware types including Intel&reg; CPU, Intel&reg; Integrated Graphics, Intel&reg; Neural Compute Stick 2, Intel&reg; Vision Accelerator Design with Intel&reg; Movidius&trade; vision processing unit (VPU).
+- [Deep Learning Inference Engine](https://docs.openvino.ai/latest/openvino_docs_OV_UG_OV_Runtime_User_Guide.html) - A unified API to allow high performance inference on many hardware types including Intel&reg; CPU, Intel&reg; Integrated Graphics, Intel&reg; Neural Compute Stick 2, Intel&reg; Vision Accelerator Design with Intel&reg; Movidius&trade; vision processing unit (VPU).
 
-- [Inference Engine Samples](https://docs.openvinotoolkit.org/latest/openvino_docs_IE_DG_Samples_Overview.html) - A set of simple console applications demonstrating how to use the Inference Engine in your applications.
+- [Inference Engine Samples](https://docs.openvino.ai/latest/openvino_docs_OV_UG_Samples_Overview.html) - A set of simple console applications demonstrating how to use the Inference Engine in your applications.
 
-- [Deep Learning Workbench](https://docs.openvinotoolkit.org/latest/workbench_docs_Workbench_DG_Introduction.html) - A web-based graphical environment that allows you to easily use various sophisticated OpenVINO&trade; toolkit components.
+- [Deep Learning Workbench](https://docs.openvino.ai/latest/workbench_docs_Workbench_DG_Introduction.html) - A web-based graphical environment that allows you to easily use various sophisticated OpenVINO&trade; toolkit components.
 
 - [Post-Training Optimization tool](https://docs.openvinotoolkit.org/latest/pot_README.html) - A tool to calibrate a model and then execute it in the INT8 precision.
 
 - Additional Tools - A set of tools to work with your models including:
-  - [Benchmark App](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_tools_benchmark_tool_README.html)
-  - [Cross Check Tool](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_tools_cross_check_tool_README.html)
-  - [Compile tool](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_tools_compile_tool_README.html)
+  - [Benchmark App](https://docs.openvino.ai/latest/openvino_inference_engine_tools_benchmark_tool_README.html)
+  - [Cross Check Tool](https://docs.openvino.ai/latest/openvino_inference_engine_tools_cross_check_tool_README.html)
+  - [Compile tool](https://docs.openvino.ai/latest/openvino_inference_engine_tools_compile_tool_README.html)
 
 - [Open Model Zoo](https://docs.openvinotoolkit.org/latest/omz_models_group_intel.html)
 	- [Demos](https://docs.openvinotoolkit.org/latest/omz_demos.html) - Console applications that provide robust application templates to help you implement specific deep learning scenarios.
