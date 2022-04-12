@@ -1,20 +1,16 @@
 ## Introduction
 
-This guide is targeted towards users who are already familiar with Intel&reg; Distribution of OpenVINO&trade; toolkit and provides pointers and system setting for hardware and software that will provide the best performance for most situations. However, please note that we rely on the users to carefully consider these settings for their specific scenarios, since Intel&reg; Distribution of OpenVINO&trade; toolkit can be deployed in multiple ways and this is a reference to one such use-case.
+This guide is for users who are already familiar with Intel&reg; Distribution of OpenVINO&trade; toolkit.  It provides hardware and software configurations that provide the best performance for most situations. However, please carefully consider these settings for their specific scenarios, since Intel&reg; Distribution of OpenVINO&trade; toolkit can be deployed in multiple ways.
 
-OpenVINO&trade; toolkit is a comprehensive toolkit for quickly developing applications and solutions that solve a variety of tasks including emulation of human vision, automatic speech recognition, natural language processing, recommendation systems, and many others. Based on latest generations of artificial neural networks, including Convolutional Neural Networks (CNNs), recurrent and attention-based networks, the toolkit extends computer vision and non-vision workloads across Intel&reg; hardware, maximizing performance. It accelerates applications with high-performance, AI and deep learning inference deployed from edge to cloud.
+OpenVINO&trade; toolkit is a comprehensive toolkit based on AI and deep learning inference for quickly developing applications to emulate human vision, automate speech recognition, process natural language, create recommendation systems, and more including:
 
-OpenVINO&trade; toolkit:
+- Enabling Convolutional Neural Networks (CNN) on edge devices for deep learning
 
-- Enables CNN-based deep learning inference on the edge
+- Supporting heterogeneous execution across an Intel&reg; CPU, Intel&reg; Integrated Graphics, Intel&reg; Neural Compute Stick 2 and Intel&reg; Vision Accelerator Design with Intel&reg; Movidius&trade; VPUs
 
-- Supports heterogeneous execution across an Intel&reg; CPU, Intel&reg; Integrated Graphics, Intel&reg; Neural Compute Stick 2 and Intel&reg; Vision Accelerator Design with Intel&reg; Movidius&trade; VPUs
+- Speeding time-to-market via an easy-to-use library of computer vision functions and pre-optimized kernels.  OpenVino also includes optimized calls for computer vision standards, including OpenCV* and OpenCL&trade.
 
-- Speeds time-to-market via an easy-to-use library of computer vision functions and pre-optimized kernels
-
-- Includes optimized calls for computer vision standards, including OpenCV* and OpenCL&trade;
-
-<strong>3rd Gen Intel</strong><sup>&reg;</sup><strong> Xeon</strong><sup>&reg;</sup><strong> Scalable processors</strong> deliver industry-leading, workload-optimized platforms with built-in AI acceleration, providing a seamless performance foundation to help speed data&rsquo;s transformative impact, from the multi-cloud to the intelligent edge and back.
+3rd Generation Intel<sup>&reg;</sup> Xeon<sup>&reg;</sup> Scalable processors deliver industry-leading, workload-optimized platforms with built-in AI acceleration, providing a seamless performance foundation to help speed the transformative impact of data, from the multi-cloud to the intelligent edge and back.
 
 ### <a id="_Toc79259920"></a>OpenVINO&trade; Toolkit Workflow<a id="inpage-nav-undefined-undefined"></a>
 
@@ -65,7 +61,7 @@ For building the Inference Engine from the source code, see the <a href="https:/
 
 ## <a id="_Toc79259922"></a>Installation Guides<a id="inpage-nav-1"></a>
 
-Please follow the steps below to install OpenVINO&trade; and configure the third-party dependencies based on your preference. Please look at the <a href="/content/www/us/en/develop/tools/openvino-toolkit/system-requirements.html">Target System Platform requirements</a> before installation.
+Before installation review the <a href="/content/www/us/en/develop/tools/openvino-toolkit/system-requirements.html">Target System Platform requirements</a> before installation.  Install OpenVINO&trade; and configure the third-party dependencies based on your preference.  
 
 #### OS Based: 
 
@@ -89,16 +85,14 @@ Download Page: <a href="https://software.intel.com/en-us/openvino-toolkit/choose
 
 <h2>Get Started with OpenVINO&trade; Model Zoo<a id="inpage-nav-2"></a></h2>
 
-The Open Model Zoo is part of Intel&reg; Distribution of OpenVINO&trade; toolkit which includes optimized deep learning models and a set of demos to expedite development of high-performance deep learning inference applications. You can use these free pre-trained models instead of training your own models to speed-up the development and production deployment process.
-
-To check the currently available models, you can use <a href="https://docs.openvinotoolkit.org/latest/omz_tools_downloader.html">Model Downloader</a> as a very handy tool. It is a set of python scripts that can help you browse and download these pre-trained models. Other automation tools also available to leverage:
+The Open Model Zoo in the Intel&reg; Distribution of OpenVINO&trade; includes optimized deep learning models and a set of demos for developing high-performance deep learning inference applications. You can use free pre-trained models to speed-up development and deployment.  To check the currently available models, use the  <a href="https://docs.openvinotoolkit.org/latest/omz_tools_downloader.html">Model Downloader</a>.  It is a set of python scripts for browsing and downloading these pre-trained models. Other automation tools are also available:
 
 - downloader.py (model downloader) downloads model files from online sources and, if necessary, patches them to make them more usable with Model Optimizer.
-- converter.py (model converter) converts the models that are not in the Inference Engine IR format into that format using Model Optimizer.
+- converter.py (model converter) converts the models that are not in the Inference Engine (IR) format into that format using Model Optimizer.
 - quantizer.py (model quantizer) quantizes full-precision models in the IR format into low-precision versions using Post-Training Optimization Toolkit.
 - info_dumper.py (model information dumper) prints information about the models in a stable machine-readable format
 
-You can run the downloader.py as shown below. Note that the following example is conducted on a Linux* machine with source installation. If you plan to use it on a different setting, please change the path of the tools accordingly.
+Use the following instructions to run downloader.py.  This example runs on a Linux* machine with source installation.  
 
 ``` 
 python3 /opt/intel/openvino_2021/deployment_tools/open_model_zoo/tools/downloader/downloader.py --help
@@ -132,7 +126,7 @@ which format to use for progress reporting:
 -j N, --jobs N how many downloads to perform concurrently</code>
 ```
 
-You can use the parameter --print_all to see which pre-trained models are supported by the current version of OpenVINO for download. We will choose a classical computer vision network to detect the target picture. With the command below, we will download ssd_mobilenet_v1_coco using <a href="https://docs.openvinotoolkit.org/latest/omz_tools_downloader.html">Model Downloader</a>.
+Use the parameter --print_all to see which pre-trained models are available for download in the current version of OpenVINO.  The following example is a classic computer vision network used to detect a target picture.  Download ssd_mobilenet_v1_coco using <a href="https://docs.openvinotoolkit.org/latest/omz_tools_downloader.html">Model Downloader</a>.
 
 ``` 
 python3 /opt/intel/openvino_2021/deployment_tools/open_model_zoo/tools/downloader/downloader.py --name ssd_mobilenet_v1_coco</code>
@@ -140,9 +134,9 @@ python3 /opt/intel/openvino_2021/deployment_tools/open_model_zoo/tools/downloade
 
 ## OpenVINO&trade; Model Optimizer<a id="inpage-nav-3"></a>
 
-Model Optimizer is a cross-platform command-line tool that facilitates the transition between the training and deployment environment, performs static model analysis, and adjusts deep learning models for optimal execution on end-point target devices.  For more information: <a href="https://docs.openvinotoolkit.org/2021.3/openvino_docs_MO_DG_Deep_Learning_Model_Optimizer_DevGuide.html">Model Optimizer Development Guide</a>
+Model Optimizer is a cross-platform command-line tool that facilitates the transition between the training and deployment environment, performs static model analysis, and adjusts deep learning models for optimal execution on end-point target devices.  For more information see the  <a href="https://docs.openvinotoolkit.org/2021.3/openvino_docs_MO_DG_Deep_Learning_Model_Optimizer_DevGuide.html">Model Optimizer Development Guide</a>
 
-Model Optimizer process assumes you have a network model trained using a supported deep learning framework. The scheme below illustrates the typical workflow for deploying a trained deep learning model:
+Model Optimizer assumes you have a network model trained using a supported deep learning framework. The figure below shows the typical workflow for deploying a trained deep learning model:
 
 <img alt="" height="218" src="/content/dam/develop/external/us/en/images/openvino-workflow.jpg" width="750"/>
 
@@ -150,13 +144,13 @@ Figure 2. Typical workflow for deploying a trained deep learning model<a href="h
 
 Network topology files are described in .xml format.  Weights and biases are stored in binary format in .bin files.
 
-To be able to convert ssd_mobilenet_v1_coco model into IR, some model specific parameters are needed to be provided the Model Optimizer. Since we downloaded this model from Open Model Zoo, we also have created a yml file to provide model specific information in each file. Here is an example for ssd_mobilenet_v1_coco:
+To be able to convert ssd_mobilenet_v1_coco model into IR, some model specific parameters must be provided to the Model Optimizer.  A .yml file with model specific information was downloaded when thie model was downloaded from Open Model Zoo.  Here is an example for ssd_mobilenet_v1_coco:
 
 ``` 
 cat /opt/intel/openvino_2021/deployment_tools/open_model_zoo/models/public/ssd_mobilenet_v1_coco/model.yml
 ```
 
-The Model Downloader also contains another handy script &#39;converter.py&#39; that helps us to accurately input the parameters of the downloaded model to the Model Optimizer (MO). We can use this script directly for model conversion and reduce the workload considerably.
+The Model Downloader also contains another handy script &#39;converter.py&#39; for accurately inputting the parameters of the downloaded model to the Model Optimizer (MO). Use this script for model conversion to reduce the workload.
 
 ``` 
 python3 /opt/intel/openvino_2021/deployment_tools/open_model_zoo/tools/downloader/converter.py \
@@ -166,7 +160,7 @@ python3 /opt/intel/openvino_2021/deployment_tools/open_model_zoo/tools/downloade
 --dry_run
 ```
 
-We can either let &ldquo;converter.py&rdquo; convert the model directly or use the MO execution parameters that are generated by the command above and use it when running MO.
+You can choose to convert the model using &ldquo;converter.py&rdquo; or use the Model Optimizer execution parameters that were generated by the command above and add them as input parameters shown below:
 
 ``` 
 python3 /opt/intel/openvino/deployment_tools/model_optimizer/mo.py \
@@ -182,7 +176,6 @@ python3 /opt/intel/openvino/deployment_tools/model_optimizer/mo.py \
 --tensorflow_object_detection_api_pipeline_config=public/ssd_mobilenet_v1_coco/ssd_mobilenet_v1_coco_2018_01_28/pipeline.config \
 --input_model=public/ssd_mobilenet_v1_coco/ssd_mobilenet_v1_coco_2018_01_28/frozen_inference_graph.pb
 ```
-
 
 Model Optimizer arguments:
 
@@ -235,9 +228,9 @@ Model Optimizer version: 2021.3.0-2787-60059f2c755-releases/2021/3Preprocessor b
 
 ## Practice Inference Engine API<a id="inpage-nav-4"></a>
 
-After creating Intermediate Representation (IR) files using the Model Optimizer, use the Inference Engine to infer the result for a given input data. The Inference Engine is a 2C++ library with a set of C++ classes to infer input data (images) and get a result. The C++ library provides an API to read the Intermediate Representation, set the input and output formats, and execute the model on devices.
+After creating intermediate representation files using the Model Optimizer, use the Inference Engine to infer the result for a given input data. The Inference Engine is a C++ library with a set of C++ classes to infer input data (images) and get a result. The C++ library provides an API to read the intermediate representation, set the input and output formats, and execute the model on devices.
 
-Inference Engine uses a plugin architecture. Inference Engine plugin is a software component that contains complete implementation for inference on a certain Intel&reg; hardware device: CPU, GPU, VPU, FPGA, etc. Each plugin implements the unified API and provides additional hardware-specific APIs. Integration process consists of the following steps:
+The Inference Engine is a software component that contains the complete implementation for inference on various Intel&reg; hardware devices: CPU, GPU, VPU, FPGA, etc. Each of these plugins implements the unified API along with hardware-specific APIs.  The following figure show the steps of the integration process:
 
 <img alt="Integration process" height="313" src="/content/dam/develop/external/us/en/images/openvino-integration.jpg" width="950"/>
 
@@ -257,7 +250,7 @@ Read a model IR created by the Model Optimizer.
 
 ### Configure Input and Output<a id="inpage-nav-4-2"></a>
 
-The information about the input and output layers of the network is stored in the loaded neural network object <strong>net</strong>, and we need to obtain the information about the  ef layers and set the inference execution accuracy of the network by the following two parameters:
+The information about the input and output layers of the network is stored in the loaded neural network object net.  Use the following two parameters to obtain the information about the  ef layers and set the inference execution accuracy of the network:
 
  - input_info
  - outputs
@@ -274,17 +267,17 @@ Load the model to the device using:
 
 ### Create Inference Request and Prepare Input<a id="inpage-nav-4-4"></a>
 
-To perform a neural network inference, we need to read the image from disk and bind it to the input blob. After loading the image, we need to determine the image size and layout format. For example, the default layout format of OpenCV is <strong>CHW</strong>, but the original layout of the image is <strong>HWC</strong>, so we need to modify the layout format and add the Batch size <strong>N dimension</strong>, then organize the image format according to NCHW for inferencing and resize the input image to the network input size.
+To perform a neural network inference, read the image from disk and bind it to the input blob. After loading the image, determine the size of the image and format of the layout. For example, the default layout format of OpenCV is CHW, but the original layout of the image was HWC.  Modify the layout format and add the Batch size N dimension, then organize the image format according to NCHW and resize the input image to the network input size.
 
 <img alt=" " height="453" src="/content/dam/develop/external/us/en/images/openvino-code5.jpg" width="950"/>
 
 ### Inference Calls<a id="inpage-nav-4-5"></a>
 
-In this tutorial, here we use the synchronous API to demonstrate how to perform inference, calling:
+This example uses the synchronous API to demonstrate how to perform inference, calling:
 
 - InferenceEngine::InferRequest::Infer()
 
-If we want to improve the inference performance, we can also use the asynchronous API for inference as follows:
+To improve the inference performance, use the asynchronous API for inference as follows:
 
 - InferenceEngine::InferRequest::StartAsync()
 - InferenceEngine::InferRequest::Wait()
@@ -299,26 +292,21 @@ After the inference engine inputs the graph and performs inference, a result is 
 
 ### Visualization of the Inference Results
 
-### <a id="inpage-nav-4-7"></a>
-
 <img alt="" height="134" src="/content/dam/develop/external/us/en/images/openvino-code8.jpg" width="950"/>
-
-###  
-
-<a id="_MON_1686429488"></a>
 
 <img alt="Open Vino Horse" height="375" src="/content/dam/develop/external/us/en/images/openvino-horse.jpg" width="500"/>
 
 Figure 4. Image example
 
-## <a id="_Toc79259934"></a>Practice Post-Training Optimization Tool<a id="inpage-nav-5"></a>
+## Practice Post-Training Optimization Tool (POT)
 
-Post-training Optimization Tool (POT) is designed to accelerate the inference of deep learning models by applying special methods without model retraining or fine-tuning, liked post-training quantization. Therefore, the tool does not require a training dataset or a pipeline. To apply post-training algorithms from the POT, you need:
+POT is designed to accelerate the inference of deep learning models by applying special methods without model retraining or fine-tuning, liked post-training quantization. Therefore, the tool does not require a training dataset or a pipeline. To apply post-training algorithms from the POT, you need:
 
 - A full precision model, FP32 or FP16, converted into the OpenVINO&trade; Intermediate Representation (IR) format
+
 - A representative calibration dataset of data samples representing a use case scenario, for example, 300 images
 
-The tool is aimed to fully automate the model transformation process without changing the model structure. The POT is available only in the Intel&reg; Distribution of OpenVINO&trade; toolkit and is not open sourced. For details about the low-precision flow in OpenVINO&trade;, see the <a href="https://docs.openvinotoolkit.org/latest/pot_docs_LowPrecisionOptimizationGuide.html">Low Precision Optimization Guide</a>.
+The tool is aimed to fully automate the model transformation process without changing the model structure. The POT is available only in the Intel&reg; Distribution of OpenVINO&trade; toolkit.  For details about the low-precision flow in OpenVINO&trade;, see the <a href="https://docs.openvinotoolkit.org/latest/pot_docs_LowPrecisionOptimizationGuide.html">Low Precision Optimization Guide</a>.
 
 Post-training Optimization Tool includes a standalone command-line tool and a Python* API that provide the following key features:
 
@@ -349,29 +337,27 @@ Before we start using the POT tool, we will need to prepare some config files:
 
 ### <a id="_Toc79259935"></a>Dataset Preparation<a id="inpage-nav-5-undefined"></a>
 
-In this tutorial, we are using the dataset of <a href="https://cocodataset.org/#home">Common Objects in Context (COCO)</a> which the model was trained with this dataset. Please prepare the dataset according to <a href="https://github.com/openvinotoolkit/open_model_zoo/blob/release/data/datasets.md">Dataset Preparation Guide</a>.
+This example shows the dataset of <a href="https://cocodataset.org/#home">Common Objects in Context (COCO)</a>.  The model was trained with this dataset.  Prepare the dataset according to <a href="https://github.com/openvinotoolkit/open_model_zoo/blob/release/data/datasets.md">Dataset Preparation Guide</a>.
 
-To download COCO dataset, you need to follow the steps below:
+Download COCO dataset:
 
 - Download <a href="http://images.cocodataset.org/zips/val2017.zip">2017 Val images</a> and <a href="http://images.cocodataset.org/annotations/annotations_trainval2017.zip">2017 Train/Val annotations</a>
 
 - Unpack archives
 
-### <a id="_Toc79259936"></a>Global Dataset Configuration<a id="inpage-nav-5-1"></a>
+Global Dataset Configuration
 
-If you want use definitions file in quantization via Post Training Optimization Toolkit (POT), you need to input the correct file path in these fields in the global dataset configuration file:
+If you want to use the definitions file in quantization via Post Training Optimization Toolkit (POT),  input the correct file path in these fields in the global dataset configuration file:
 
 - annotation_file: [PATH_TO_DATASET]/instances_val2017.json
 - data_source: [PATH_TO_DATASET]/val2017
 
-### <a id="_Toc79259937"></a>Prepare Model Quantization and Configuration<a id="inpage-nav-5-2"></a>
+Prepare Model Quantization and Configuration
 
-We will need to create two config files to include model specific and dataset specific configurations to POT tool.
+Create two config files.  One to include model specific and another for the dataset specific configurations.
 
 - ssd_mobilenetv1_int8.json
-
 - ssd_mobilenet_v1_coco.yml
-
 
 1. Create a new file and name it ssd_mobilenetv1_int8.json. This is the POT configuration file.
 
@@ -379,18 +365,17 @@ We will need to create two config files to include model specific and dataset sp
 
 2. Create a dataset config file and name it ssd_mobilenet_v1_coco.yml
 
-
 <img alt="" height="376" src="/content/dam/develop/external/us/en/images/openvino-code10.jpg" width="950"/>
 
-### Quantize the Model<a id="inpage-nav-5-3"></a>
+### Quantize the Model
 
-Now run the Accuracy checker tool and POT tool to create your quantized IR files.
+Run the Accuracy checker tool and POT tool to create your quantized IR files.
 
 <img alt="" height="92" src="/content/dam/develop/external/us/en/images/openvino-code11.jpg" width="950"/>
 
-### Compare FP32 and INT8 Model Performance<a id="inpage-nav-5-4"></a>
+### Compare FP32 and INT8 Model Performance
 
-This topic demonstrates how to run the Benchmark Python* Tool, which performs inference using convolutional networks. Performance can be measured for two inference modes: synchronous (latency-oriented) and asynchronous (throughput-oriented).
+This demonstrates how to run the Benchmark Python* Tool, which performs inference using convolutional networks. Performance can be measured for two inference modes: synchronous (latency-oriented) and asynchronous (throughput-oriented).
 
 Upon start-up, the application reads command-line parameters and loads a network and images/binary files to the Inference Engine plugin, which is chosen depending on a specified device. The number of infer requests and execution approach depend on the mode defined with the -api command-line parameter. For more information see <a href="https://docs.openvinotoolkit.org/2020.4/openvino_inference_engine_tools_benchmark_tool_README.html">Openvino Inference Engine Tools Benchmark Tool README</a>
 
@@ -400,18 +385,18 @@ Please run both of your FP32 and INT8 models on <a href="https://docs.openvinoto
 
 Now that you have run both your FP32 and INT8 IRs, you can make a comparison of the performance gain you are achieving with INT8 IR files. See the official <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_performance_benchmarks_openvino.html">benchmark results for Intel&reg; Distribution of OpenVINO&trade; Toolkit</a> on various Intel&reg; hardware settings.
 
-## <a id="_Toc68091356"></a><a id="_Toc79259940"></a>Conclusion<a id="inpage-nav-6"></a>
+## Conclusion
 
-This article describes an overview of Intel&reg; Distribution of OpenVINO&trade; Toolkit with how to get started guides and using the power of vector neural network instructions (VNNI) and Intel&reg; Advanced Vector Extensions (AVX512) with low precision inference workloads. The steps and codes shown are aimed at modifying the similar type of workloads to help you leverage these tutorials. You can also clearly see the performance boost of using these methodologies on <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_performance_benchmarks_openvino.html">this official benchmark result page</a>.
+This guide provides recommendations for tuning The Intel&reg; Distribution of OpenVINO&trade; Toolkit using the power of vector neural network instructions (VNNI) and Intel&reg; Advanced Vector Extensions (AVX512) with low precision inference workloads.  You can use the steps and code to modify similar types of workloads so that you see a performance boost.  Check out the <a href="https://docs.openvinotoolkit.org/latest/openvino_docs_performance_benchmarks_openvino.html">this official benchmark result page for more examples</a>.
 
-## <a id="_Toc79259941"></a>Additional Information<a id="inpage-nav-7"></a>
+## Additional Information
 
 - <a href="https://devcloud.intel.com/edge/get_started/tutorials">Jupyter* Notebook Tutorials</a> - sample application Jupyter* Notebook tutorials
 
 - <a href="https://software.intel.com/openvino-toolkit">Intel&reg; Distribution of OpenVINO&trade; toolkit Main Page</a> - learn more about the tools and use of the Intel&reg; Distribution of OpenVINO&trade; toolkit for implementing inference on the edge
 
 
-## <a id="_Toc79259942"></a>References<a id="inpage-nav-8"></a>
+##  References
 
 [1] Typical OpenVINO&trade; workflow from <a href="https://docs.openvinotoolkit.org/latest/index.html#openvino_toolkit_components">https://docs.openvinotoolkit.org/latest/index.html#openvino_toolkit_components</a> on 8/4/21
 
