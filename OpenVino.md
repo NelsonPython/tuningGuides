@@ -25,35 +25,31 @@ Figure 1. [Typical OpenVINO&trade; workflow](https://docs.openvinotoolkit.org/la
 
 Intel&reg; Distribution of OpenVINO&trade; toolkit includes the following components:
 
-- [Deep Learning Model Optimizer](https://docs.openvino.ai/latest/openvino_docs_model_optimization_guide.html) - A cross-platform command-line tool for importing models and preparing them for optimal execution with the Inference Engine. The Model Optimizer imports, converts, and optimizes models, which were trained in popular frameworks, such as Caffe*, TensorFlow*, MXNet*, Kaldi*, and ONNX*.
+- [Model Optimizer](https://docs.openvino.ai/latest/openvino_docs_MO_DG_Deep_Learning_Model_Optimizer_DevGuide.html) - A cross-platform command-line tool for importing models and preparing them for optimal execution with the Inference Engine. The Model Optimizer imports, converts, and optimizes models, which were trained in popular frameworks, such as Caffe*, TensorFlow*, MXNet*, Kaldi*, and ONNX*.
 
-- [Deep Learning Inference Engine](https://docs.openvino.ai/latest/openvino_docs_OV_UG_OV_Runtime_User_Guide.html) - A unified API to allow high performance inference on many hardware types including Intel&reg; CPU, Intel&reg; Integrated Graphics, Intel&reg; Neural Compute Stick 2, Intel&reg; Vision Accelerator Design with Intel&reg; Movidius&trade; vision processing unit (VPU).
+- Deep learning [Inference Engine](https://docs.openvino.ai/latest/openvino_docs_OV_UG_OV_Runtime_User_Guide.html) - A unified API to allow high performance inference on many hardware types including Intel&reg; CPU, Intel&reg; Integrated Graphics, Intel&reg; Neural Compute Stick 2, Intel&reg; Vision Accelerator Design with Intel&reg; Movidius&trade; vision processing unit (VPU).
 
 - [Inference Engine Samples](https://docs.openvino.ai/latest/openvino_docs_OV_UG_Samples_Overview.html) - A set of simple console applications demonstrating how to use the Inference Engine in your applications.
 
 - [Deep Learning Workbench](https://docs.openvino.ai/latest/workbench_docs_Workbench_DG_Introduction.html) - A web-based graphical environment that allows you to easily use various sophisticated OpenVINO&trade; toolkit components.
 
-- [Post-Training Optimization tool](https://docs.openvinotoolkit.org/latest/pot_README.html) - A tool to calibrate a model and then execute it in the INT8 precision.
+- [Optimizing models post-training](https://docs.openvino.ai/latest/pot_introduction.html) - A tool to calibrate a model and then execute it in the INT8 precision.
 
 - Additional Tools - A set of tools to work with your models including:
-  - [Benchmark App](https://docs.openvino.ai/latest/openvino_inference_engine_tools_benchmark_tool_README.html)
+  - [Benchmark Python* Tool](https://docs.openvino.ai/latest/openvino_inference_engine_tools_benchmark_tool_README.html)
   - [Cross Check Tool](https://docs.openvino.ai/latest/openvino_inference_engine_tools_cross_check_tool_README.html)
-  - [Compile tool](https://docs.openvino.ai/latest/openvino_inference_engine_tools_compile_tool_README.html)
+  - [Compile Tool](https://docs.openvino.ai/latest/openvino_inference_engine_tools_compile_tool_README.html)
 
-- [Open Model Zoo](https://docs.openvinotoolkit.org/latest/omz_models_group_intel.html)
-	- [Demos](https://docs.openvinotoolkit.org/latest/omz_demos.html) - Console applications that provide robust application templates to help you implement specific deep learning scenarios.
+- [Open Model Zoo](https://docs.openvino.ai/latest/model_zoo.html)
+	- [Demos](https://docs.openvino.ai/latest/omz_demos.html) - Console applications that provide robust application templates to help you implement specific deep learning scenarios.
 	- Additional Tools - A set of tools to work with your models including:
-		- [Accuracy Checker Utility](https://docs.openvinotoolkit.org/latest/omz_tools_accuracy_checker.html)
-		- [Model Downloader](https://docs.openvinotoolkit.org/latest/omz_tools_downloader.html)
-	- [Documentation for Pretrained Models](https://docs.openvinotoolkit.org/latest/omz_models_group_intel.html) - Documentation for pretrained models that are available in the (https://github.com/opencv/open_model_zoo)Open Model Zoo repository].
+		- [Deep Learning accuracy validation framework](https://docs.openvino.ai/latest/omz_tools_accuracy_checker.html)
+		- [Model Downloader and other automation tools](https://docs.openvino.ai/latest/omz_tools_downloader.html)
+	- [Overview of OpenVINO&trade; Toolkit Pre-Trained Models](https://docs.openvino.ai/2019_R1/_docs_Pre_Trained_Models.html) - Documentation for pretrained models that are available in the (https://github.com/opencv/open_model_zoo)Open Model Zoo repository].
 
-- Deep Learning Streamer (DL Streamer) &ndash; Streaming analytics framework, based on GStreamer, for constructing graphs of media analytics components. DL Streamer can be installed by the Intel&reg; Distribution of OpenVINO&trade; toolkit installer. Its open source version is available on (https://github.com/opencv/gst-video-analytics)GitHub]. For the DL Streamer documentation, see:
-		- [DL Streamer Samples](https://docs.openvinotoolkit.org/latest/gst_samples_README.html)
-		- [API Reference](https://openvinotoolkit.github.io/dlstreamer_gst/)
-		- [Elements](https://github.com/opencv/gst-video-analytics/wiki/Elements)
-		- [Tutorial](https://github.com/opencv/gst-video-analytics/wiki/DL%20Streamer%20Tutorial)
+- Intel® DL Streamer is a streaming analytics framework, based on GStreamer, for constructing graphs of media analytics components. Intel® DL Streamer can be installed by the Intel&reg; Distribution of OpenVINO&trade; toolkit installer. Its open source version is available on [Github](https://github.com/opencv/gst-video-analytics). For more information see [Intel® DL Streamer documentation](https://docs.openvino.ai/nightly/openvino_docs_dlstreamer.html).
 
-- [OpenCV](https://docs.opencv.org/master/) - OpenCV* community version compiled for Intel&reg; hardware
+- [OpenCV](https://docs.opencv.org/4.x/) - OpenCV* community version compiled for Intel&reg; hardware
 
 - [Intel&reg; Media SDK](/content/www/us/en/developer/tools/media-sdk/overview.html) in [Intel&reg; Distribution of OpenVINO&trade; toolkit for Linux only](https://docs.openvinotoolkit.org/2021.1/index.html)
 
@@ -65,22 +61,12 @@ Before installation review the [Target System Platform requirements](/content/ww
 
 #### OS Based: 
 
-[Download Page](https://software.intel.com/en-us/openvino-toolkit/choose-download)
-
-- [Linux](https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_linux.html)
-- [Windows](https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_windows.html)
-- [MacOS](https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_macos.html)
-- [Raspbian OS](https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_raspbian.html)
+[Install OpenVINO&trade;Runtime](https://docs.openvino.ai/nightly/openvino_docs_install_guides_install_runtime.html) on Linux, Windows, MacOS, or Raspbian OS
 
 #### Install from Images or Repositories:
 
-- [Docker](https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_docker_linux.html)
-- [Docker with DL Workbench](https://docs.openvinotoolkit.org/latest/workbench_docs_Workbench_DG_Install_from_Docker_Hub.html)
-- [APT](https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_apt.html)
-- [YUM](https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_yum.html)
-- [Anaconda Cloud](https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_conda.html)
-- [Yocto](https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_yocto.html)
-- [PyPI](https://docs.openvinotoolkit.org/latest/openvino_docs_install_guides_installing_openvino_pip.html)
+To install from Anaconda Cloud, APT, Docker, PyPI, Yocto, or the OpenVINO&trade;Runtime using an installer see
+[Install and Configure Intel® Distribution of OpenVINO™ toolkit for Linux](https://docs.openvino.ai/nightly/openvino_docs_install_guides_installing_openvino_linux_header.html#doxid-openvino-docs-install-guides-installing-openvino-linux-header)
 
 ## Get Started with OpenVINO&trade; Model Zoo
 
@@ -376,7 +362,7 @@ Run the Accuracy checker tool and POT tool to create your quantized IR files.
 
 This demonstrates how to run the Benchmark Python* Tool, which performs inference using convolutional networks. Performance can be measured for two inference modes: synchronous (latency-oriented) and asynchronous (throughput-oriented).
 
-Upon start-up, the application reads command-line parameters and loads a network and images/binary files to the Inference Engine plugin, which is chosen depending on a specified device. The number of infer requests and execution approach depend on the mode defined with the -api command-line parameter. For more information see [Openvino Inference Engine Tools Benchmark Tool README](https://docs.openvinotoolkit.org/2020.4/openvino_inference_engine_tools_benchmark_tool_README.html)
+Upon start-up, the application reads command-line parameters and loads a network and images/binary files to the Inference Engine plugin, which is chosen depending on a specified device. The number of infer requests and execution approach depend on the mode defined with the -api command-line parameter. For more information see [OpenVINO&trade; Inference Engine Tools Benchmark Tool README](https://docs.openvinotoolkit.org/2020.4/openvino_inference_engine_tools_benchmark_tool_README.html)
 
 Please run both of your FP32 and INT8 models on [Benchmark Python* Tool](https://docs.openvinotoolkit.org/latest/openvino_inference_engine_tools_benchmark_tool_README.html) and compare your results.
 
