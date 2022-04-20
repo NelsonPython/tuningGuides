@@ -51,58 +51,13 @@ Platforms using VNNI require only one instruction, &ldquo;vpdpbusd&rdquo;, to co
 
 The configuration items that can be optimized in BIOS and their recommended values are as follows:
 
-<table>
-	<tbody>
-		<tr>
-			<td>
-			Configuration item
-			</td>
-			<td>
-			Recommended value
-			</td>
-		</tr>
-		<tr>
-			<td>
-			Hyper-Threading
-			</td>
-			<td>
-			Enable
-			</td>
-		</tr>
-		<tr>
-			<td>
-			SNC (Sub NUMA)
-			</td>
-			<td>
-			Disable
-			</td>
-		</tr>
-		<tr>
-			<td>
-			Boot performance mode
-			</td>
-			<td>
-			Max Performance
-			</td>
-		</tr>
-		<tr>
-			<td>
-			Turbo Mode
-			</td>
-			<td>
-			Enable
-			</td>
-		</tr>
-		<tr>
-			<td>
-			Hardware P-State
-			</td>
-			<td>
-			Native Mode
-			</td>
-		</tr>
-	</tbody>
-</table>
+|Configuration item|Recommended value|
+|------------------|-----------------|
+|Hyper-Threading|Enable|
+|SNC (Sub NUMA)|Disable|
+|Boot performance mode|Max Performance|
+|Turbo Mode|Enable|
+|Hardware P-State|Native Mode|
 
 ### Recommended Hardware Configurations
 
@@ -504,99 +459,20 @@ Intel&reg; AI Quantization Tools for TensorFlow currently support the following 
 
 The frameworks and their versions that have already been verified are shown below:
 
-<table>
-	<tbody>
-		<tr>
-			<td>
-			OS
-			</td>
-			<td>
-			Python
-			</td>
-			<td>
-			Framework
-			</td>
-			<td>
-			Version
-			</td>
-		</tr>
-		<tr>
-			<td rowspan="10">
-			CentOS 7.8
-
-			Ubuntu 18.04
-			</td>
-			<td rowspan="10">
-			3.6
-
-			3.7
-			</td>
-			<td rowspan="6">
-			TensorFlow
-			</td>
-			<td>
-			2.2.0
-			</td>
-		</tr>
-		<tr>
-			<td>
-			1.15.0 UP1
-			</td>
-		</tr>
-		<tr>
-			<td>
-			1.15.0 UP2
-			</td>
-		</tr>
-		<tr>
-			<td>
-			2.3.0
-			</td>
-		</tr>
-		<tr>
-			<td>
-			2.1.0
-			</td>
-		</tr>
-		<tr>
-			<td>
-			1.15.2
-			</td>
-		</tr>
-		<tr>
-			<td>
-			PyTorch
-			</td>
-			<td>
-			1.5.0+cpu
-			</td>
-		</tr>
-		<tr>
-			<td rowspan="2">
-			Apache* MXNet
-			</td>
-			<td>
-			1.7.0
-			</td>
-		</tr>
-		<tr>
-			<td>
-			1.6.0
-			</td>
-		</tr>
-		<tr>
-			<td>
-			ONNX Runtime
-			</td>
-			<td>
-			1.6.0
-			</td>
-		</tr>
-	</tbody>
-</table>
+|OS|Python|Framework|Version|
+|-|-|-|-|
+|CentOS 7.8|3.6|TensorFlow|2.2.0|
+|Ubuntu 18.04| 3.7||1.15.0 UP1|
+||||1.15.0 UP2|
+||||2.3.0|
+||||2.1.0|
+||||1.15.2|
+|||PyTorch|1.5.0+cpu|
+|||Apache* MXNet|1.7.0|
+||||1.6.0|
+|||ONNX Runtime|1.6.0|
 
 The tuning strategies supported by Intel&reg; AI Quantization Tools for Tensorflow include:
-
 
 - <a href="https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#basic">Basic</a>
 - <a href="https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#bayesian">Bayesian</a>
