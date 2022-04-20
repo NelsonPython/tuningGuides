@@ -2,7 +2,6 @@
 
 This user guide is intended to explain how the 3 Generation Intel&reg; Xeon&reg; Scalable Processor platform (codename Ice Lake/Whitley) is used for machine learning and deep learning-related tasks. Executing machine learning and deep learning workloads on the Intel&reg; Xeon&reg; Scalable Processor platform has the following advantages:
 
-
 - The platform is very suitable for processing memory-intensive workloads and 3D-CNN topologies used in medical imaging, GAN, seismic analysis, genome sequencing, etc.
 - The simple numactl command can be used for flexible core control; it is still very suitable for real-time inference even when the number of batches is small.
 - It is supported by a powerful ecosystem and can be used for distributed training (such as for computations directly at the data source) directly on large-scale clusters. This avoids the additional costs for large storage capacity and expensive cache mechanisms that are usually required for the training of scaled architecture.
@@ -10,13 +9,11 @@ This user guide is intended to explain how the 3 Generation Intel&reg; Xeon&reg;
 - It satisfies the computing requirements in many real deep learning applications via SIMD acceleration.
 - The same infrastructure can be used directly for training and inference.
 
-
 The development and deployment of typical deep learning applications involve the following stages:
 
-<img alt="DL stages" height="148" src="/content/dam/develop/external/us/en/images/dl-stages.jpg" width="560"/>
+![Deep learning stages](/content/dam/develop/external/us/en/images/dl-stages.jpg)
 
 These different stages require the allocation of following resources, and choosing the right resources can greatly accelerate the efficiency of your AI services:
-
 
 - Computational power
 - Memory
@@ -27,7 +24,7 @@ These different stages require the allocation of following resources, and choosi
 
 All the processes including dataset preparation, model training, model optimization, and model deployment, can be done on an Intel&reg; Xeon&reg; Scalable Processor platform-based infrastructure which also supports machine learning/deep learning platforms for training and inference. The proposed infrastructure is shown in the figure below:
 
-<img alt="DL infrastructure" height="457" src="/content/dam/develop/external/us/en/images/dl-infrastructure.jpg" width="1027"/>
+![Deep learning infrastructure](/content/dam/develop/external/us/en/images/dl-infrastructure.jpg)
 
 ## Introducing Intel&reg; AVX-512 and Intel&reg; Deep Learning Boost
 
@@ -35,15 +32,15 @@ Intel&reg; Advanced Vector Extensions 512 (Intel&reg; AVX-512) is a single instr
 
 Intel&reg; Xeon&reg; Scalable Processors support multiple types of workloads, including complex AI workloads, and improve AI computation performance with the use of Intel&reg; Deep Learning Boost (Intel&reg; DL Boost). Intel Deep Learning Boost includes Intel&reg; AVX-512 VNNI (Vector Neural Network Instructions) which is an extension to the Intel&reg; AVX-512 instruction set. It can combine three instructions into one for execution, which further unleashes the computing potential of next-generation Intel&reg; Xeon&reg; Scalable Processors and increases the inference performance of the INT8 model. Both 2nd-Generation and 3rd-Generation Intel&reg; Xeon&reg; Scalable Processors support VNNI.
 
-<img alt="DL VNNI" height="176" src="/content/dam/develop/external/us/en/images/dl-vnni.jpg" width="855"/>
+![Deep learning VNNI](/content/dam/develop/external/us/en/images/dl-vnni.jpg)
 
 Platforms not using VNNI require the  vpmaddubsw, vpmaddwd and  vpaddd instructions to complete the multiply-accumulate operations in INT8 convolution operation:
 
-<img alt="DL int-8" height="140" src="/content/dam/develop/external/us/en/images/dl-int8-1.jpg" width="1175"/>
+![Deep learning int8](/content/dam/develop/external/us/en/images/dl-int8-1.jpg)
 
 Platforms using VNNI require only one instruction, &ldquo;vpdpbusd&rdquo;, to complete the INT8 convolution operation:
 
-<img alt="DL int-8" height="156" src="/content/dam/develop/external/us/en/images/dl-int8-2.jpg" width="587"/>
+![Deep learning int8](/content/dam/develop/external/us/en/images/dl-int8-2.jpg)
 
 ## BIOS Settings and Hardware Configurations
 
@@ -131,11 +128,11 @@ TensorFlow* is one of the most popular deep learning frameworks used in large-sc
 
 ### Deploying Intel&reg; Optimization for TensorFlow* Deep Learning Framework
 
-Reference: <a href="/content/www/us/en/developer/articles/guide/optimization-for-tensorflow-installation-guide.html">https://www.intel.com/content/www/us/en/developer/articles/guide/optimization-for-tensorflow-installation-guide.html</a>
+Reference: [https://www.intel.com/content/www/us/en/developer/articles/guide/optimization-for-tensorflow-installation-guide.html](/content/www/us/en/developer/articles/guide/optimization-for-tensorflow-installation-guide.html)
 
 Step 1: Install a Python3.x environment. Here is an example to illustrate how to build Python* 3.6 with Anaconda*
 
-Reference: <a href="https://www.anaconda.com/products/individual">https://www.anaconda.com/products/individual</a>
+Reference: [https://www.anaconda.com/products/individual](https://www.anaconda.com/products/individual)
 
 Download and install the latest version of Anaconda
 
@@ -175,7 +172,7 @@ Step 3: Set run-time optimization parameters.
 
 Reference:
 
-<a href="https://github.com/IntelAI/models/blob/master/docs/general/tensorflow/GeneralBestPractices.md">https://github.com/IntelAI/models/blob/master/docs/general/tensorflow/GeneralBestPractices.md</a>
+[https://github.com/IntelAI/models/blob/master/docs/general/tensorflow/GeneralBestPractices.md](https://github.com/IntelAI/models/blob/master/docs/general/tensorflow/GeneralBestPractices.md)
 
 Usually, the following two methods are used for inference, which use different optimization settings
 
@@ -240,19 +237,19 @@ tf.Session(config=config)
 
 This section mainly explains how to run the inference benchmark on ResNet50. You can refer to the following reference to inference using your machine learning/deep learning model.
 
-Reference: <a href="https://github.com/IntelAI/models/blob/master/docs/image_recognition/tensorflow/Tutorial.md">https://github.com/IntelAI/models/blob/master/docs/image_recognition/tensorflow/Tutorial.md</a>
+Reference: [https://github.com/IntelAI/models/blob/master/docs/image_recognition/tensorflow/Tutorial.md](https://github.com/IntelAI/models/blob/master/docs/image_recognition/tensorflow/Tutorial.md)
 
 Taking inference benchmarking for ResNet50* as an example, FP32, BFloat16, and Int8 are supported for model inference.
 
-Reference: <a href="https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md">https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md</a>
+Reference: [https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md](https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md)
 
 FP32-based model inference: 
 
-<a href="https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md#fp32-inference-instructions">https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md#fp32-inference-instructions</a>
+[https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md#fp32-inference-instructions](https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md#fp32-inference-instructions)
 
 INT8-based model inference:
 
-<a href="https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md#int8-inference-instructions">https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md#int8-inference-instructions</a>
+[https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md#int8-inference-instructions](https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md#int8-inference-instructions)
 
 ### Training using Intel&reg; Optimization for TensorFlow* DL Model with FP32/ INT8 Support
 
@@ -260,7 +257,7 @@ This section mainly explains how to run a training benchmark on ResNet50. You ca
 
 FP32-based training:
 
-<a href="https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md#fp32-training-instructions">https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md#fp32-training-instructions</a>
+[https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md#fp32-training-instructions](https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md#fp32-training-instructions)
 
 ### Applications &ndash; Inferencing and Training Using Intel Optimized TensorFlow Wide &amp; Deep Model
 
@@ -270,47 +267,47 @@ When using deep learning, we find, from a large amount of complex raw data, the 
 
 Using the Wide &amp; Deep model as an example, the core idea is to take advantage of both the memorization capability of a linear model and the generalization capability of the DNN model and optimize the parameters in these models at the same time during training. This will result in better overall model prediction capabilities. Its structure is shown in the figure below:
 
-<img alt="DL structure" height="389" src="/content/dam/develop/external/us/en/images/dl-structure.jpg" width="813"/>
+![Deep learning structure](/content/dam/develop/external/us/en/images/dl-structure.jpg)
 
  Wide
 
 &quot;Wide&quot; is a generalized linear model, and its inputs mainly include original and interactive features. We can use cross-product transformation to build the interactive features of K-group:
 
-<img alt="Wide" height="112" src="/content/dam/develop/external/us/en/images/dl-wide.jpg" width="426"/>
+![wide linear model](/content/dam/develop/external/us/en/images/dl-wide.jpg)
 
  Deep
 
 &ldquo;Deep&rdquo; is a DNN model, and the calculation for each layer is as follows:
 
-<img alt="Deep" height="98" src="/content/dam/develop/external/us/en/images/dl-deep.jpg" width="437"/>
+![Deep DNN model](/content/dam/develop/external/us/en/images/dl-deep.jpg)
 
  Co-training
 
 The Wide &amp; Deep model uses co-training instead of integration. The difference is that co-training shares a loss function, then updates the parameters in either part of the model at the same time, while integration trains N models independently and fuses them together afterwards. Therefore, the output of the model is:
 
-<img alt="co-training" height="68" src="/content/dam/develop/external/us/en/images/dl-cotrain.jpg" width="680"/>
+![Deep learning co-training](/content/dam/develop/external/us/en/images/dl-cotrain.jpg)
 
 The above is the background information on the Wide &amp; Deep model. Next, we will describe how to run inference benchmarking for the Wide &amp; Deep model.
 
 Reference:
 
-<a href="https://github.com/IntelAI/models/blob/master/docs/recommendation/tensorflow/Tutorial.md">https://github.com/IntelAI/models/blob/master/docs/recommendation/tensorflow/Tutorial.md</a>
+[https://github.com/IntelAI/models/blob/master/docs/recommendation/tensorflow/Tutorial.md](https://github.com/IntelAI/models/blob/master/docs/recommendation/tensorflow/Tutorial.md)
 
 Dataset preparation:
 
-<a href="https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#Prepare-dataset">https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#Prepare-dataset</a>
+[https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#Prepare-dataset](https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#Prepare-dataset)
 
 FP32-based model inference:
 
-<a href="https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#fp32-inference-instructions">https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#fp32-inference-instructions</a>
+[https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#fp32-inference-instructions](https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#fp32-inference-instructions)
 
 INT8-based model inference:
 
-<a href="https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#int8-inference-instructions">https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#int8-inference-instructions</a>
+[https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#int8-inference-instructions](https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#int8-inference-instructions)
 
 FP32-based training:
 
-<a href="https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#fp32-training-instructions">https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#fp32-training-instructions</a>
+[https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#fp32-training-instructions](https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#fp32-training-instructions)
 
 ### Intel&reg; Math Kernel Library (MKL) Threadpool-Based TensorFlow (Optional)
 
@@ -342,17 +339,17 @@ After successfully completing the steps above, the TensorFlow  <em>wheel</em> fi
 
 ### Deploying PyTorch
 
-Reference: <a href="/content/www/us/en/developer/articles/guide/getting-started-with-intel-optimization-of-pytorch.html">https://www.intel.com/content/www/us/en/developer/articles/guide/getting-started-with-intel-optimization-of-pytorch.html</a>
+Reference: [https://www.intel.com/content/www/us/en/developer/articles/guide/getting-started-with-intel-optimization-of-pytorch.html](/content/www/us/en/developer/articles/guide/getting-started-with-intel-optimization-of-pytorch.html)
 
 Environment: Python3.6 or above
 
-Step 1: Visit the official PyTorch website: <a href="https://pytorch.org/">https://pytorch.org/</a>
+Step 1: Visit the official PyTorch website: [https://pytorch.org/](https://pytorch.org/)
 
 Step 2: Select CPU
 
 Currently, Intel oneDNN is integrated into the official version of PyTorch, so there is no need for additional installation to have accelerated performance on the Intel&reg; Xeon&reg; Scalable Processor platform. Select &ldquo;None&rdquo; for CUDA. See the figure below for details.
 
-<img alt="oneDNN" height="372" src="/content/dam/develop/external/us/en/images/dl-onednn.jpg" width="1060"/>
+![oneDNN](/content/dam/develop/external/us/en/images/dl-onednn.jpg)
 
 Step 3: Installation
 
@@ -366,7 +363,7 @@ pip install torch==1.7.1+cpu torchvision==0.8.2+cpu torchaudio==0.7.2 -f https:/
 
 You may refer to the following website to learn more about optimization parameter settings for PyTorch* on the Intel&reg; Xeon&reg; Scalable Processor platform.
 
-Reference: <a href="/content/www/us/en/developer/articles/technical/how-to-get-better-performance-on-pytorchcaffe2-with-intel-acceleration.html">https://www.intel.com/content/www/us/en/developer/articles/technical/how-to-get-better-performance-on-pytorchcaffe2-with-intel-acceleration.html</a>
+Reference: [https://www.intel.com/content/www/us/en/developer/articles/technical/how-to-get-better-performance-on-pytorchcaffe2-with-intel-acceleration.html](/content/www/us/en/developer/articles/technical/how-to-get-better-performance-on-pytorchcaffe2-with-intel-acceleration.html)
 
 ### Introducing and Using Intel&reg; Extension for PyTorch
 
@@ -374,25 +371,25 @@ Intel&reg; Extension for PyTorch is a Python extension of PyTorch that aims to i
 
 The Github links to the Intel Extension for PyTorch are:
 
-<a href="https://github.com/intel/intel-extension-for-pytorch">https://github.com/intel/intel-extension-for-pytorch</a>
+[https://github.com/intel/intel-extension-for-pytorch](https://github.com/intel/intel-extension-for-pytorch)
 
-<a href="https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics/Features-and-Functionality/IntelPyTorch_Extensions_AutoMixedPrecision">https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics/Features-and-Functionality/IntelPyTorch_Extensions_AutoMixedPrecision</a>
+[https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics/Features-and-Functionality/IntelPyTorch_Extensions_AutoMixedPrecision](https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics/Features-and-Functionality/IntelPyTorch_Extensions_AutoMixedPrecision)
 
 ## Accelerating Vector Recall in the Recommendation System with Intel&reg; Deep Learning Boost VNNI
 
 A problem that needs to be resolved in the recommendation system is how to generate a recommendation list with the length of K for a given user that matches their interests and needs as much as possible (high accuracy) and as fast as possible (low latency)? Conventional recommendation systems include two components: vector recall and ranking. &ldquo;Vector recall&rdquo; roughly filters out hundreds or thousands of items from a huge recommendation pool that will most likely interest the user, passes the results on to the ranking module for further sorting before the final recommendation results are obtained.
 
-<img alt="vector recall" height="552" src="/content/dam/develop/external/us/en/images/dl-vector-recall.jpg" width="1026"/>
+![Deep learning vector recall](/content/dam/develop/external/us/en/images/dl-vector-recall.jpg)
 
 Vector recall can be converted into a high-dimensional vector similarity search problem.
 
 The Hierarchical Navigable Small World (HNSW) algorithm is a type of Approximate Nearest Neighbor (ANN) vector similarity search algorithm based on graph structures. It is also one of the fastest and most precise algorithms.
 
-<img alt="HNSW" height="512" src="/content/dam/develop/external/us/en/images/dl-ann.jpg" width="482"/>
+![ANN](/content/dam/develop/external/us/en/images/dl-ann.jpg)
 
 Usually, the data type of the raw vector data is FP32. For many applications (such as image search), vector data can be expressed in INT8/INT6 and the impact of quantization error on the final search result is limited. The &ldquo;VNNI intrinsic&rdquo; instruction can be used for inner product calculations for INT8/INT6 vectors. Many experiments have shown that QPS Performance has greatly improved, and that recall rate remains virtually unchanged. The reason for the improvement in QPS performance is that the memory&ndash;bandwidth ratio for INT8/INT16 is smaller than for FP32, and VNNI instructions accelerate the distance calculations in addition.
 
-Currently, optimized source code is implemented based on the HNSWLib[10] open source project. We have already ported it to the Faiss[9] framework, which is widely used in the industry.
+Currently, optimized source code is implemented based on the HNSWLib[10] open source project. We have already ported it to the Faiss[1] framework, which is widely used in the industry.
 
 To achieve the optimal performance, the following deployment steps are recommended:
 
@@ -400,7 +397,6 @@ To achieve the optimal performance, the following deployment steps are recommend
 - Each physical CPU core executes a single query process
 
 Reference command (using 1 socket and 24 cores as an example):
-
 
 ``` 
 # numactl -C 0-23 <test_program> 
@@ -418,44 +414,40 @@ Computations in neural networks are mainly concentrated in the convolutional lay
 
 There are three approaches to the quantization of neural network models:
 
-
 - Post-Training Quantization (PTQ), which is supported by most AI frameworks.
 - Quantization-Aware-Training (QAT), which inserts the  FakeQuantization node into the FP32 model when the training converges. It increases the quantization-induced noise. During the backpropagation stage of the training, the model weights fall into a finite interval which results in better quantization precision.
 - Dynamic Quantization (DQ) is very similar to PTQ. They are both quantization methods used on post-trained models. The difference lies in that the quantization factor in the activation layer is dynamically decided by the data range used when the neural network model is run, while for PTQ samples from a small-scale pre-processed dataset are used to obtain data distribution and range information in the activation layer, then records it permanently in the newly generated quantization model. Of the Intel&reg; AI Quantization Tools for TensorFlow which we will talk about later on,  onnxruntime supports this method at the backend only.
 
-
 The basic procedure for the post-training quantization of neural networks is as follows:
 
-     1. Fuse FP32 OP to INT8 OP. For example, <em>MatMul</em>, <em>BiasAdd</em> and <em>ReLU</em> can be fused into a single quantized OP at the fully connected layer,  <em>QuantizedMatMulWithBiasAndRelu</em>. Different neural network frameworks support different fuse-able OPs. For Intel&reg; AI Quantization Tools for TensorFlow, which will be discussed later on, below we can see a list of fuse-able OPs supported by TensorFlow: <a href="https://github.com/intel/lpot/blob/master/lpot/adaptor/tensorflow.yaml#L190">https://github.com/intel/lpot/blob/master/lpot/adaptor/tensorflow.yaml#L190</a>.
+1. Fuse FP32 OP to INT8 OP. For example, <em>MatMul</em>, <em>BiasAdd</em> and <em>ReLU</em> can be fused into a single quantized OP at the fully connected layer,  <em>QuantizedMatMulWithBiasAndRelu</em>. Different neural network frameworks support different fuse-able OPs. For Intel&reg; AI Quantization Tools for TensorFlow, which will be discussed later on, below we can see a list of fuse-able OPs supported by TensorFlow: [https://github.com/intel/lpot/blob/master/lpot/adaptor/tensorflow.yaml#L190](https://github.com/intel/lpot/blob/master/lpot/adaptor/tensorflow.yaml#L190).
 
-For fuse-able OPs supported by pyTorch, please see : <a href="https://github.com/intel/lpot/blob/master/lpot/adaptor/pytorch_cpu.yaml#L124">https://github.com/intel/lpot/blob/master/lpot/adaptor/pytorch_cpu.yaml#L124</a>
+For fuse-able OPs supported by pyTorch, please see : [https://github.com/intel/lpot/blob/master/lpot/adaptor/pytorch_cpu.yaml#L124](https://github.com/intel/lpot/blob/master/lpot/adaptor/pytorch_cpu.yaml#L124)
 
-     2. Quantize weights and save them in the quantized model.
+2. Quantize weights and save them in the quantized model.
 
-     3. Quantize the input/activation layer by sampling the calibration dataset to acquire the distribution and range information of the data in the activation layer, which is then recorded in the newly generated quantized model.
+3. Quantize the input/activation layer by sampling the calibration dataset to acquire the distribution and range information of the data in the activation layer, which is then recorded in the newly generated quantized model.
 
-     4. The  Requantize operation is fused into its corresponding INT8 OP to generate the final quantized model.
+4. The  Requantize operation is fused into its corresponding INT8 OP to generate the final quantized model.
 
 Using a simple model which includes two layers of  MatMul as an example, we can observe the quantization process as follows:
 
-<img alt="MatMul" height="585" src="/content/dam/develop/external/us/en/images/dl-matmul.jpg" width="695"/>
+![MatMul](/content/dam/develop/external/us/en/images/dl-matmul.jpg)
 
 ### Intel&reg; AI Quantization Tools for TensorFlow
 
 Intel&reg; AI Quantization Tools for TensorFlow is an open source Python library which provides API access for low-precision quantization for cross-neural network development frameworks. It is intended to provide simple, easy-to-use and precision-driven auto tuning tools for the quantization of models for accelerating the inference performance of low-precision models on the 3rd Gen Intel&reg; Xeon&reg; Scalable Processor platform.
 
-Reference: <a href="https://github.com/intel/lpot">https://github.com/intel/lpot</a>
+Reference: [https://github.com/intel/lpot](https://github.com/intel/lpot)
 
-<img alt="AI tools" height="452" src="/content/dam/develop/external/us/en/images/dl-ai-tools.jpg" width="912"/>
+![AI tools](/content/dam/develop/external/us/en/images/dl-ai-tools.jpg)
 
 Intel&reg; AI Quantization Tools for TensorFlow currently support the following Intel optimized deep learning frameworks:
 
-
-- <a href="https://www.tensorflow.org/">Tensorflow*</a>
-- <a href="https://pytorch.org/">PyTorch*</a>
-- <a href="https://mxnet.apache.org/">Apache* MXNet</a>
-- <a href="https://onnx.ai/">ONNX Runtime</a>
-
+- [Tensorflow*](https://www.tensorflow.org/)
+- [PyTorch*](https://pytorch.org/)
+- [Apache* MXNet](https://mxnet.apache.org/)
+- [ONNX Runtime](https://onnx.ai/)
 
 The frameworks and their versions that have already been verified are shown below:
 
@@ -474,24 +466,23 @@ The frameworks and their versions that have already been verified are shown belo
 
 The tuning strategies supported by Intel&reg; AI Quantization Tools for Tensorflow include:
 
-- <a href="https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#basic">Basic</a>
-- <a href="https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#bayesian">Bayesian</a>
-- <a href="https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#exhaustive">Exhaustive</a>
-- <a href="https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#mse">MSE</a>
-- <a href="https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#random">Random</a>
-- <a href="https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#tpe">TPE</a>
+- [Basic](https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#basic)
+- [Bayesian](https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#bayesian)
+- [Exhaustive](https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#exhaustive)
+- [MSE](https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#mse)
+- [Random](https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#random)
+- [TPE](https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#tpe)
 
 
 The workflow for Intel&reg; AI Quantization Tools for TensorFlow is shown below. The model quantization parameters matching the precision loss target are automatically selected according to the set tuning strategy, and the quantized model is generated:
 
-<img alt="TensorFlow" height="430" src="/content/dam/develop/external/us/en/images/dl-tensorflow.jpg" width="855"/>
+![Tensorflow](/content/dam/develop/external/us/en/images/dl-tensorflow.jpg)
 
 ### Installing Intel&reg; AI Quantization Tools for TensorFlow
 
-For details on installation, refer to: <a href="https://github.com/intel/lpot/blob/master/README.md">https://github.com/intel/lpot/blob/master/README.md</a>
+For details on installation, refer to: [https://github.com/intel/lpot/blob/master/README.md](https://github.com/intel/lpot/blob/master/README.md)
 
 Step 1: Use  Anaconda to create a  Python3.x virtual environment with the name of  lpot. We are using  Python 3.7 here as an example:
-
 
 ```
 # conda create -n lpot python=3.7
@@ -503,13 +494,11 @@ Step 2: Install  lpot; the two following installation methods are available:
 
 Installing with the binary file:
 
-
 ``` 
 # pip install lpot 
 ```
 
 Install from the source code
-
 
 ``` 
 # git clone https://github.com/intel/lpot.git
@@ -547,7 +536,7 @@ Step 2: Move the image files to the child directories sorted by label:
 # wget -qO- https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh | bash 
 ```
 
-Step 3: Use the script, <a href="https://github.com/intel/lpot/blob/master/examples/tensorflow/image_recognition/prepare_dataset.sh">prepare_dataset.sh</a>, to convert raw data to the  TFrecord format:
+Step 3: Use the script, [prepare_dataset.sh](https://github.com/intel/lpot/blob/master/examples/tensorflow/image_recognition/prepare_dataset.sh), to convert raw data to the  TFrecord format:
 
 
 ``` 
@@ -556,7 +545,7 @@ Step 3: Use the script, <a href="https://github.com/intel/lpot/blob/master/examp
 # bash prepare_dataset.sh --output_dir=./data --raw_dir=/PATH/TO/img_raw/val/ --subset=validation 
 ```
 
-Reference: <a href="https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition#2-prepare-dataset">https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition#2-prepare-dataset</a>
+Reference: [https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition#2-prepare-dataset](https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition#2-prepare-dataset)
 
 ### Model preparation:
 
@@ -566,7 +555,7 @@ Reference: <a href="https://github.com/intel/lpot/tree/master/examples/tensorflo
 
 ### Run Tuning:
 
-Edit the file: <a href="https://github.com/intel/lpot/blob/master/examples/tensorflow/image_recognition/resnet50_v1.yaml">examples/tensorflow/image_recognition/resnet50_v1.yaml</a>, making sure the dataset path for  quantizationcalibration,  evaluationaccuracy and  evaluationperformance is the user&#39;s real local path. It should be where the  TFrecord data generated previously during the data preparation stage, is located.
+Edit the file: [examples/tensorflow/image_recognition/resnet50_v1.yaml](https://github.com/intel/lpot/blob/master/examples/tensorflow/image_recognition/resnet50_v1.yaml), making sure the dataset path for  quantizationcalibration,  evaluationaccuracy and  evaluationperformance is the user&#39;s real local path. It should be where the  TFrecord data generated previously during the data preparation stage, is located.
 
 ``` 
 # cd examples/tensorflow/image_recognition
@@ -576,7 +565,7 @@ Edit the file: <a href="https://github.com/intel/lpot/blob/master/examples/tenso
 --output_model=./lpot_resnet50_v1.pb 
 ```
 
-Reference: <a href="https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition#1-resnet50-v10">https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition#1-resnet50-v10</a>
+Reference: [https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition#1-resnet50-v10](https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition#1-resnet50-v10)
 
 ### Run Benchmark:
 
@@ -607,66 +596,61 @@ Performance mode benchmark result:
 
  Throughput: (results will vary)
 
-## Using Intel&reg; Distribution of OpenVINO&trade; Toolkit for Inference Acceleration<a id="_Hlk43400832"></a>
+## Using Intel&reg; Distribution of OpenVINO&trade; Toolkit for Inference Acceleration
 
 ### Intel&reg; Distribution of OpenVINO&trade; Toolkit
 
 Intel&reg; Distribution of OpenVINO<sup>TM </sup>toolkit&rsquo;s official website and download websites:
 
-<a href="/content/www/us/en/developer/tools/openvino-toolkit/overview.html">https://www.intel.com/content/www/us/en/developer/tools/openvino-toolkit/overview.html</a>
+[https://www.intel.com/content/www/us/en/developer/tools/openvino-toolkit/overview.html](/content/www/us/en/developer/tools/openvino-toolkit/overview.html)
 
 Online documentation:
 
-<a href="https://docs.openvino.ai/latest/index.html">https://docs.openvino.ai/latest/index.html</a>
+[https://docs.openvino.ai/latest/index.html](https://docs.openvino.ai/latest/index.html)
 
 Online documentation in Simplified Chinese:
 
-<a href="https://docs.openvino.ai/cn/latest/index.html">https://docs.openvino.ai/cn/latest/index.html</a>
+[https://docs.openvino.ai/cn/latest/index.html](https://docs.openvino.ai/cn/latest/index.html)
 
 The Intel&reg; Distribution of OpenVINO<sup>TM</sup> toolkit is used to accelerate the development of computer vision and deep learning applications. It supports deep learning applications with various accelerators, including CPUs, GPUs, FPGAs, and Intel&reg; Movidius&trade; CPUs on the Intel&reg; Xeon&reg; Processor platform, and it also directly supports heterogenous execution.
 
-<img alt="DL OpenVINO" height="353" src="/content/dam/develop/external/us/en/images/dl-openvino.jpg" width="1020"/>
+![OpenVINO](/content/dam/develop/external/us/en/images/dl-openvino.jpg)
 
 The Intel&reg; Distribution of OpenVINO<sup>TM </sup>toolkit is designed to improve the performance and reduce the development time of computer vision processing and deep learning inference solutions. It includes two components: computer vision and deep learning development kits.
 
 The Deep Learning Deployment Toolkit (DLDT) is a cross-platform tool for accelerating deep learning inference performance, and includes the following components:
 
-
 -  Model Optimizer: converts models trained with Caffe*, TensorFlow, Mxnet, and other frameworks into Intermediate Representations (IR).
 -  Inference Engine: executes the IR on CPU, GPU, FPGA, VPU, and other hardware. It automatically calls the hardware acceleration kit to accelerate inference performance.
 
-
 The Intel&reg; Distribution of OpenVINO<sup>TM </sup>toolkit Workflow:
 
-<img alt="OpenVino workflow" height="372" src="/content/dam/develop/external/us/en/images/dl-openvino-workflow.jpg" width="881"/>
+![OpenVINO workflow](/content/dam/develop/external/us/en/images/dl-openvino-workflow.jpg)
 
 ### Deploying the Intel&reg; Distribution of OpenVINO&trade; Toolkit
 
 You can refer to the installation documentation in Simplified Chinese:
 
-<a href="https://docs.openvino.ai/downloads/cn/I03030-5-Install%20Intel_%20Distribution%20of%20OpenVINO_%20toolkit%20for%20Linux%20-%20OpenVINO_%20Toolkit.pdf" target="_blank"> Installing the Intel<sup>&reg;</sup> Distribution of OpenVINO&trade; toolkit for Linux*</a> :
+Installing the Intel<sup>&reg;</sup> [Distribution of OpenVINO&trade; toolkit for Linux*](https://docs.openvino.ai/downloads/cn/I03030-5-Install%20Intel_%20Distribution%20of%20OpenVINO_%20toolkit%20for%20Linux%20-%20OpenVINO_%20Toolkit.pdf):
 
 ### Using Deep Learning Deployment Toolkit (DLDT) of the Intel&reg; Distribution of OpenVINO Toolkit
 
-<a href="https://docs.openvino.ai/downloads/cn/I03030-9-Introduction%20to%20Intel_%20Deep%20Learning%20Deployment%20Toolkit%20-%20OpenVINO_%20Toolkit.pdf" target="_blank"> Introduction to the Intel<sup>&reg;</sup> Deep Learning Deployment toolkit</a>
+Introduction to the Intel<sup>&reg;</sup> [Deep Learning Deployment toolkit](https://docs.openvino.ai/downloads/cn/I03030-9-Introduction%20to%20Intel_%20Deep%20Learning%20Deployment%20Toolkit%20-%20OpenVINO_%20Toolkit.pdf)
 
-<a id="_Hlk42691266"></a> <a href="https://docs.openvino.ai/downloads/cn/I03030-10-Image%20Classification%20Cpp%20Sample%20Async%20-%20OpenVINO_%20Toolkit.pdf">Image Classification C++ Sample (Async)</a>
+[Image Classification C++ Sample (Async)](https://docs.openvino.ai/downloads/cn/I03030-10-Image%20Classification%20Cpp%20Sample%20Async%20-%20OpenVINO_%20Toolkit.pdf)
 
-<a href="https://docs.openvino.ai/downloads/cn/I03030-11-Object%20Detection%20Cpp%20Sample%20SSD%20-%20OpenVINO_%20Toolkit.pdf" target="_blank"> Object Detection C++ Sample (SSD)</a>
+[Object Detection C++ Sample (SSD)](https://docs.openvino.ai/downloads/cn/I03030-11-Object%20Detection%20Cpp%20Sample%20SSD%20-%20OpenVINO_%20Toolkit.pdf)
 
-<a href="https://docs.openvino.ai/downloads/cn/I03030-12-Automatic%20Speech%20Recognition%20Cpp%20%20Sample%20-%20OpenVINO_%20Toolkit.pdf" target="_blank"> Automatic Speech Recognition C++ Sample</a>
+[Automatic Speech Recognition C++ Sample](https://docs.openvino.ai/downloads/cn/I03030-12-Automatic%20Speech%20Recognition%20Cpp%20%20Sample%20-%20OpenVINO_%20Toolkit.pdf)
 
-<a id="_Hlk42691304"></a>
+[Action Recognition Python* Demo](https://docs.openvino.ai/downloads/cn/I03030-13-Action%20Recognition%20Python%20Demo%20-%20OpenVINO_%20Toolkit.pdf)
 
- <a href="https://docs.openvino.ai/downloads/cn/I03030-13-Action%20Recognition%20Python%20Demo%20-%20OpenVINO_%20Toolkit.pdf">Action Recognition Python* Demo</a>
+[Crossroad Camera C++ Demo](https://docs.openvino.ai/downloads/cn/I03030-14-Crossroad%20Camera%20Cpp%20%20Demo%20-%20OpenVINO_%20Toolkit.pdf)
 
-<a href="https://docs.openvino.ai/downloads/cn/I03030-14-Crossroad%20Camera%20Cpp%20%20Demo%20-%20OpenVINO_%20Toolkit.pdf" target="_blank"> Crossroad Camera C++ Demo</a>
+[Human Pose Estimation C++ Demo](https://docs.openvino.ai/downloads/cn/I03030-15-Human%20Pose%20Estimation%20Cpp%20Demo%20-%20OpenVINO_%20Toolkit.pdf)
 
-<a href="https://docs.openvino.ai/downloads/cn/I03030-15-Human%20Pose%20Estimation%20Cpp%20Demo%20-%20OpenVINO_%20Toolkit.pdf" target="_blank"> Human Pose Estimation C++ Demo</a>
+[Interactive Face Detection C++ Demo](https://docs.openvino.ai/downloads/cn/I03030-16-Interactive%20Face%20Detection%20Cpp%20%20Demo%20-%20OpenVINO_%20Toolkit.pdf)
 
-<a id="_Hlk42691333"></a> <a href="https://docs.openvino.ai/downloads/cn/I03030-16-Interactive%20Face%20Detection%20Cpp%20%20Demo%20-%20OpenVINO_%20Toolkit.pdf">Interactive Face Detection C++ Demo</a>
-
- 
 
 ### Using the Intel&reg; Distribution of OpenVINO&trade; Toolkit for INT8 Inference Acceleration
 
@@ -682,12 +666,11 @@ Step 2: Optional operation (Whether to fine-tune the model will be determined ac
 
 Step 3: Use OpenVINO IE for model inference.
 
-<img alt="OpenVINO-ie" height="420" src="/content/dam/develop/external/us/en/images/dl-openvino-ie.jpg" width="922"/>
+![OpenVINO IE](/content/dam/develop/external/us/en/images/dl-openvino-ie.jpg)
 
 POT provides an independent command line tool and Python API and it mainly supports the following features:
 
-
-- Two types of post-training INT8 quantization algorithms: fast <a href="https://docs.openvino.ai/latest/pot_compression_algorithms_quantization_default_README.html">DefaultQuantization</a> and precise <a href="https://docs.openvino.ai/latest/pot_compression_algorithms_quantization_accuracy_aware_README.html">AccuracyAwareQuantization</a>.
+- Two types of post-training INT8 quantization algorithms: fast [DefaultQuantization](https://docs.openvino.ai/latest/pot_compression_algorithms_quantization_default_README.html) and precise [AccuracyAwareQuantization](https://docs.openvino.ai/latest/pot_compression_algorithms_quantization_accuracy_aware_README.html).
 - Uses the  Tree-structured  Parzen Estimator for global optimization of post-training quantization parameters
 - Supports both symmetrical and asymmetrical quantization
 - Supports compression for multiple hardware platforms (CPU, GPU)
@@ -695,28 +678,27 @@ POT provides an independent command line tool and Python API and it mainly suppo
 - Supports multiple applications: computer vision, recommendation system
 - Provides customized optimization methods through provided API
 
-
 Please refer to the following websites for instructions of operations and use:
 
-<a href="https://docs.openvino.ai/latest/pot_README.html">Introduction to the Post-Training Optimization Toolkit</a>
+[Introduction to the Post-Training Optimization Toolkit](https://docs.openvino.ai/latest/pot_README.html)
 
-<a href="https://docs.openvino.ai/latest/pot_docs_LowPrecisionOptimizationGuide.html">Low Precision Optimization Guide</a>
+[Low Precision Optimization Guide](https://docs.openvino.ai/latest/pot_docs_LowPrecisionOptimizationGuide.html)
 
-<a href="https://docs.openvino.ai/latest/pot_docs_BestPractices.html">Post-training Optimization Toolkit Best Practices</a>
+[Post-training Optimization Toolkit Best Practices](https://docs.openvino.ai/latest/pot_docs_BestPractices.html)
 
-<a href="https://docs.openvino.ai/latest/pot_docs_FrequentlyAskedQuestions.html">Post-training Optimization Toolkit Frequently Asked Questions</a>
+[Post-training Optimization Toolkit Frequently Asked Questions](https://docs.openvino.ai/latest/pot_docs_FrequentlyAskedQuestions.html)
 
-<a href="https://docs.openvino.ai/latest/workbench_docs_Workbench_DG_Int_8_Quantization.html">INT8 quantization and optimization using DL Workbench&rsquo;s web interface</a>
+[INT8 quantization and optimization using DL Workbench&rsquo;s web interface](https://docs.openvino.ai/latest/workbench_docs_Workbench_DG_Int_8_Quantization.html)
 
 ## Using Intel&reg; DAAL for Accelerated Machine Learning
 
-<a id="_Hlk40274671"></a>Intel<sup>&reg;</sup> Data Analytics Acceleration Library (Intel&reg; DAAL)
+Intel<sup>&reg;</sup> Data Analytics Acceleration Library (Intel&reg; DAAL)
 
 As a branch of artificial intelligence, machine learning is currently attracting a huge amount of attention. Machine learning-based analytics is also getting increasingly popular. The reason is that, when compared to other analytics, machine learning can help IT staff, data scientists, and various business teams and their organizations to quickly unleash the strengths of AI. Furthermore, machine learning offers many new commercial and open-source solutions, providing a vast ecosystem for developers. In addition, developers can choose from a variety of open-source machine learning libraries such as  Scikit-learn,  Cloudera* and  Spark* MLlib.
 
-### <a id="_Toc67652318"></a><a id="_Toc68526437"></a>Intel&reg; Distribution for Python*
+### Intel&reg; Distribution for Python*
 
-Intel&reg; Distribution for Python* is a Python development toolkit for artificial intelligence software developers. It can be used to accelerate computational speed of Python on the Intel&reg; Xeon&reg; Scalable Processor platform. It is available at  Anaconda*, and it can also be installed and used with  Conda*, PIP*, APT GET, YUM, Docker*, among others. Reference and download site: <a href="/content/www/us/en/developer/tools/oneapi/distribution-for-python.html">https://www.intel.com/content/www/us/en/developer/tools/oneapi/distribution-for-python.html</a>
+Intel&reg; Distribution for Python* is a Python development toolkit for artificial intelligence software developers. It can be used to accelerate computational speed of Python on the Intel&reg; Xeon&reg; Scalable Processor platform. It is available at  Anaconda*, and it can also be installed and used with  Conda*, PIP*, APT GET, YUM, Docker*, among others. Reference and download site: [https://www.intel.com/content/www/us/en/developer/tools/oneapi/distribution-for-python.html](/content/www/us/en/developer/tools/oneapi/distribution-for-python.html)
 
 Intel&reg; Distribution for Python* features:
 
@@ -732,13 +714,13 @@ Intel&reg; Data Analytics Acceleration Library (DAAL) is designed for data scien
 
 Intel&reg; DAAL is a complete end-to-end software solution designed to help data scientists and analysts quickly build everything from data pre-processing, to data feature engineering, data modeling and deployment. It provides various data analytics needed to develop machine learning and analytics as well as high-performance building blocks required by algorithms. It currently supports linear regression, logic regression, LASSO, AdaBoost, Bayesian classifiers, support vector machines, k-nearest neighbors, k-means clustering, DBSCAN clustering, various types of decision trees, random forest, gradient boosting, and other classic machine learning algorithms. These algorithms are highly optimized to achieve high performance on Intel&reg; processors. For example, a leading big data analytics technology and service provider has used these resources to improve the performance of data mining algorithms by several times.
 
-<img alt="Intel DAAL" height="326" src="/content/dam/develop/external/us/en/images/dl-daal.jpg" width="921"/>
+![Deep learning DAAL](/content/dam/develop/external/us/en/images/dl-daal.jpg)
 
-To make it easier for developers to use Intel&reg; DAAL in machine learning applications in Intel-based environments, Intel has open-sourced the entire project (<a href="https://github.com/intel/daal">https://github.com/intel/daal</a>), and provides full-memory, streaming and distributed algorithm support for different big data scenarios. For example, DAAL Kmeans can be combined with Spark to perform multi-node clustering on a Spark cluster. In addition, DAAL provides interfaces for C++, Java*, and Python.
+To make it easier for developers to use Intel&reg; DAAL in machine learning applications in Intel-based environments, Intel has open-sourced the entire project: [https://github.com/intel/daal](https://github.com/intel/daal), and provides full-memory, streaming and distributed algorithm support for different big data scenarios. For example, DAAL Kmeans can be combined with Spark to perform multi-node clustering on a Spark cluster. In addition, DAAL provides interfaces for C++, Java*, and Python.
 
  DAAL4py
 
-In order to provide better support for Scikitlearn, which is the most widely used with Python, Intel&reg; DAAL provides a very simple Python interface, DAAL4py (please see the open source website for more details: <a href="https://github.com/IntelPython/daal4py">https://github.com/IntelPython/daal4py</a>). It can be used seamlessly with Scikitlearn and provides acceleration for machine learning algorithms at the underlying layer.
+In order to provide better support for Scikitlearn, which is the most widely used with Python, Intel&reg; DAAL provides a very simple Python interface, DAAL4py.  See the open source website for more details: [https://github.com/IntelPython/daal4py](https://github.com/IntelPython/daal4py). It can be used seamlessly with Scikitlearn and provides acceleration for machine learning algorithms at the underlying layer.
 
 Developers do not need to modify the Scikitlearn source code to benefit from the advantages of automatic vectorization and multithreading. DAAL4py currently supports the following algorithms in Scikitlearn:
 
@@ -752,11 +734,11 @@ Developers do not need to modify the Scikitlearn source code to benefit from the
 
 ### Installing Intel&reg; Distribution for Python &amp; Intel&reg; DAAL
 
-<a href="/content/www/us/en/developer/tools/oneapi/distribution-for-python.html">Download and install Intel&reg; Distribution for Python</a>* (Intel&reg; DAAL already included)
+[Download and install Intel&reg; Distribution for Python](/content/www/us/en/developer/tools/oneapi/distribution-for-python.html)* (Intel&reg; DAAL already included)
 
-<a href="/content/www/us/en/developer/articles/guide/intel-daal-2020-install-guide.html">Installing Intel&reg; DAAL separately</a>
+[Installing Intel&reg; DAAL separately](/content/www/us/en/developer/articles/guide/intel-daal-2020-install-guide.html)
 
-<a href="/content/www/us/en/develop/documentation/dal-developer-guide/top.html">Intel&reg; DAAL Developer Guide</a>
+[Intel&reg; DAAL Developer Guide](/content/www/us/en/develop/documentation/dal-developer-guide/top.html)
 
 ### Using Intel&reg; DAAL
 
@@ -764,13 +746,11 @@ There are two ways to use Intel&reg; DAAL to accelerate scikit-learn:
 
 Method 1: Using the command line
 
-
 ```
  # python -m daal4py &lt;your-scikit-learn-script&gt; 
 ```
 
 Method 2: Adding it to source code
-
 
 ``` 
 import daal4py.sklearn
@@ -780,24 +760,16 @@ daal4py.sklearn.patch_sklearn('kmeans')
 
 ## References
 
-[1] Intel&reg; AVX-512 info: <a href="https://colfaxresearch.com/skl-avx512/">https://colfaxresearch.com/skl-avx512/</a>
+[1] Open source of Faiss project: [https://github.com/facebookresearch/faiss](https://github.com/facebookresearch/faiss)
 
-[2] Intel&reg; Optimized AI Frameworks: <a href="/content/www/us/en/developer/tools/frameworks/overview.html">https://www.intel.com/content/www/us/en/developer/tools/frameworks/overview.html</a>
+## Additional References
 
-[3] Intel&reg; Distribution of OpenVINO&trade; toolkit: <a href="https://docs.openvino.ai">https://docs.openvino.ai</a>
+Intel&reg; AVX-512 info: [https://colfaxresearch.com/skl-avx512/](https://colfaxresearch.com/skl-avx512/)
 
-[4] Intel&reg; Analytics Zoo: <a href="https://github.com/intel-analytics/analytics-zoo">https://github.com/intel-analytics/analytics-zoo</a>
+Intel&reg; Optimized AI Frameworks: [https://www.intel.com/content/www/us/en/developer/tools/frameworks/overview.html](/content/www/us/en/developer/tools/frameworks/overview.html)
 
-[5] Hands-on IDP and Intel&reg; DAAL
+Intel&reg; Distribution of OpenVINO&trade; toolkit: [https://docs.openvino.ai](https://docs.openvino.ai)
 
-[6] IDP benchmarks
+Intel&reg; Analytics Zoo: [https://github.com/intel-analytics/analytics-zoo](https://github.com/intel-analytics/analytics-zoo)
 
-[7] Intel&reg; DL Boost
-
-[8] Intel&reg; DL Boost: <a href="https://www.intel.com/content/dam/www/public/us/en/documents/product-overviews/dl-boost-product-overview.pdf">https://www.intel.com/content/dam/www/public/us/en/documents/product-overviews/dl-boost-product-overview.pdf</a>
-
-<a href="/content/www/us/en/developer/articles/technical/lower-numerical-precision-deep-learning-inference-and-training.html">https://www.intel.com/content/www/us/en/developer/articles/technical/lower-numerical-precision-deep-learning-inference-and-training.html</a>
-
-[9] Open source of Faiss project: <a href="https://github.com/facebookresearch/faiss">https://github.com/facebookresearch/faiss</a>
-
-[10] Open source of HNSWLib project: <a href="https://github.com/nmslib/hnswlib">https://github.com/nmslib/hnswlib</a>
+Open source of HNSWLib project: [https://github.com/nmslib/hnswlib](https://github.com/nmslib/hnswlib)
