@@ -28,19 +28,11 @@ All the processes including dataset preparation, model training, model optimizat
 
 ## Introducing Intel&reg; AVX-512 and Intel&reg; Deep Learning Boost
 
-Intel&reg; Advanced Vector Extensions 512 (Intel&reg; AVX-512) is a single instruction, multiple data (SIMD) instruction set based on x86 processors. Compared to traditional single instruction, single data instructions, a SIMD instruction allows for executing multiple data operations with a single instruction. As the name implies, Intel&reg; AVX-512 has a register width of 512 bits, and it supports 16 32-bit single-precision floating-point numbers or 64 8-bit integers.
+Intel® Neural Compressor (formerly known as Intel® Low Precision Optimization Tool) is an open-source Python library running on Intel CPUs and GPUs, which delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, knowledge distillation. This tool supports automatic accuracy-driven tuning strategies to help user quickly find out the best quantized model. It also implements different weight pruning algorithms to generate pruned model with predefined sparsity goal and supports knowledge distillation to distill the knowledge from the teacher model to the student model.
 
-Intel&reg; Xeon&reg; Scalable Processors support multiple types of workloads, including complex AI workloads, and improve AI computation performance with the use of Intel&reg; Deep Learning Boost (Intel&reg; DL Boost). Intel Deep Learning Boost includes Intel&reg; AVX-512 VNNI (Vector Neural Network Instructions) which is an extension to the Intel&reg; AVX-512 instruction set. It can combine three instructions into one for execution, which further unleashes the computing potential of next-generation Intel&reg; Xeon&reg; Scalable Processors and increases the inference performance of the INT8 model. Both 2nd-Generation and 3rd-Generation Intel&reg; Xeon&reg; Scalable Processors support VNNI.
+Note:  GPU support is under development.
 
-![Deep learning VNNI](/content/dam/develop/external/us/en/images/dl-vnni.jpg)
-
-Platforms not using VNNI require the  vpmaddubsw, vpmaddwd and  vpaddd instructions to complete the multiply-accumulate operations in INT8 convolution operation:
-
-![Deep learning int8](/content/dam/develop/external/us/en/images/dl-int8-1.jpg)
-
-Platforms using VNNI require only one instruction, &ldquo;vpdpbusd&rdquo;, to complete the INT8 convolution operation:
-
-![Deep learning int8](/content/dam/develop/external/us/en/images/dl-int8-2.jpg)
+Visit the [Intel® Neural Compressor online document website](https://intel.github.io/neural-compressor)
 
 ## BIOS Settings and Hardware Configurations
 
