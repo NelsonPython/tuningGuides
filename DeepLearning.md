@@ -416,11 +416,11 @@ There are three approaches to the quantization of neural network models:
 
 - Post-Training Quantization (PTQ), which is supported by most AI frameworks.
 - Quantization-Aware-Training (QAT), which inserts the  FakeQuantization node into the FP32 model when the training converges. It increases the quantization-induced noise. During the backpropagation stage of the training, the model weights fall into a finite interval which results in better quantization precision.
-- Dynamic Quantization (DQ) is very similar to PTQ. They are both quantization methods used on post-trained models. The difference lies in that the quantization factor in the activation layer is dynamically decided by the data range used when the neural network model is run, while for PTQ samples from a small-scale pre-processed dataset are used to obtain data distribution and range information in the activation layer, then records it permanently in the newly generated quantization model. Of the Intel&reg; AI Quantization Tools for TensorFlow which we will talk about later on,  onnxruntime supports this method at the backend only.
+- Dynamic Quantization (DQ) is very similar to PTQ. They are both quantization methods used on post-trained models. The difference lies in that the quantization factor in the activation layer is dynamically decided by the data range used when the neural network model is run, while for PTQ samples from a small-scale pre-processed dataset are used to obtain data distribution and range information in the activation layer, then records it permanently in the newly generated quantization model. Of the Intel&reg; Intel&reg; Neural Compressor which we will talk about later on,  onnxruntime supports this method at the backend only.
 
 The basic procedure for the post-training quantization of neural networks is as follows:
 
-1. Fuse FP32 OP to INT8 OP. For example, <em>MatMul</em>, <em>BiasAdd</em> and <em>ReLU</em> can be fused into a single quantized OP at the fully connected layer,  <em>QuantizedMatMulWithBiasAndRelu</em>. Different neural network frameworks support different fuse-able OPs. For Intel&reg; AI Quantization Tools for TensorFlow, which will be discussed later on, below we can see a list of fuse-able OPs supported by TensorFlow: [https://github.com/intel/neural-compressor/blob/master/neural_compressor/adaptor/tensorflow.yaml#L110](https://github.com/intel/neural-compressor/blob/master/neural_compressor/adaptor/tensorflow.yaml#L110).
+1. Fuse FP32 OP to INT8 OP. For example, <em>MatMul</em>, <em>BiasAdd</em> and <em>ReLU</em> can be fused into a single quantized OP at the fully connected layer,  <em>QuantizedMatMulWithBiasAndRelu</em>. Different neural network frameworks support different fuse-able OPs. For Intel&reg; Intel&reg; Neural Compressor, which will be discussed later on, below we can see a list of fuse-able OPs supported by TensorFlow: [https://github.com/intel/neural-compressor/blob/master/neural_compressor/adaptor/tensorflow.yaml#L110](https://github.com/intel/neural-compressor/blob/master/neural_compressor/adaptor/tensorflow.yaml#L110).
 
 For fuse-able OPs supported by pyTorch, please see : [https://github.com/intel/neural-compressor/blob/master/neural_compressor/adaptor/pytorch_cpu.yaml#L251](https://github.com/intel/neural-compressor/blob/master/neural_compressor/adaptor/pytorch_cpu.yaml#L251)
 
@@ -434,15 +434,15 @@ Using a simple model which includes two layers of  MatMul as an example, we can 
 
 ![MatMul](/content/dam/develop/external/us/en/images/dl-matmul.jpg)
 
-### Intel&reg; AI Quantization Tools for TensorFlow
+### Intel&reg; Neural Compressor
 
-Intel&reg; AI Quantization Tools for TensorFlow is an open source Python library which provides API access for low-precision quantization for cross-neural network development frameworks. It is intended to provide simple, easy-to-use and precision-driven auto tuning tools for the quantization of models for accelerating the inference performance of low-precision models on the 3rd Gen Intel&reg; Xeon&reg; Scalable Processor platform.
+Intel&reg; Neural Compressor is an open source Python library which provides API access for low-precision quantization for cross-neural network development frameworks. It is intended to provide simple, easy-to-use and precision-driven auto tuning tools for the quantization of models for accelerating the inference performance of low-precision models on the 3rd Gen Intel&reg; Xeon&reg; Scalable Processor platform.
 
 Reference: [https://github.com/intel/neural-compressor](https://github.com/intel/neural-compressor)
 
 ![AI tools](/content/dam/develop/external/us/en/images/dl-ai-tools.jpg)
 
-Intel&reg; AI Quantization Tools for TensorFlow currently support the following Intel optimized deep learning frameworks:
+Intel&reg; Neural Compressor currently support the following Intel optimized deep learning frameworks:
 
 - [Tensorflow*](https://www.tensorflow.org/)
 - [PyTorch*](https://pytorch.org/)
@@ -464,7 +464,7 @@ The frameworks and their versions that have already been verified are shown belo
 ||||1.6.0|
 |||ONNX Runtime|1.6.0|
 
-The tuning strategies supported by Intel&reg; AI Quantization Tools for Tensorflow include:
+The tuning strategies supported by Intel&reg; Neural Compressor include:
 
 - [Basic](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#basic)
 - [Bayesian](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#bayesian)
@@ -473,11 +473,11 @@ The tuning strategies supported by Intel&reg; AI Quantization Tools for Tensorfl
 - [Exhaustive](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#exhaustive)
 - [Random](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#random)
 
-The workflow for Intel&reg; AI Quantization Tools for TensorFlow is shown below. The model quantization parameters matching the precision loss target are automatically selected according to the set tuning strategy, and the quantized model is generated:
+The workflow for Intel&reg; Neural Compressor is shown below. The model quantization parameters matching the precision loss target are automatically selected according to the set tuning strategy, and the quantized model is generated:
 
 ![Tensorflow](/content/dam/develop/external/us/en/images/dl-tensorflow.jpg)
 
-### Installing Intel&reg; AI Quantization Tools for TensorFlow
+### Installing Intel&reg; Neural Compressor
 
 For details on installation, refer to: [https://github.com/intel/neural-compressor#installation](https://github.com/intel/neural-compressor#installation)
 
@@ -509,7 +509,7 @@ Install from the source code
 # python setup.py install 
 ```
 
-### Using Intel&reg; AI Quantization Tools for TensorFlow
+### Using Intel&reg; Neural Compressor
 
 We are using  ResNet50 v1.0 as an example to explain how to use this tool for quantization.
 
