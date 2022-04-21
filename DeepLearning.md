@@ -11,7 +11,7 @@ This user guide is intended to explain how the 3 Generation Intel&reg; Xeon&reg;
 
 The development and deployment of typical deep learning applications involve the following stages:
 
-![Deep learning stages](/content/dam/develop/external/us/en/images/dl-stages.jpg)
+![Neural Compressor Architecture](/content/dam/develop/external/us/en/images/neuralCompressorArchitecture.png)
 
 These different stages require the allocation of following resources, and choosing the right resources can greatly accelerate the efficiency of your AI services:
 
@@ -24,7 +24,7 @@ These different stages require the allocation of following resources, and choosi
 
 All the processes including dataset preparation, model training, model optimization, and model deployment, can be done on an Intel&reg; Xeon&reg; Scalable Processor platform-based infrastructure which also supports machine learning/deep learning platforms for training and inference. The proposed infrastructure is shown in the figure below:
 
-![Deep learning infrastructure](/content/dam/develop/external/us/en/images/dl-infrastructure.jpg)
+![Neural Compressor Workflow](/content/dam/develop/external/us/en/images/neuralCompressorWorkflow.png)
 
 ## Introducing Intel&reg; AVX-512 and Intel&reg; Deep Learning Boost
 
