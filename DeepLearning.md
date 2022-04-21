@@ -420,9 +420,9 @@ There are three approaches to the quantization of neural network models:
 
 The basic procedure for the post-training quantization of neural networks is as follows:
 
-1. Fuse FP32 OP to INT8 OP. For example, <em>MatMul</em>, <em>BiasAdd</em> and <em>ReLU</em> can be fused into a single quantized OP at the fully connected layer,  <em>QuantizedMatMulWithBiasAndRelu</em>. Different neural network frameworks support different fuse-able OPs. For Intel&reg; AI Quantization Tools for TensorFlow, which will be discussed later on, below we can see a list of fuse-able OPs supported by TensorFlow: [https://github.com/intel/lpot/blob/master/lpot/adaptor/tensorflow.yaml#L190](https://github.com/intel/lpot/blob/master/lpot/adaptor/tensorflow.yaml#L190).
+1. Fuse FP32 OP to INT8 OP. For example, <em>MatMul</em>, <em>BiasAdd</em> and <em>ReLU</em> can be fused into a single quantized OP at the fully connected layer,  <em>QuantizedMatMulWithBiasAndRelu</em>. Different neural network frameworks support different fuse-able OPs. For Intel&reg; AI Quantization Tools for TensorFlow, which will be discussed later on, below we can see a list of fuse-able OPs supported by TensorFlow: [https://github.com/intel/neural-compressor/blob/master/neural_compressor/adaptor/tensorflow.yaml#L110](https://github.com/intel/neural-compressor/blob/master/neural_compressor/adaptor/tensorflow.yaml#L110).
 
-For fuse-able OPs supported by pyTorch, please see : [https://github.com/intel/lpot/blob/master/lpot/adaptor/pytorch_cpu.yaml#L124](https://github.com/intel/lpot/blob/master/lpot/adaptor/pytorch_cpu.yaml#L124)
+For fuse-able OPs supported by pyTorch, please see : [https://github.com/intel/neural-compressor/blob/master/neural_compressor/adaptor/pytorch_cpu.yaml#L251](https://github.com/intel/neural-compressor/blob/master/neural_compressor/adaptor/pytorch_cpu.yaml#L251)
 
 2. Quantize weights and save them in the quantized model.
 
@@ -438,7 +438,7 @@ Using a simple model which includes two layers of  MatMul as an example, we can 
 
 Intel&reg; AI Quantization Tools for TensorFlow is an open source Python library which provides API access for low-precision quantization for cross-neural network development frameworks. It is intended to provide simple, easy-to-use and precision-driven auto tuning tools for the quantization of models for accelerating the inference performance of low-precision models on the 3rd Gen Intel&reg; Xeon&reg; Scalable Processor platform.
 
-Reference: [https://github.com/intel/lpot](https://github.com/intel/lpot)
+Reference: [https://github.com/intel/neural-compressor](https://github.com/intel/neural-compressor)
 
 ![AI tools](/content/dam/develop/external/us/en/images/dl-ai-tools.jpg)
 
@@ -466,13 +466,12 @@ The frameworks and their versions that have already been verified are shown belo
 
 The tuning strategies supported by Intel&reg; AI Quantization Tools for Tensorflow include:
 
-- [Basic](https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#basic)
-- [Bayesian](https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#bayesian)
-- [Exhaustive](https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#exhaustive)
-- [MSE](https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#mse)
-- [Random](https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#random)
-- [TPE](https://github.com/intel/lpot/blob/master/docs/tuning_strategies.md#tpe)
-
+- [Basic](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#basic)
+- [Bayesian](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#bayesian)
+- [MSE](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#mse)
+- [TPE](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#tpe)
+- [Exhaustive](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#exhaustive)
+- [Random](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#random)
 
 The workflow for Intel&reg; AI Quantization Tools for TensorFlow is shown below. The model quantization parameters matching the precision loss target are automatically selected according to the set tuning strategy, and the quantized model is generated:
 
@@ -480,7 +479,7 @@ The workflow for Intel&reg; AI Quantization Tools for TensorFlow is shown below.
 
 ### Installing Intel&reg; AI Quantization Tools for TensorFlow
 
-For details on installation, refer to: [https://github.com/intel/lpot/blob/master/README.md](https://github.com/intel/lpot/blob/master/README.md)
+For details on installation, refer to: [https://github.com/intel/neural-compressor#installation](https://github.com/intel/neural-compressor#installation)
 
 Step 1: Use  Anaconda to create a  Python3.x virtual environment with the name of  lpot. We are using  Python 3.7 here as an example:
 
@@ -501,7 +500,7 @@ Installing with the binary file:
 Install from the source code
 
 ``` 
-# git clone https://github.com/intel/lpot.git
+# git clone https://github.com/intel/neural-compressor.git
 
 # cd lpot
 
@@ -536,7 +535,7 @@ Step 2: Move the image files to the child directories sorted by label:
 # wget -qO- https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh | bash 
 ```
 
-Step 3: Use the script, [prepare_dataset.sh](https://github.com/intel/lpot/blob/master/examples/tensorflow/image_recognition/prepare_dataset.sh), to convert raw data to the  TFrecord format:
+Step 3: Use the script, [prepare_dataset.sh](https://github.com/intel/neural-compressor/blob/master/examples/tensorflow/image_recognition/tensorflow_models/quantization/ptq/prepare_dataset.sh), to convert raw data to the  TFrecord format:
 
 
 ``` 
@@ -544,28 +543,26 @@ Step 3: Use the script, [prepare_dataset.sh](https://github.com/intel/lpot/blob/
 
 # bash prepare_dataset.sh --output_dir=./data --raw_dir=/PATH/TO/img_raw/val/ --subset=validation 
 ```
-
-Reference: [https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition#2-prepare-dataset](https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition#2-prepare-dataset)
+Reference: [https://github.com/intel/neural-compressor/tree/master/examples/tensorflow/image_recognition/tensorflow_models/quantization/ptq#2-prepare-dataset](https://github.com/intel/neural-compressor/tree/master/examples/tensorflow/image_recognition/tensorflow_models/quantization/ptq#2-prepare-dataset)
 
 ### Model preparation:
 
 ``` 
 # wget https://storage.googleapis.com/intel-optimized-tensorflow/models/v1_6/resnet50_fp32_pretrained_model.pb 
 ```
-
 ### Run Tuning:
 
-Edit the file: [examples/tensorflow/image_recognition/resnet50_v1.yaml](https://github.com/intel/lpot/blob/master/examples/tensorflow/image_recognition/resnet50_v1.yaml), making sure the dataset path for  quantizationcalibration,  evaluationaccuracy and  evaluationperformance is the user&#39;s real local path. It should be where the  TFrecord data generated previously during the data preparation stage, is located.
+Edit the file: [examples/tensorflow/image_recognition/resnet50_v1.yaml](https://github.com/intel/neural-compressor/blob/master/examples/tensorflow/image_recognition/tensorflow_models/quantization/ptq/resnet50_v1.yaml), making sure the dataset path for  quantizationcalibration,  evaluationaccuracy and  evaluationperformance is the user&#39;s real local path. It should be where the  TFrecord data generated previously during the data preparation stage, is located.
 
 ``` 
-# cd examples/tensorflow/image_recognition
+# cd examples/tensorflow/image_recognition/tensorflow_models/quantization/ptq
 
 # bash run_tuning.sh --config=resnet50_v1.yaml \n
 --input_model=/PATH/TO/resnet50_fp32_pretrained_model.pb \n
 --output_model=./lpot_resnet50_v1.pb 
 ```
 
-Reference: [https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition#1-resnet50-v10](https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition#1-resnet50-v10)
+Reference: [https://github.com/intel/neural-compressor/tree/master/examples/tensorflow/image_recognition/tensorflow_models/quantization/ptq#1-resnet50-v10](https://github.com/intel/neural-compressor/tree/master/examples/tensorflow/image_recognition/tensorflow_models/quantization/ptq#1-resnet50-v10)
 
 ### Run Benchmark:
 
