@@ -1,4 +1,4 @@
-# Tuning Guides Markdown Template
+# Intel® Tuning Guides Markdown Template
 
 Answer questions in (parenthesis)
 
