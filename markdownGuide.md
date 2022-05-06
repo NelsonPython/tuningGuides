@@ -1,4 +1,4 @@
-# Intel General Markdown Guide
+# Intel (R) General Markdown Guide
 
 **Version 2.4**
 
