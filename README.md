@@ -8,7 +8,17 @@ Intel® Tuning Guides Markdown Template is the recommended outline for writing a
 
 ### markdownGuide.md
 
-Intel® General Markdown Guide with formatting examples
+Intel® General Markdown Guide has formatting examples
+
+### Tips for Success
+
+Markdown may preview in github but will not load into AEM.  Troubleshooting tips:
+
+- Double check the spacing between headers and paragraphs
+- Use " or ' rather than other characters that look like quotes
+- Avoid using `/` or `\` in content.  These characters can be used in code blocks.  
+
+Please create an issue with questions or additional suggestions.
 
 
 ## Examples:
