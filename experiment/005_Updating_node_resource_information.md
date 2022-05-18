@@ -140,3 +140,7 @@ Enable MUNGE and Slurm controller services on the frontend node:
 ```
  syssystemctl enable slurmctld.service 
 ```
+
+##### Summary of the commands
+
+Here are all the commands for this section:
