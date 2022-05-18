@@ -4,7 +4,7 @@
 
 Using the  guide, create a template to structure content so that each group of code snippets and their corresponding instructions can be maintained separately.  Develop a Python script to assemble these markdown files into one markdown file for loading into the DevZone.  For purposes of these experiments, this is called the "DevZone markdown"
 
-Initial file formats:
+### File contents:
 
 000-config.json - contains the order in which the code and text snippets should be arranged
 
@@ -12,12 +12,15 @@ Initial file formats:
 
 002_intro.md - contains all content prior to the first code snippet
 
-Instructions and code snippet files:
-There are two files for each block of code:  step-by-step instructins along with code and a block of code that a developer can cut-and-paste directly into the command line
+#### Instructions and code snippet files:
+There are two files for each block of code:  
+- step-by-step instructions along with code
+- block of code that a developer can cut-and-paste directly into the command line
 
-- 003_Configuring_the_Slurm_Workload_Manager.md - step-by-step instructions along with code snippets
-- 004_summary.md - block of code snippets that a developer can cut-and-paste
+```
+003_Configuring_the_Slurm_Workload_Manager.md
+004_summary.md
 
-- 005_Updating_node_resource_information.md
-- 006_summary.md
-
+005_Updating_node_resource_information.md
+006_summary.md
+```
