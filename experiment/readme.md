@@ -2,7 +2,7 @@
 
 ## 1. Experiment 1
 
-Using the  guide, create a template to structure content so that each group of code snippets and their corresponding instructions can be maintained separately.  Develop a Python script to assemble these markdown files into one markdown file for loading into the DevZone.  For purposes of these experiments, this is called the "DevZone markdown"
+Using content and code snippets from the <i>Tuning Guide for Intel® Select Solutions for Genomics Analytics on 3rd Generation Intel® Xeon® Scalable Processors Based Platform</i>, create a template to structure content so that each group of code snippets and their corresponding instructions can be maintained separately by an Intel developer.  Write a Python script to assemble these markdown files into one markdown file for the entire tuning guide that can be loaded into DevZone.  For purposes of these experiments, this file is called the "DevZone markdown" file.  Future experiments will consider more automation.
 
 ### File contents:
 
