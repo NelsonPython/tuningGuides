@@ -6,15 +6,14 @@ Using content and code snippets from the <i>Tuning Guide for Intel® Select Solu
 
 ### File contents:
 
-000-config.json - contains the order in which the code and text snippets should be arranged, for example:
+content_order - contains the order in which the code and text snippets should be arranged, for example:
 
 ```
-{"Order":"[
-"https://raw.githubusercontent.com/NelsonPython/tuningGuides/main/experiment/002_intro.md",
-"https://raw.githubusercontent.com/NelsonPython/tuningGuides/main/experiment/003_Configuring_the_Slurm_Workload_Manager.md",
-"https://raw.githubusercontent.com/NelsonPython/tuningGuides/main/experiment/004_summary.md",
-"https://raw.githubusercontent.com/NelsonPython/tuningGuides/main/experiment/005_Updating_node_resource_information.md",
-"https://raw.githubusercontent.com/NelsonPython/tuningGuides/main/experiment/006_summary.md"]"}
+https://raw.githubusercontent.com/NelsonPython/tuningGuides/main/experiment/002_intro.md
+https://raw.githubusercontent.com/NelsonPython/tuningGuides/main/experiment/003_Configuring_the_Slurm_Workload_Manager.md
+https://raw.githubusercontent.com/NelsonPython/tuningGuides/main/experiment/004_summary.md
+https://raw.githubusercontent.com/NelsonPython/tuningGuides/main/experiment/005_Updating_node_resource_information.md
+https://raw.githubusercontent.com/NelsonPython/tuningGuides/main/experiment/006_summary.md
 ```
 
 001_title.md - the title may not be included in the DevZone markdown file
