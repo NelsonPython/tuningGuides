@@ -34,3 +34,8 @@ Via Slurm, the PAM (pluggable authentication module) restricts normal user SSH a
 ```
 wwsh file sync 
 ```
+
+##### Summary of the commands
+
+Here are all the commands for this section:
+
