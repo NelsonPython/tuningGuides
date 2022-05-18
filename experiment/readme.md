@@ -8,7 +8,7 @@ Using content and code snippets from the <i>Tuning Guide for Intel® Select Solu
 
 000-config.json - contains the order in which the code and text snippets should be arranged
 
-001_title.md - the title may not be included in the DevZone markdown file.  Only ## level two headers and lower may be used.
+001_title.md - the title may not be included in the DevZone markdown file
 
 002_intro.md - contains all content prior to the first code snippet
 
