@@ -33,3 +33,33 @@ Test data for this experiment is two actual code blocks from our most complex tu
 005_Updating_node_resource_information.md
 006_summary.md
 ```
+
+## Python script
+
+```
+import requests
+
+url = "https://raw.githubusercontent.com/NelsonPython/tuningGuides/main/experiment/content_order.md"
+
+payload={}
+headers = {}
+md = ''
+
+response = requests.request("GET", url, headers=headers, data=payload)
+print(response.text)
+
+contents = response.text.split("\n")
+
+for content in contents:
+    if len(content) > 0:
+        res2 = requests.request("GET",content, headers=headers, data=payload)
+        md += (res2.text)
+
+print(md)
+```
+
+## Results - Experiment 1
+
+[See DevZone_Markdown.md](Devzone_Markdown.md)
+
+
