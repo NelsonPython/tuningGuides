@@ -6,7 +6,7 @@ Using content and code snippets from the <i>Tuning Guide for Intel® Select Solu
 
 ### File contents:
 
-000-config.json - contains the order in which the code and text snippets should be arranged, as follows:
+000-config.json - contains the order in which the code and text snippets should be arranged, for example:
 
 ```
 {"Order":"[
