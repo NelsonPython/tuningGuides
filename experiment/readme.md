@@ -8,7 +8,7 @@ Using the  guide, create a template to structure content so that each group of c
 
 000-config.json - contains the order in which the code and text snippets should be arranged
 
-001_title.md - the title may not be included in the DevZone markdown file
+001_title.md - the title may not be included in the DevZone markdown file.  Only ## level two headers and lower may be used.
 
 002_intro.md - contains all content prior to the first code snippet
 
