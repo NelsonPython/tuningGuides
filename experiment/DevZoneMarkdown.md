@@ -77,11 +77,18 @@ Via Slurm, the PAM (pluggable authentication module) restricts normal user SSH a
 ```
 wwsh file sync 
 ```
+
+##### Summary of the commands
+
+Here are all the commands for this section:
+
+```
 groupadd sshallowlist
 usermod -aG sshallowlist clck
 useradd --system --shell=/sbin/nologin slurm 
 dnf -y install ohpc-slurm-server
 wwsh file sync
+```
 #### Updating node resource information
 
 Update the Slurm configuration file with the node names of the compute nodes, the properties of their processors, and the Slurm partitions or queues that are associated with your HPC Cluster, including:
@@ -224,6 +231,11 @@ Enable MUNGE and Slurm controller services on the frontend node:
 ```
  syssystemctl enable slurmctld.service 
 ```
+
+##### Summary of the commands
+
+Here are all the commands for this section:
+```
 cp /etc/slurm/slurm.conf.ohpc /etc/slurm/slurm.conf
 
 sed -i "s/^\(NodeName.*\)/#\1/" /etc/slurm/slurm.conf                                                     
@@ -247,3 +259,4 @@ EOFslurm
 wwsh -y file import /etc/slurm/slurm.conf
 sed -i "s/^files\(.*\)/files\1, slurm.conf, munge.key/" /etc/warewulf/defaults/provision.conf
 syssystemctl enable slurmctld.service 
+```
