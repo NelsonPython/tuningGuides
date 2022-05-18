@@ -1,3 +1,4 @@
+```
 cp /etc/slurm/slurm.conf.ohpc /etc/slurm/slurm.conf
 
 sed -i "s/^\(NodeName.*\)/#\1/" /etc/slurm/slurm.conf                                                     
@@ -21,3 +22,4 @@ EOFslurm
 wwsh -y file import /etc/slurm/slurm.conf
 sed -i "s/^files\(.*\)/files\1, slurm.conf, munge.key/" /etc/warewulf/defaults/provision.conf
 syssystemctl enable slurmctld.service 
+```
