@@ -13,10 +13,11 @@ Using the  guide, create a template to structure content so that each group of c
 002_intro.md - contains all content prior to the first code snippet
 
 #### Instructions and code snippet files:
-There are two files for each block of code:  
+There are multiple blocks of code and two files for each block:  
 - step-by-step instructions along with code
 - block of code that a developer can cut-and-paste directly into the command line
 
+Test data for this experiment is two actual code blocks from our most complex tuning guide:
 ```
 003_Configuring_the_Slurm_Workload_Manager.md
 004_summary.md
