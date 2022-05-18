@@ -74,4 +74,10 @@ This screen capture focuses on the code block.  The code is there but the format
 
 ![Screen capture of published markdown page 3](images/Experiment1-code_snipppet_2_partial.png)
 
+### Summary of results
+
+This is one good framework for storing micro-recipes that can be created and maintained by an Intel developer.  The developer must use native markdown.  This process improves the accuracy of the code snippets and reduces the validation effort because we are publishing the exact code written by the developer.  This eliminates the opportunity for typos and known Word2AEM translater bugs.  
+
+More investigation is needed to understand how the developer can push content to the web when he/she makes changes.  Currently, the developer would notify the CCP web publisher.  The web publisher would run the process and publish content.
+
 
