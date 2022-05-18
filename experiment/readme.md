@@ -15,9 +15,9 @@ Initial file formats:
 Instructions and code snippet files:
 There are two files for each block of code:  step-by-step instructins along with code and a block of code that a developer can cut-and-paste directly into the command line
 
-003_Configuring_the_Slurm_Workload_Manager.md - step-by-step instructions along with code snippets
-004_summary.md - block of code snippets that a developer can cut-and-paste
+- 003_Configuring_the_Slurm_Workload_Manager.md - step-by-step instructions along with code snippets
+- 004_summary.md - block of code snippets that a developer can cut-and-paste
 
-005_Updating_node_resource_information.md
-006_summary.md
+- 005_Updating_node_resource_information.md
+- 006_summary.md
 
