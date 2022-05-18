@@ -62,4 +62,16 @@ print(md)
 
 [See DevZone_Markdown.md](DevZoneMarkdown.md)
 
+In the menu on the left, there may be redundant items or this may be a result of using the test environment without actually publishing the tuning guide.
+
+![Screen capture of published markdown](images/Experiment1.png)
+
+This screen capture shows both the step-by-step instructions for learners and the code block for advanced developers
+
+![Screen capture of published markdown page 2](images/Experiment1-code_snipppet_1.png)
+
+This screen capture focuses on the code block.  The code is there but the formatting is a bit irregular.  More investigation needed.
+
+![Screen capture of published markdown page 3](images/Experiment1-code_snipppet_2_partial.png)
+
 
