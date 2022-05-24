@@ -4,7 +4,7 @@
 
 This guide is for users who are already familiar with deep learning using [Intel® AVX512](https://www.intel.com/content/www/us/en/architecture-and-technology/avx-512-animation.html) and [Intel® Deep Learning Boost](https://www.intel.com/content/www/us/en/artificial-intelligence/deep-learning-boost.html). It provides recommendations for configuring hardware and software that will provide the best performance in most situations. However, please note that we rely on the users to carefully consider these settings for their specific scenarios, since these tools can be deployed in multiple ways.
 
-The 3 Generation Intel&reg; Xeon&reg; Scalable Processor platform has the following advantages:
+The 3rd Generation Intel&reg; Xeon&reg; Scalable Processor platform has the following advantages:
 
 - Speedy processing of memory-intensive workloads such as 3D-CNN topologies used in medical imaging, GAN, seismic analysis, genome sequencing, etc.
 - Leveraging the simple ` numactl ` command for flexible core control and real-time inference even when the number of batches is small
@@ -48,19 +48,38 @@ Choosing the right combination of resources greatly accelerates the efficiency o
 
 <p style="text-align:center"><img alt="DL int-8" height="156" src="/content/dam/develop/external/us/en/images/dl-int8-2.jpg" width="587"/></p>
 
-## Hardware Configuration
+### Environment
 
-Machine learning workloads, specifically deep learning workloads, are often used by compute-intensive applications. Hence, they require sufficient memory, CPUs, hard drives, and other computing resources to achieve optimal performance. The following settings are recommended: 
+Tested hardware and software for this tuning guide include:
 
+#### Hardware
+
+The configuration described in this article is based on 3rd Generation Intel® Xeon® processor hardware. The server platform, memory, hard drives, and network interface cards can be determined according to your usage requirements.
+
+| Hardware | Model |
+|----------------------------------|------------------------------------|
+| Server Platform Name/Brand/Model | Intel® Coyote Pass Server Platform |
+| CPU | Intel® Xeon® PLATINUM 8380 CPU @ 2.30GHz | 
+| BIOS | version # | 
+| Memory | 8*64 GB DDR4, 3200 MT/s | 
+
+#### Software
+
+| Software | Version |
+|------------------|-------------|
+| Operating System | Ubuntu 20.04.4 LTS | 
+| Kernel | 5.4.0 | 
+
+Note: The configuration described in this article is based on 3rd Generation Intel Xeon processor hardware. Server platform, memory, hard drives, network interface cards can be determined according to customer usage requirements.  
 ### BIOS Settings
 
 |Configuration item|Recommended value|
 |------------------|-----------------|
-|Hyper-Threading|Enable|
+|Processor configuration: Hyper-Threading|Enable|
 |SNC (Sub NUMA)|Disable|
 |Boot performance mode|Max Performance|
 |Turbo Mode|Enable|
-|Hardware P-State|Native Mode|
+|Power and Performanace: Hardware P-States|Native Mode|
 
 ### Memory
 
@@ -69,6 +88,12 @@ Use all available memory channels
 ### CPU
 
 FMA, the Intel AVX-512 acceleration module, is an important component for unleashing computational performance.  In order to achieve better computing performance, use the Intel Xeon&reg; Scalable Processors Gold 6 series (or above) which have two Intel AVX512 computational modules per core.
+
+Note:  To confirm that AVX-512 is supported by the CPU, enter the following command and look for avx512 in the "flags" section.
+
+```
+$ cat /proc/cpuinfo
+```
 
 ### Network
 
