@@ -32,6 +32,22 @@ Choosing the right combination of resources greatly accelerates the efficiency o
 
 ![Neural Compressor Workflow](/content/dam/develop/external/us/en/images/neuralCompressorWorkflow.png)
 
+<h2><a id="_Toc67652282"></a><a id="_Toc68526401"></a>Introducing Intel&reg; AVX-512 and Intel&reg; Deep Learning Boost</h2>
+
+<p>Intel&reg; Advanced Vector Extensions 512 (Intel&reg; AVX-512) is a &ldquo;single instruction, multiple data&rdquo; (SIMD) instruction set based on x86 processors. Compared to traditional &ldquo;single instruction, single data&rdquo; instructions, a SIMD instruction allows for executing multiple data operations with a single instruction. As the name implies, Intel&reg; AVX-512 has a register width of 512 bits, and it supports 16 32-bit single-precision floating-point numbers or 64 8-bit integers.</p>
+
+<p>Intel&reg; Xeon&reg; Scalable Processors support multiple types of workloads, including complex AI workloads, and improve AI computation performance with the use of Intel&reg; Deep Learning Boost (Intel&reg; DL Boost). Intel Deep Learning Boost includes Intel&reg; AVX-512 VNNI (Vector Neural Network Instructions) which is an extension to the Intel&reg; AVX-512 instruction set. It can combine three instructions into one for execution, which further unleashes the computing potential of next-generation Intel&reg; Xeon&reg; Scalable Processors and increases the inference performance of the INT8 model. Both 2nd-Generation and 3rd-Generation Intel&reg; Xeon&reg; Scalable Processors support VNNI.</p>
+
+<p style="text-align:center"><img alt="DL VNNI" height="176" src="/content/dam/develop/external/us/en/images/dl-vnni.jpg" width="855"/></p>
+
+<p>Platforms not using VNNI require the&nbsp;<strong>vpmaddubsw, vpmaddwd&nbsp;</strong>and<strong>&nbsp;vpaddd</strong>&nbsp;instructions to complete the multiply-accumulate operations in INT8 convolution operation:</p>
+
+<p style="text-align:center"><img alt="DL int-8" height="140" src="/content/dam/develop/external/us/en/images/dl-int8-1.jpg" width="1175"/></p>
+
+<p>Platforms using VNNI require only one instruction, &ldquo;vpdpbusd&rdquo;, to complete the INT8 convolution operation:</p>
+
+<p style="text-align:center"><img alt="DL int-8" height="156" src="/content/dam/develop/external/us/en/images/dl-int8-2.jpg" width="587"/></p>
+
 ## Intel&reg; Neural Compressor
 
 [Intel® Neural Compressor](https://intel.github.io/neural-compressor) is one of the key AI software components in the Intel® oneAPI AI Analytics Toolkit.  It is an open-source Python library that runs on Intel CPUs and GPUs.  This toolkit delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, and knowledge distillation. It supports automatic, accuracy-driven, tuning strategies to quickly find the best model.  It also implements different weight pruning algorithms to generate a pruned model with a pre-defined sparsity goal and it supports knowledge distillation from a teacher model to a student model.   
