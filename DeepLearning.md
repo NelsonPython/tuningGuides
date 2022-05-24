@@ -34,7 +34,7 @@ Choosing the right combination of resources greatly accelerates the efficiency o
 
 ## Intel&reg; Neural Compressor
 
-[Intel® Neural Compressor](https://intel.github.io/neural-compressor) is an open-source Python library that runs on Intel CPUs and GPUs.  
+[Intel® Neural Compressor](https://intel.github.io/neural-compressor) is one of the key AI software components in the Intel® oneAPI AI Analytics Toolkit.  It is an open-source Python library that runs on Intel CPUs and GPUs.  This toolkit delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, and knowledge distillation. It supports automatic, accuracy-driven, tuning strategies to quickly find the best model.  It also implements different weight pruning algorithms to generate a pruned model with a pre-defined sparsity goal and it supports knowledge distillation from a teacher model to a student model.   
 
 ## Hardware Configuration
 
