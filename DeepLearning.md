@@ -32,13 +32,9 @@ Choosing the right combination of resources greatly accelerates the efficiency o
 
 ## Intel&reg; AVX-512 and Intel&reg; Deep Learning Boost
 
-Intel® Neural Compressor (formerly known as Intel® Low Precision Optimization Tool) is an open-source Python library running on Intel CPUs and GPUs, which delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, knowledge distillation. This tool supports automatic accuracy-driven tuning strategies to help user quickly find out the best quantized model. It also implements different weight pruning algorithms to generate pruned model with predefined sparsity goal and supports knowledge distillation to distill the knowledge from the teacher model to the student model.
+[Intel® Neural Compressor](https://intel.github.io/neural-compressor) is an open-source Python library running on Intel CPUs and GPUs.  
 
-Note:  GPU support is under development.
-
-Visit the [Intel® Neural Compressor online document website](https://intel.github.io/neural-compressor)
-
-## BIOS Settings and Hardware Configurations
+## BIOS Settings and Hardware Configuration
 
 ### BIOS Settings
 
