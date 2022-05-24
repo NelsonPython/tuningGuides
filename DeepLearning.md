@@ -48,10 +48,6 @@ Choosing the right combination of resources greatly accelerates the efficiency o
 
 <p style="text-align:center"><img alt="DL int-8" height="156" src="/content/dam/develop/external/us/en/images/dl-int8-2.jpg" width="587"/></p>
 
-## Intel&reg; Neural Compressor
-
-[Intel® Neural Compressor](https://intel.github.io/neural-compressor) is one of the key AI software components in the Intel® oneAPI AI Analytics Toolkit.  It is an open-source Python library that runs on Intel CPUs and GPUs.  This toolkit delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, and knowledge distillation. It supports automatic, accuracy-driven, tuning strategies to quickly find the best model.  It also implements different weight pruning algorithms to generate a pruned model with a pre-defined sparsity goal and it supports knowledge distillation from a teacher model to a student model.   
-
 ## Hardware Configuration
 
 Machine learning workloads, specifically deep learning workloads, are often used by compute-intensive applications. Hence, they require sufficient memory, CPUs, hard drives, and other computing resources to achieve optimal performance. The following settings are recommended: 
@@ -425,7 +421,7 @@ For fuse-able OPs supported by pyTorch, please see : [https://github.com/intel/n
 
 3. Quantize the input/activation layer by sampling the calibration dataset to acquire the distribution and range information of the data in the activation layer, which is then recorded in the newly generated quantized model.
 
-4. The  Requantize operation is fused into its corresponding INT8 OP to generate the final quantized model.
+4. The Requantize operation is fused into its corresponding INT8 OP to generate the final quantized model.
 
 Using a simple model which includes two layers of  MatMul as an example, we can observe the quantization process as follows:
 
@@ -433,7 +429,7 @@ Using a simple model which includes two layers of  MatMul as an example, we can 
 
 ### Intel&reg; Neural Compressor
 
-Intel&reg; Neural Compressor is an open source Python library which provides API access for low-precision quantization for cross-neural network development frameworks. It is intended to provide simple, easy-to-use and precision-driven auto tuning tools for the quantization of models for accelerating the inference performance of low-precision models on the 3rd Gen Intel&reg; Xeon&reg; Scalable Processor platform.
+[Intel® Neural Compressor](https://intel.github.io/neural-compressor) is one of the key AI software components in the Intel® oneAPI AI Analytics Toolkit.  It is an open-source Python library that runs on Intel CPUs and GPUs.  This toolkit delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, and knowledge distillation. It supports automatic, accuracy-driven, tuning strategies to quickly find the best model.  It also implements different weight pruning algorithms to generate a pruned model with a pre-defined sparsity goal and it supports knowledge distillation from a teacher model to a student model.   
 
 Reference: [https://github.com/intel/neural-compressor](https://github.com/intel/neural-compressor)
 
@@ -477,6 +473,8 @@ The workflow for Intel&reg; Neural Compressor is shown below. The model quantiza
 ### Installing Intel&reg; Neural Compressor
 
 For details on installation, refer to: [https://github.com/intel/neural-compressor#installation](https://github.com/intel/neural-compressor#installation)
+
+![Neural Compressor](https://github.com/intel/neural-compressor/blob/master/docs/imgs/infrastructure.png)
 
 Step 1: Use  Anaconda to create a  Python3.x virtual environment with the name of  lpot. We are using  Python 3.7 here as an example:
 
