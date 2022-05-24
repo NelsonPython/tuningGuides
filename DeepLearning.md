@@ -2,19 +2,21 @@
 
 ## Introduction
 
-This guide is for users who are already familiar with Deep Learning with [Intel® AVX512](https://www.intel.com/content/www/us/en/architecture-and-technology/avx-512-animation.html) and [Intel® Deep Learning Boost](https://www.intel.com/content/www/us/en/artificial-intelligence/deep-learning-boost.html). It provides recommendations for configuring hardware and software that will provide the best performance in most situations. However, please note that we rely on the users to carefully consider these settings for their specific scenarios, since Deep Learning with Intel® AVX512 and Intel® Deep Learning Boost can be deployed in multiple ways.
+This guide is for users who are already familiar with deep learning using [Intel® AVX512](https://www.intel.com/content/www/us/en/architecture-and-technology/avx-512-animation.html) and [Intel® Deep Learning Boost](https://www.intel.com/content/www/us/en/artificial-intelligence/deep-learning-boost.html). It provides recommendations for configuring hardware and software that will provide the best performance in most situations. However, please note that we rely on the users to carefully consider these settings for their specific scenarios, since these tools can be deployed in multiple ways.
 
 The 3 Generation Intel&reg; Xeon&reg; Scalable Processor platform has the following advantages:
 
-- Speedy processing of memory-intensive workloads and 3D-CNN topologies used in medical imaging, GAN, seismic analysis, genome sequencing, etc.
-- A simple numactl command can be used for flexible core control and is suitable for real-time inference even when the number of batches is small
-- Supported by a powerful ecosystem
-- Cost effective distributed training on large-scale clusters used to perform computations directly at the data source in order to avoid the additional costs of redundant data storage and expensive cache mechanisms that are usually required for the training of scaled architecture.
-- Supports multiple types of workloads (HPC/BigData/AI) on the same cluster to achieve better TCO
+- Speedy processing of memory-intensive workloads such as 3D-CNN topologies used in medical imaging, GAN, seismic analysis, genome sequencing, etc.
+- Leveraging the simple ` numactl ` command for flexible core control and real-time inference even when the number of batches is small
+- Cost-effective distributed training on large-scale clusters used to perform computations directly at the data source in order to avoid the additional costs of redundant data storage and expensive cache mechanisms
+- Multiple types of workloads (HPC/BigData/AI) are supported on the same cluster to achieve better TCO
 - SIMD acceleration
 - The same infrastructure can be used for training and inference
+- An active ecosystem full of developers, experts, and learners  
 
-These stages are involved in development and deployment of a typical deep learning application:
+### Development and Deployment Stages
+
+A typical deep learning application has these stages:
 
 ![Neural Compressor Architecture](/content/dam/develop/external/us/en/images/neuralCompressorArchitecture.png)
 
@@ -26,19 +28,19 @@ Each stage requires the allocation of these resources:
 - Communication link between compute nodes
 - Optimized software
 
-Choosing the right combination of resources greatly accelerates the efficiency of your AI services.  All the processes including dataset preparation, model training, model optimization, and model deployment, can be done on the 3 Generation Intel&reg; Xeon&reg; Scalable Processor platform-based infrastructure that supports machine learning/deep learning platforms for training and inference. A proposed infrastructure is shown in the figure below:
+Choosing the right combination of resources greatly accelerates the efficiency of your AI services.  All of the processes including dataset preparation, model training, model optimization, and model deployment, can be done on a 3rd Generation Intel&reg; Xeon&reg; Scalable Processor platform-based infrastructure that supports machine learning/deep learning platforms for training and inference. A proposed infrastructure is shown in the figure below:
 
 ![Neural Compressor Workflow](/content/dam/develop/external/us/en/images/neuralCompressorWorkflow.png)
 
-## Intel&reg; AVX-512 and Intel&reg; Deep Learning Boost
+## Intel&reg; Neural Compressor
 
-[Intel® Neural Compressor](https://intel.github.io/neural-compressor) is an open-source Python library running on Intel CPUs and GPUs.  
+[Intel® Neural Compressor](https://intel.github.io/neural-compressor) is an open-source Python library that runs on Intel CPUs and GPUs.  
 
-## BIOS Settings and Hardware Configuration
+## Hardware Configuration
+
+Machine learning workloads, specifically deep learning workloads, are often used by compute-intensive applications. Hence, they require sufficient memory, CPUs, hard drives, and other computing resources to achieve optimal performance. The following settings are recommended: 
 
 ### BIOS Settings
-
-The configuration items that can be optimized in BIOS and their recommended values are as follows:
 
 |Configuration item|Recommended value|
 |------------------|-----------------|
@@ -48,73 +50,63 @@ The configuration items that can be optimized in BIOS and their recommended valu
 |Turbo Mode|Enable|
 |Hardware P-State|Native Mode|
 
-### Recommended Hardware Configurations
+### Memory
 
-Machine learning workloads, and in particular deep learning workloads, are usually used for compute-intensive applications. Hence, they require a selection of suitable types of memory, CPU, hard drives, and other computing resources to achieve optimal performance. In summary, the following common configurations are recommended:
+Use all available memory channels
 
- Memory configuration
+### CPU
 
-The utilization of all memory channels is recommended so that the bandwidth of all memory channels can be utilized.
+FMA, the Intel AVX-512 acceleration module, is an important component for unleashing computational performance.  In order to achieve better computing performance, use the Intel Xeon&reg; Scalable Processors Gold 6 series (or above) which have two Intel AVX512 computational modules per core.
 
- CPU configuration
+### Network
 
-FMA, the Intel AVX-512 acceleration module in Intel processors, is an important component in unleashing computational performance, and artificial intelligence-related workloads are usually part of compute-intensive applications. In order to achieve better computing performance, it is recommended to use the Intel Xeon&reg; Scalable Processors Gold 6 series (or above) which have two Intel AVX512 computational modules per core.
+If cross-node training clusters are required, choose high-speed networks, such as 25G/100G, for better scalability.
 
- Network configuration
+### Hard drive
 
-If cross-node training clusters are required, then it is recommended to choose high-speed networking such as 25G/100G networks for better scalability.
+For high I/O efficiency, use SSDs and drives with higher read and write speeds.
 
- Hard drive configuration
+## Linux Operating System Optimization
 
-For high IO efficiency for workloads, SSDs and drives with higher read and write speeds are recommended.
-
-## Linux System Optimization
+Benchmarking experiments conducted in order to write this guide run on Linux.
 
 ### OpenMP Parameter Settings
 
 The recommended configuration for the main parameters is as follows:
 
-
 - OMP_NUM_THREADS = &ldquo;number of cpu cores in container&rdquo;
 - KMP_BLOCKTIME = 1 or 0 (set according to actual type of model)
 - KMP_AFFINITY=granularity=fine, verbose, compact,1,0
-
 
 ### Number of CPU cores
 
 The main impact of the number of CPU cores on inference performance is as follows:
 
-&bull; When batchsize is small (in online services for instance), the increase in inference throughput gradually weakens as the number of CPU cores increases; in practice, 8-16 CPU cores is recommended for service deployment depending on the model used.
+&bull; When batchsize is small (in online services for instance) the increase in inference throughput gradually weakens as the number of CPU cores increases.  In practice, 8-16 CPU cores is recommended for service deployment depending on the model used.
 
-&bull; When batchsize is large (in offline services for instance), the inference throughput can increase linearly as the number of CPU cores increases; in practice, more than 20 CPU cores is recommended for service deployment.
-
+&bull; When batchsize is large (in offline services for instance) the inference throughput can increase linearly as the number of CPU cores increases.  In practice, more than 20 CPU cores is recommended for service deployment.
 
 ``` # taskset -C xxx-xxx –p pid (limits the number of CPU cores used in service) ```
 
-### Impact of NUMA Configuration
+### NUMA Configuration
 
 For NUMA-based servers, there is usually a 5-10% increase in performance when configuring NUMA on the same node compared to using it on different nodes.
-
 
 ``` #numactl -N NUMA_NODE -l command args ... (controls NUMA nodes running in service) ```
 
 ### Configuration of Linux Performance Governor
 
-Performance: As the name suggests, efficiency is the only consideration and the CPU frequency is set to its peak to achieve the best performance.
-
+Efficiency is the key consideration.  Set the CPU frequency to its peak for the best performance.
 
 ``` # cpupower frequency-set -g performance ```
 
 ### CPU C-States Settings
 
-CPU C-States: To reduce power consumption when the CPU is idle, the CPU can be placed in the low-power mode. There are several power modes available for each CPU which are collectively referred to as C-states or C-modes.
-
-Disabling C-States can increase performance.
-
+There are several power modes available for each CPU which are collectively referred to as C-states or C-modes.  To reduce power consumption when the CPU is idle, the CPU can be placed in the low-power mode.  Disabling C-States can increase performance.
 
 ``` #cpupower idle-set -d 2,3 ```
 
-## Using Intel&reg; Optimization for TensorFlow* Deep Learning Framework
+## Intel&reg; Optimization for TensorFlow* Deep Learning Framework
 
 TensorFlow* is one of the most popular deep learning frameworks used in large-scale machine learning (ML) and deep learning (DL) applications. Since 2016, Intel and Google* engineers have been working together to use Intel&reg; oneAPI Deep Neural Network Library (Intel&reg; oneDNN) to optimize TensorFlow* performance and accelerate its training and inference performance on the Intel&reg; Xeon&reg; Scalable Processor platform.
 
