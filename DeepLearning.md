@@ -1,21 +1,24 @@
 # Deep Learning with Intel® AVX512 and Intel® Deep Learning Boost Tuning Guide on 3rd Generation Intel® Xeon® Scalable Processors
 
-## Overview
+## Introduction
 
-This user guide is intended to explain how the 3 Generation Intel&reg; Xeon&reg; Scalable Processor platform (codename Ice Lake/Whitley) is used for machine learning and deep learning-related tasks. Executing machine learning and deep learning workloads on the Intel&reg; Xeon&reg; Scalable Processor platform has the following advantages:
+This guide is for users who are already familiar with Deep Learning with Intel® AVX512 and Intel® Deep Learning Boost. It provides recommendations for configuring hardware and software that will provide the best performance in most situations. However, please note that we rely on the users to carefully consider these settings for their specific scenarios, since Deep Learning with Intel® AVX512 and Intel® Deep Learning Boost can be deployed in multiple ways.
 
-- The platform is very suitable for processing memory-intensive workloads and 3D-CNN topologies used in medical imaging, GAN, seismic analysis, genome sequencing, etc.
-- The simple numactl command can be used for flexible core control; it is still very suitable for real-time inference even when the number of batches is small.
-- It is supported by a powerful ecosystem and can be used for distributed training (such as for computations directly at the data source) directly on large-scale clusters. This avoids the additional costs for large storage capacity and expensive cache mechanisms that are usually required for the training of scaled architecture.
-- Multiple types of workloads (HPC/BigData/AI) are supported on the same cluster to achieve better TCO.
-- It satisfies the computing requirements in many real deep learning applications via SIMD acceleration.
-- The same infrastructure can be used directly for training and inference.
+The 3 Generation Intel&reg; Xeon&reg; Scalable Processor platform has the following advantages:
 
-The development and deployment of typical deep learning applications involve the following stages:
+- Speedy processing of memory-intensive workloads and 3D-CNN topologies used in medical imaging, GAN, seismic analysis, genome sequencing, etc.
+- A simple numactl command can be used for flexible core control and is suitable for real-time inference even when the number of batches is small
+- Supported by a powerful ecosystem
+- Cost effective distributed training on large-scale clusters used to perform computations directly at the data source in order to avoid the additional costs of redundant data storage and expensive cache mechanisms that are usually required for the training of scaled architecture.
+- Supports multiple types of workloads (HPC/BigData/AI) on the same cluster to achieve better TCO
+- SIMD acceleration
+- The same infrastructure can be used for training and inference
+
+These stages are involved in development and deployment of a typical deep learning application:
 
 ![Neural Compressor Architecture](/content/dam/develop/external/us/en/images/neuralCompressorArchitecture.png)
 
-These different stages require the allocation of following resources, and choosing the right resources can greatly accelerate the efficiency of your AI services:
+Each stage requires the allocation of these resources:  
 
 - Computational power
 - Memory
@@ -23,12 +26,11 @@ These different stages require the allocation of following resources, and choosi
 - Communication link between compute nodes
 - Optimized software
 
-
-All the processes including dataset preparation, model training, model optimization, and model deployment, can be done on an Intel&reg; Xeon&reg; Scalable Processor platform-based infrastructure which also supports machine learning/deep learning platforms for training and inference. The proposed infrastructure is shown in the figure below:
+Choosing the right combination of resources greatly accelerates the efficiency of your AI services.  All the processes including dataset preparation, model training, model optimization, and model deployment, can be done on the 3 Generation Intel&reg; Xeon&reg; Scalable Processor platform-based infrastructure that supports machine learning/deep learning platforms for training and inference. A proposed infrastructure is shown in the figure below:
 
 ![Neural Compressor Workflow](/content/dam/develop/external/us/en/images/neuralCompressorWorkflow.png)
 
-## Introducing Intel&reg; AVX-512 and Intel&reg; Deep Learning Boost
+## Intel&reg; AVX-512 and Intel&reg; Deep Learning Boost
 
 Intel® Neural Compressor (formerly known as Intel® Low Precision Optimization Tool) is an open-source Python library running on Intel CPUs and GPUs, which delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, knowledge distillation. This tool supports automatic accuracy-driven tuning strategies to help user quickly find out the best quantized model. It also implements different weight pruning algorithms to generate pruned model with predefined sparsity goal and supports knowledge distillation to distill the knowledge from the teacher model to the student model.
 
