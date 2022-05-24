@@ -1,5 +1,3 @@
-# Tuning Guide for Deep Learning with Intel® AVX512 and Intel® Deep Learning Boost on 3rd Generation Intel® Xeon® Scalable Processors
-
 ## Introduction
 
 This guide is for users who are already familiar with deep learning using [Intel® AVX512](https://www.intel.com/content/www/us/en/architecture-and-technology/avx-512-animation.html) and [Intel® Deep Learning Boost](https://www.intel.com/content/www/us/en/artificial-intelligence/deep-learning-boost.html). It provides recommendations for configuring hardware and software that will provide the best performance in most situations. However, please note that we rely on the users to carefully consider these settings for their specific scenarios, since these tools can be deployed in multiple ways.
