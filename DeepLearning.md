@@ -14,7 +14,7 @@ The 3 Generation Intel&reg; Xeon&reg; Scalable Processor platform has the follow
 - The same infrastructure can be used for training and inference
 - An active ecosystem full of developers, experts, and learners  
 
-### Development and Deployment Stages
+### Deep Learning Stages
 
 A typical deep learning application has these stages:
 
@@ -36,7 +36,7 @@ Choosing the right combination of resources greatly accelerates the efficiency o
 
 [Intel® Neural Compressor](https://intel.github.io/neural-compressor) is one of the key AI software components in the Intel® oneAPI AI Analytics Toolkit.  It is an open-source Python library that runs on Intel CPUs and GPUs.  This toolkit delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, and knowledge distillation. It supports automatic, accuracy-driven, tuning strategies to quickly find the best model.  It also implements different weight pruning algorithms to generate a pruned model with a pre-defined sparsity goal and it supports knowledge distillation from a teacher model to a student model.   
 
-## Hardware Configuration
+## Tuning Hardware
 
 Machine learning workloads, specifically deep learning workloads, are often used by compute-intensive applications. Hence, they require sufficient memory, CPUs, hard drives, and other computing resources to achieve optimal performance. The following settings are recommended: 
 
@@ -139,18 +139,15 @@ Step 2: Install the Intel optimation for TensorFlow*: intel-tensorflow.
 
 Install the latest version (2.x)
 
-
 ``` 
 # pip install intel-tensorflow 
 ```
 
 If you need to install tensorflow1.x, we recommend installing the following version to take advantage of the performance acceleration on the 3<sup>rd</sup> Gen Intel&reg; Xeon&reg; Scalable Processor platform:
 
-
 ``` 
 # pip install https://storage.googleapis.com/intel-optimized-tensorflow/intel_tensorflow-1.15.0up2-cp36-cp36m-manylinux2010_x86_64.whl 
 ```
-
 
 Step 3: Set run-time optimization parameters.
 
