@@ -60,7 +60,6 @@ The configuration described in this article is based on 3rd Generation Intel® X
 |----------------------------------|------------------------------------|
 | Server Platform Name/Brand/Model | Intel® Coyote Pass Server Platform |
 | CPU | Intel® Xeon® PLATINUM 8380 CPU @ 2.30GHz | 
-| BIOS | version # | 
 | Memory | 8*64 GB DDR4, 3200 MT/s | 
 
 #### Software
@@ -105,11 +104,11 @@ For high I/O efficiency, use SSDs and drives with higher read and write speeds.
 
 ## Linux Operating System Optimization
 
-Benchmarking experiments conducted in order to write this guide run on Linux.
+To speed up processing tune the Linux operating system for parallel programming.
 
 ### OpenMP Parameter Settings
 
-The recommended configuration for the main parameters is as follows:
+The [OpenMP](https://www.openmp.org/) is a specification for parallel programming.  Set these environment variables as follows:
 
 - OMP_NUM_THREADS = &ldquo;number of cpu cores in container&rdquo;
 - KMP_BLOCKTIME = 1 or 0 (set according to actual type of model)
@@ -117,7 +116,7 @@ The recommended configuration for the main parameters is as follows:
 
 ### Number of CPU cores
 
-The main impact of the number of CPU cores on inference performance is as follows:
+Consider the impact on inference performance based on the number of CPU cores being used, as follows:
 
 &bull; When batchsize is small (in online services for instance) the increase in inference throughput gradually weakens as the number of CPU cores increases.  In practice, 8-16 CPU cores is recommended for service deployment depending on the model used.
 
@@ -202,9 +201,14 @@ Usually, the following two methods are used for inference, which use different o
 
 To confirm the current number of physical cores, we recommend using the following command:
 
-
 ``` 
 # lscpu | grep "Core(s) per socket" | cut -d':' -f2 | xargs 
+```
+
+You may also use this command to list all physical cores for all sockets:
+
+```
+$ lscpu -b -p=Core,Socket | grep -v '^#' | sort -u | wc -l
 ```
 
 In this example, we assume 8 physical cores.
@@ -214,7 +218,6 @@ In this example, we assume 8 physical cores.
 Optimization parameters are configured using the two following methods. Please choose the configuration method according to your needs.
 
 Method 1: Configure environment parameters directly:
-
 
 ``` 
 export OMP_NUM_THREADS=physical cores
