@@ -1,4 +1,6 @@
-## Introduction
+# Tuning Guide for Deep Learning with Intel® AVX512 and Intel® Deep Learning Boost on 3rd Generation Intel® Xeon® Scalable Processors
+
+## Overview
 
 This guide is for users who are already familiar with deep learning using [Intel® AVX512](https://www.intel.com/content/www/us/en/architecture-and-technology/avx-512-animation.html) and [Intel® Deep Learning Boost](https://www.intel.com/content/www/us/en/artificial-intelligence/deep-learning-boost.html). It provides recommendations for configuring hardware and software that will provide the best performance in most situations. However, please note that we rely on the users to carefully consider these settings for their specific scenarios, since these tools can be deployed in multiple ways.
 
@@ -46,11 +48,11 @@ Choosing the right combination of resources greatly accelerates the efficiency o
 
 <p style="text-align:center"><img alt="DL int-8" height="156" src="/content/dam/develop/external/us/en/images/dl-int8-2.jpg" width="587"/></p>
 
-### Environment
+## Environment
 
 Tested hardware and software for this tuning guide include:
 
-#### Hardware
+### Hardware
 
 The configuration described in this article is based on 3rd Generation Intel® Xeon® processor hardware. The server platform, memory, hard drives, and network interface cards can be determined according to your usage requirements.
 
@@ -60,7 +62,7 @@ The configuration described in this article is based on 3rd Generation Intel® X
 | CPU | Intel® Xeon® PLATINUM 8380 CPU @ 2.30GHz | 
 | Memory | 8*64 GB DDR4, 3200 MT/s | 
 
-#### Software
+### Software
 
 | Software | Version |
 |------------------|-------------|
@@ -68,6 +70,7 @@ The configuration described in this article is based on 3rd Generation Intel® X
 | Kernel | 5.4.0 | 
 
 Note: The configuration described in this article is based on 3rd Generation Intel Xeon processor hardware. Server platform, memory, hard drives, network interface cards can be determined according to customer usage requirements.  
+
 ### BIOS Settings
 
 |Configuration item|Recommended value|
@@ -153,7 +156,6 @@ Step 1: Install a Python3.x environment. Here is an example to illustrate how to
 Reference: [https://www.anaconda.com/products/individual](https://www.anaconda.com/products/individual)
 
 Download and install the latest version of Anaconda
-
 
 ``` 
 # wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh
