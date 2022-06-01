@@ -45,15 +45,15 @@
 
 Tested hardware and software for this tuning guide include:
 
-### Hardware
+### 硬件
 
 The configuration described in this article is based on 3rd Generation Intel® Xeon® processor hardware. The server platform, memory, hard drives, and network interface cards can be determined according to your usage requirements.
 
-| Hardware | Model |
+| 硬件 | Model |
 |----------------------------------|------------------------------------|
 | Server Platform Name/Brand/Model | Intel® Coyote Pass Server Platform |
 | CPU | Intel® Xeon® PLATINUM 8380 CPU @ 2.30GHz | 
-| Memory | 8*64 GB DDR4, 3200 MT/s | 
+| 内存 | 8*64 GB DDR4, 3200 MT/s | 
 
 ### Software
 
