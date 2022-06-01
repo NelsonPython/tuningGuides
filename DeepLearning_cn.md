@@ -41,12 +41,36 @@
 
 ![](深度学习 int-8)
 
+## Environment
+
+Tested hardware and software for this tuning guide include:
+
+### Hardware
+
+The configuration described in this article is based on 3rd Generation Intel® Xeon® processor hardware. The server platform, memory, hard drives, and network interface cards can be determined according to your usage requirements.
+
+| Hardware | Model |
+|----------------------------------|------------------------------------|
+| Server Platform Name/Brand/Model | Intel® Coyote Pass Server Platform |
+| CPU | Intel® Xeon® PLATINUM 8380 CPU @ 2.30GHz | 
+| Memory | 8*64 GB DDR4, 3200 MT/s | 
+
+### Software
+
+| Software | Version |
+|------------------|-------------|
+| Operating System | Ubuntu 20.04.4 LTS | 
+| Kernel | 5.4.0 | 
+
+Note: The configuration described in this article is based on 3rd Generation Intel Xeon processor hardware. Server platform, memory, hard drives, network interface cards can be determined according to customer usage requirements.  
+
 ### BIOS 设置和硬件选型配置
 
 #### BIOS 设置
 
 BIOS 可优化配置项及推荐值如下：
 
+设置的影响 | 建议 |
 ------|-------|
 配置项 | 推荐值 |
 超线程 | 启用 |
@@ -75,7 +99,7 @@ Turbo 模式 | 启用 |
 
 为了提供工作负载的 IO 效率，建议配置 SSD 及更高读写速度的快速硬盘。
 
-### Linux* 系统优化
+## Linux* 系统优化
 
 #### OpenMP*参数的设置
 
@@ -93,28 +117,41 @@ Turbo 模式 | 启用 |
 - batchsize 较大时（例如离线类服务），推理吞吐量会随着 CPU 内核数的增加呈线性增长，实践中推荐使用 20 核以上的 CPU 进行服务部署。
 
 ```
-taskset -C xxx-xxx –p pid (limits the number of CPU cores used in service)
+# taskset -C xxx-xxx –p pid (limits the number of CPU cores used in service)
 ```
 
-NUMA 设置的影响
+### NUMA 设置的影响
 
 对于 NUMA 架构的服务器，NUMA 配置在同一 node 上相比不同 node 上性能通常会有 5%-10% 的提升。
 
+```
 #numactl -N NUMA_NODE -l command args ... (controls NUMA nodes running in service)
-Linux Performance Governor 的设置
+```
+
+### Linux Performance Governor 的设置
+
 性能：顾名思义只注重效率，将 CPU 频率固定工作在其支持的最高运行频率上，从而取得最好的性能。
 
+```
 # cpupower frequency-set -g performance
-CPU C-States设置
+```
+
+### CPU C-States设置
+
 CPU C-States：为了在 CPU 空闲的时候降低功耗，CPU 可以被命令进入低功耗模式。每个 CPU 都有几种功耗模式，这些模式被统称为 C-states 或者 C-modes。
 
 禁用 C-States 可以带来性能的提升。
 
+```
 #cpupower idle-set -d 2,3
-使用英特尔® Optimization for TensorFlow* Deep Learning Framework
+```
+
+## 使用英特尔® Optimization for TensorFlow* Deep Learning Framework
+
 TensorFlow *是用于大规模机器学习 (ML) 和深度学习 (DL) 的最受欢迎的深度学习框架之一。自 2016 年以来，英特尔和 Google 工程师一直在合作，使用英特尔® oneAPI Deep Neural Network Library (英特尔® OneDNN) 优化 TensorFlow*性能，加速在英特尔® 至强® 可扩展处理器平台上的训练和推理性能。
 
-部署英特尔® Optimization for TensorFlow* Deep Learning Framework
+### 部署英特尔® Optimization for TensorFlow* Deep Learning Framework
+
 参考：https://www.intel.com/content/www/cn/zh/developer/articles/guide/optimization-for-tensorflow-installation-guide.html
 
 第一步：安装 python*3.x 的环境。这里以 anaconda* 建立 python3.6 为例
@@ -123,6 +160,7 @@ TensorFlow *是用于大规模机器学习 (ML) 和深度学习 (DL) 的最受�
 
 下载 anaconda* 最新版本并安装
 
+```
 # wget https://repo.anaconda.com/archive/Anaconda3-2020.02-Linux-x86_64.sh
 
 # sh Anaconda3-2020.02-Linux-x86_64.sh
@@ -134,15 +172,21 @@ TensorFlow *是用于大规模机器学习 (ML) 和深度学习 (DL) 的最受�
 #(base) [root@xx]# python -V
 
 Python 3.6.10
+```
+
 第二步：安装英特尔® Optimization for TensorFlow* 版本：intel-tensorflow。
 
 安装最新版本 (2.x)
 
+```
 # pip install intel-tensorflow
+```
+
 如果您需要安装 tensorflow1.x，推荐安装以下版本，以便利用第 3 代英特尔® 至强® 可扩展处理器平台上的性能加速优势：
 
+```
 # pip install https://storage.googleapis.com/intel-optimized-tensorflow/intel_tensorflow-1.15.0up2-cp36-cp36m-manylinux2010_x86_64.whl
- 
+```
 
 第三步：设置运行时优化参数
 
@@ -160,7 +204,10 @@ https://github.com/IntelAI/models/blob/master/docs/general/tensorflow/GeneralBes
 
 确认目前的物理核配置个数，建议用以下命令获取
 
+```
 # lscpu | grep "Core(s) per socket" | cut -d':' -f2 | xargs
+```
+
 本例子假定为 8 个物理核 (physical cores)。
 
 2：设置优化参数：
@@ -169,6 +216,7 @@ https://github.com/IntelAI/models/blob/master/docs/general/tensorflow/GeneralBes
 
 方法一：直接设置环境运行参数：
 
+```
 export OMP_NUM_THREADS=physical cores
 
 export KMP_AFFINITY="granularity=fine,verbose,compact,1,0"
@@ -176,8 +224,11 @@ export KMP_AFFINITY="granularity=fine,verbose,compact,1,0"
 export KMP_BLOCKTIME=1
 
 export KMP_SETTINGS=1
+```
+
 方法二：在运行的 python 代码中加入环境变化设置：
 
+```
 import os
 
 os.environ["KMP_BLOCKTIME"] = "1"
@@ -197,7 +248,10 @@ config.intra_op_parallelism_threads = # <physical cores>
 config.inter_op_parallelism_threads = 1
 
 tf.Session(config=config)
-运行基于英特尔® Optimization for TensorFlow* 深度学习模型的推理, 支持 FP32/ INT8
+```
+
+### 运行基于英特尔® Optimization for TensorFlow* 深度学习模型的推理, 支持 FP32/ INT8
+
 本文主要介绍如何运行 ResNet50 的推理基准测试。您可以参考运行您的机器学习/深度学习模型推理。
 
 参考网址：https://github.com/IntelAI/models/blob/master/docs/image_recognition/tensorflow/Tutorial.md
@@ -214,21 +268,23 @@ https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tenso
 
 https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md#int8-inference-instructions
 
-运行基于址：英特尔® Optimization for TensorFlow* 深度学习模型的训练, 支持 FP32
+### 运行基于址：英特尔® Optimization for TensorFlow* 深度学习模型的训练, 支持 FP32
+
 本文主要介绍如何运行 ResNet50 的训练基准测试。您可以参考运行您的机器学习/深度学习模型训练。
 
 基于 FP32 精度的训练：
 
 https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tensorflow/resnet50v1_5/README.md#fp32-training-instructions
 
-典型应用 - 基于英特尔® Optimization for TensorFlow* 在 Wide & Deep 模型上的推理和训练
+### 典型应用 - 基于英特尔® Optimization for TensorFlow* 在 Wide & Deep 模型上的推理和训练
+
 在数据中心的众多业务中，使用推荐系统为用户匹配他们感兴趣的内容是一个典型的应用。推荐系统是一种信息过滤系统，能根据用户的档案或者历史行为记录，学习出用户的兴趣爱好，预测出用户对给定物品的评分或偏好。它改变了商家与用户的沟通方式，加强了和用户之间的交互性。
 
 利用深度学习，我们从海量而复杂的原始数据中学习到传统机器使用人工特征工程难以表达的特征间的深度交互。相关的研究成果包括 Wide & Deep、DeepFM、FNN、DCN 等模型。
 
 以 Wide & Deep 模型为例，它的核心思想是结合线性模型的记忆能力（memorization）和 DNN 模型的泛化能力（generalization），在训练过程中同时优化 2 个模型的参数。从而达到整体模型的预测能力最优。其结构如下所示：
 
-深度学习架构
+![深度学习架构]()
 
 Wide 部分
 
@@ -270,11 +326,13 @@ https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorfl
 
 https://github.com/IntelAI/models/tree/master/benchmarks/recommendation/tensorflow/wide_deep_large_ds#fp32-training-instructions
 
-基于 MKL Threadpool* 的 Tensorflow*（可选）
+### 基于 MKL Threadpool* 的 Tensorflow*（可选）
+
 TensorFlow 从 2.3.0 开始，增加了一个新的功能。TensorFlow 多线程支持可以选择使用 Eigen threadpool 而不是 OpenMP*，具体做法是在编译 Tensorflow 源代码时，使用编译选项 --config=mkl_threadpool 而不是之前的 --config=mkl。
 
 如用户想在 TensorFlow 1.15 上尝试此功能，则需下载经过英特尔移植和优化的源代码，并进行编译（特别强调这里需要安装 Bazel* 0.24.1）：
 
+```
 # git clone https://github.com/Intel-tensorflow/tensorflow.git
 
 # git checkout -b tf-1.15-maint remotes/origin/tf-1.15-maint
@@ -282,13 +340,20 @@ TensorFlow 从 2.3.0 开始，增加了一个新的功能。TensorFlow 多线程
 # bazel --output_user_root=$BUILD_DIR build --config=mkl_threadpool -c opt --copt=-O3 //tensorflow/tools/pip_package:build_pip_package
 
 bazel-bin/tensorflow/tools/pip_package/build_pip_package $BUILD_DIR
+```
+
 上述步骤顺利完成后，TensorFlow wheel 文件可在 $BUILD_DIR 路径下找到。例如： tensorflow-1.15.0up2-cp36-cp36m-linux_x86_64.whl。安装步骤如下：
 
+```
 # pip uninstall tensorflow
 
 # pip install $BUILD_DIR/<filename>.whl --user
-使用深度学习框架 PyTorch*
-部署 PyTorch*
+```
+ 
+## 使用深度学习框架 PyTorch*
+
+### 部署 PyTorch*
+
 参考：https://www.intel.com/content/www/cn/zh/developer/articles/guide/getting-started-with-intel-optimization-of-pytorch.html
 
 安装环境：python3.6 及以上的版本
@@ -299,17 +364,22 @@ bazel-bin/tensorflow/tools/pip_package/build_pip_package $BUILD_DIR
 
 目前，英特尔 oneDNN 已经集成到 PyTorch 的正式版本中，因此无需额外的安装步骤就可以在英特尔® 至强® 可扩展处理器平台上获取加速性能，在选择 CUDA 的版本时。请将 CUDA 选项设置为 “None”。具体见下图。
 
-oneDNN
+![oneDNN]()
 
 第 3 步：安装
 
+```
 pip install torch==1.7.1+cpu torchvision==0.8.2+cpu torchaudio==0.7.2 -f https://download.pytorch.org/whl/torch_stable.html
-运行基于 PyTorch* 的深度学习模型的训练和推理的优化建议
+```
+
+### 运行基于 PyTorch* 的深度学习模型的训练和推理的优化建议
+
 您可参考以下网址在英特尔® 至强® 可扩展处理器平台上进行 PyTorch* 的优化参数设置
 
 参考：https://www.intel.com/content/www/cn/zh/developer/articles/technical/how-to-get-better-performance-on-pytorchcaffe2-with-intel-acceleration.html
 
-英特尔® Extension for PyTorch 介绍和使用
+### 英特尔® Extension for PyTorch 介绍和使用
+
 英特尔® Extension for PyTorch 是一个 PyTorch 的扩展 python 包，旨在提升 PyTorch 在英特尔® 至强® 处理器平台上的计算性能。这个扩展包不仅包括一些函数，还提供一些优化以加速英特尔新的硬件性能。
 
 英特尔 Extension for PyTorch 的 github 链接如下：
@@ -318,16 +388,17 @@ https://github.com/intel/intel-extension-for-pytorch
 
 https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics/Features-and-Functionality/IntelPyTorch_Extensions_AutoMixedPrecision
 
-使用英特尔® 深度学习加速 VNN I 加速推荐系统中的矢量召回
+## 使用英特尔® 深度学习加速 VNN I 加速推荐系统中的矢量召回
+
 推荐系统需要解决的问题是：如何为既定用户生成一个长度为 K 的推荐列表，并使该推荐列表尽量（高准确性）、尽快（低延迟）地满足用户的兴趣和需求？常规的推荐系统包含两部分：矢量召回（vector recall）和重排（ranking）。前者从庞大的推荐池里粗筛出当前用户最可能感兴趣的几百或几千条内容，并将结果交由后者的排序模块进一步排序，得到最终推荐结果。
 
-矢量召回
+![矢量召回]()
 
 矢量召回可以转换成高纬度的矢量相似性搜索问题。
 
 HNSW (Hierarchical Navigable Small World) 算法是基于图结构的 ANN (Approximate Nearest Neighbor) 矢量相似度搜索算法之一。也是速度最快精度最高的算法之一。
 
-HNSW
+![HNSW]()
 
 矢量原始数据的数据类型常常是 FP32。对于很多业务（如图片检索），矢量数据是可以用 INT8/INT16 表示而且量化误差对最终搜集结果影响有限。这时可以使用 VNNI intrinsic 指令实现矢量 INT8/INT16 的内积计算。大量实验表明 QPS 性能有较大的提升，而且召回率几乎不变。QPS 提升的原因一方面是 INT8/INT16 访问带宽比 FP32 少很多，另一方面距离计算部分由于使用 VNNI 指令得以加速。
 
@@ -335,24 +406,31 @@ HNSW
 
 为得到最佳性能，部署建议如下:
 
-绑定 NUMA
-每个 CPU 物理核运行一个查询进程
+- 绑定 NUMA
+- 每个 CPU 物理核运行一个查询进程
+
 参考命令（以一个 socket 24 核为例）：
 
+```
 # numactl -C 0-23 <test_program>
+```
+
 当数据集比较大时（如 1 亿到 10 亿数据量级范围），传统的做法是将数据集切片，变成几个较小的数据集，每个数据集单独获取 topK，最后再合并。由于增加了多个机器之间的通信，增加延迟的同时降低了 QPS。我们在大数据集上使用 HNSW 方案的心得是：尽量不切片，在完整的数据集上建立索引和执行搜索，可获得最佳性能。当数据集过大，DDR 空间不够时，可以考虑使用英特尔® 傲腾™ 持久内存解决。
 
 通过将 HNSW layer0 数据保存到 PMEM 上，可以显著扩大能支持的数据集的大小（单插槽可支持高达 40 亿条记录的 @d=100 的 INT8 数据库）。同时利用持久化特性避免大量数据的加载过程，使得初始化时间大为缩短。
 
-AI 神经网络模型量化
-AI 神经网络量化流程
+## AI 神经网络模型量化
+
+### AI 神经网络量化流程
+
 神经网络的计算主要集中在卷积层和全连接层。这两层的计算都是可以表示为：Y = X * 权重 + 偏差。因此在做性能优化时也就自然而然地把焦点集中到了矩阵乘法上。神经网络模型量化的出发点是以有限的精度损失为代价换取性能上的提升。用低精度的整数代替 32 位浮点数做矩阵运算，不仅能够加速计算，同时也压缩了模型，节约了内存访问带宽。
 
 神经网络模型量化有三种做法：
 
-训练后量化，大多数人工智能框架均支持。
-量化感知训练，在训练融合时将 FakeQuantization 节点插入到 FP32 模型中。增加了量化引入的噪声。在训练的反向传播中使模型权重落入一个有限区间，从而达到更好的量化后精度。
-动态量化，与 PTQ 非常类似。都是训练后的量化。不同的是激活层的量化因子是神经网络模型在运行时根据数据范围动态决定的，而 PTQ 则是预先在小规模数据集上采样，获取激活层数据分布和范围信息，并永久记录在新生成的量化模型中。我们稍后将介绍的英特尔® AI Quantization Tools for TensorFlow* 中，目前只有 onnxruntime 可在后端支持此方法。
+- 训练后量化，大多数人工智能框架均支持。
+- 量化感知训练，在训练融合时将 FakeQuantization 节点插入到 FP32 模型中。增加了量化引入的噪声。在训练的反向传播中使模型权重落入一个有限区间，从而达到更好的量化后精度。
+- 动态量化，与 PTQ 非常类似。都是训练后的量化。不同的是激活层的量化因子是神经网络模型在运行时根据数据范围动态决定的，而 PTQ 则是预先在小规模数据集上采样，获取激活层数据分布和范围信息，并永久记录在新生成的量化模型中。我们稍后将介绍的英特尔® AI Quantization Tools for TensorFlow* 中，目前只有 onnxruntime 可在后端支持此方法。
+
 神经网络模型训练后量化的基本流程如下：
 
      1.融合 FP32 OP 并转换为 INT8 OP。例如 MatMul、BiasAdd 和 ReLU 可以融合为单个量化的全连接层 OP，即 QuantizedMatMulWithBiasAndRelu。不同的神经网络框架所支持的可融合的 OP 不完全相同。稍后将介绍的英特尔® AI Quantization Tools for TensorFlow* 中，可以看到 TensorFlow 支持的可融合 OP 列表如下：https://github.com/intel/lpot/blob/master/lpot/adaptor/tensorflow.yaml#L190。
@@ -367,94 +445,90 @@ pyTorch 支持的可融合 OP 请参阅：https://github.com/intel/lpot/blob/mas
 
 以包含两层 MatMul 的简单模型为例，我们可以观察到量化的过程如下：
 
-MatMul
+![MatMul]()
 
-英特尔® AI Quantization Tools for TensorFlow* 介绍
-英特尔® AI Quantization Tools for TensorFlow* 是一个开源 Python 库，提供跨神经网络开发框架的统一的低精度量化 API 入口。旨在提供简单易用和以精度驱动的自动调试工具，对模型进行量化，加速低精度模型在第 2 代英特尔® 至强® 可扩展处理器平台上的推理性能。
+==============================
 
-参考网址：https://github.com/intel/lpot
+英特尔® Neural Compressor 介绍
 
-人工智能工具
+Intel® Neural Compressor is one of the key AI software components in the Intel® oneAPI AI Analytics Toolkit. It is an open-source Python library that runs on Intel CPUs and GPUs. This toolkit delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, and knowledge distillation. It supports automatic, accuracy-driven, tuning strategies to quickly find the best model. It also implements different weight pruning algorithms to generate a pruned model with a pre-defined sparsity goal and it supports knowledge distillation from a teacher model to a student model.
 
-目前英特尔® AI Quantization Tools for TensorFlow 支持以下英特尔优化的深度学习框架：
+英特尔® Neural Compressor 是一个开源 Python 库，提供跨神经网络开发框架的统一的低精度量化 API 入口。旨在提供简单易用和以精度驱动的自动调试工具，对模型进行量化，加速低精度模型在第 2 代英特尔® 至强® 可扩展处理器平台上的推理性能。
 
-TensorFlow*
-PyTorch*
-Apache* MXNet
-ONNX Runtime
+参考网址：https://github.com/intel/neural-compressor
+
+![人工智能工具]()
+![AI tools](/content/dam/develop/external/us/en/images/dl-ai-tools.jpg)
+
+目前英特尔® Neural Compressor 支持以下英特尔优化的深度学习框架：
+
+- [Tensorflow*](https://www.tensorflow.org/)
+- [PyTorch*](https://pytorch.org/)
+- [Apache* MXNet](https://mxnet.apache.org/)
+- [ONNX Runtime](https://onnx.ai/)
+
 当前已验证的各框架版本如下：
 
-OS
+|OS|Python|Framework|Version|
+|-|-|-|-|
+|CentOS 7.8|3.6|TensorFlow|2.2.0|
+|Ubuntu 18.04| 3.7||1.15.0 UP1|
+||||1.15.0 UP2|
+||||2.3.0|
+||||2.1.0|
+||||1.15.2|
+|||PyTorch|1.5.0+cpu|
+|||Apache* MXNet|1.7.0|
+||||1.6.0|
+|||ONNX Runtime|1.6.0|
 
-Python
+英特尔® Neural Compressor 支持的调优策略有：
 
-框架
+- [Basic](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#basic)
+- [Bayesian](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#bayesian)
+- [MSE](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#mse)
+- [TPE](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#tpe)
+- [Exhaustive](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#exhaustive)
+- [Random](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#random)
 
-版本
+- 基础
+- Bayesian
+- Exhaustive
+- MSE
+- 随机
+- TPE
 
-CentOS 7.8
+The workflow for Intel® Neural Compressor is shown below. The model quantization parameters matching the precision loss target are automatically selected according to the set tuning strategy, and the quantized model is generated:
 
-Ubuntu 18.04
+![Tensorflow]()
 
-3.6
+=====================================================
 
-3.7
+### 安装英特尔® Neural Compressor
 
-TensorFlow
-
-2.2.0
-
-1.15.0 UP1
-
-1.15.0 UP2
-
-2.3.0
-
-2.1.0
-
-1.15.2
-
-PyTorch
-
-1.5.0+cpu
-
-Apache* MXNet
-
-1.7.0
-
-1.6.0
-
-ONNX Runtime
-
-1.6.0
-
-英特尔® AI Quantization Tools for TensorFlow* 支持的调优策略有：
-
-基础
-Bayesian
-Exhaustive
-MSE
-随机
-TPE
-英特尔® AI Quantization Tools for TensorFlow* 工作流程如下。根据设定的调优策略自动筛选出符合精度损失目标的模型量化参数，并生成量化后的模型：
-
-TensorFlow
-
-安装英特尔® AI Quantization Tools for TensorFlow*
 安装详情请参阅：https://github.com/intel/lpot/blob/master/README.md
+
+![Neural Compressor]()
 
 第 1 步：使用 Anaconda 创建名为 lpot 的 Python3.x 虚拟环境。这里我们使用 Python 3.7 为例：
 
+```
 # conda create -n lpot python=3.7
 
 # conda activate lpot
+```
+
 第 2 步：安装 lpot；可选择以下 2 种安装方式：
 
 从二进制文件安装：
 
+```
 # pip install lpot
+```
+
 从源代码安装：
 
+```
 # git clone https://github.com/intel/lpot.git
 
 # cd lpot
@@ -462,43 +536,68 @@ TensorFlow
 # pip install –r requirements.txt
 
 # python setup.py install
-运行英特尔® AI Quantization Tools for TensorFlow*
+```
+
+### 运行英特尔® Neural Compressor
+
 我们以 ResNet50 v1.0 为例，说明如何使用此工具进行量化。
 
-准备数据集
+### 准备数据集
+
 第一步，下载并解压缩 ImageNet validation 数据集：
 
+```
 # mkdir –p img_raw/val && cd img_raw
 
 # wget http://www.image-net.org/challenges/LSVRC/2012/dd31405981ef5f776aa17412e1f0c112/ILSVRC2012_img_val.tar
 
 # tar –xvf ILSVRC2012_img_val.tar -C val
+```
+
 第二步，把 image 文件移动进按标签分类的子目录：
 
+```
 # cd val
 
 # wget -qO- https://raw.githubusercontent.com/soumith/imagenetloader.torch/master/valprep.sh | bash
+```
+
 第 3 步：使用脚本 prepare_dataset.sh 将原始数据转化为 TFrecord 格式：
 
+```
 # cd examples/tensorflow/image_recognition
 
 # bash prepare_dataset.sh --output_dir=./data --raw_dir=/PATH/TO/img_raw/val/ --subset=validation
+```
+
 参考网址： https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition#2-prepare-dataset
 
-准备模型
+### 准备模型
+```
 # wget https://storage.googleapis.com/intel-optimized-tensorflow/models/v1_6/resnet50_fp32_pretrained_model.pb
-运行 Tuning：
+```
+
+### 运行 Tuning：
+
 编辑文件：examples/tensorflow/image_recognition/resnet50_v1.yaml，确保 quantization\calibration、evaluation\accuracy 和 evaluation\performance 的数据集路径是用户的真实本地路径。应为之前数据准备阶段生成的 TFrecord 数据的所在位置。
 
+```
 # cd examples/tensorflow/image_recognition
 
 # bash run_tuning.sh --config=resnet50_v1.yaml \n
 --input_model=/PATH/TO/resnet50_fp32_pretrained_model.pb \n
 --output_model=./lpot_resnet50_v1.pb
+```
+
 参考网址： https://github.com/intel/lpot/tree/master/examples/tensorflow/image_recognition#1-resnet50-v10
 
-运行 Benchmark：
+
+### 运行 Benchmark：
+
+```
 # bash run_benchmark.sh --input_model=./lpot_resnet50_v1.pb --config=resnet50_v1.yaml
+```
+
 输出如下。性能数据仅供参考：
 
 精确模式基准测试结果：
@@ -511,8 +610,6 @@ TensorFlow
 
 吞吐量：（结果可能会有不同）
 
- 
-
 性能模式基准测试结果：
 
 精确度为 0.000
@@ -523,9 +620,11 @@ TensorFlow
 
 吞吐量：（结果可能会有不同）
 
-使用英特尔® 发行版 OpenVINO™ 工具套件进行推理加速
-英特尔® 发行版 OpenVINO™ 工具套件
-英特尔® 发行版 OpenVINOTM  工具套件官网和下载网站：
+## 使用英特尔® 发行版 OpenVINO™ 工具套件进行推理加速
+
+### 英特尔® 发行版 OpenVINO™ 工具套件
+
+英特尔® 发行版 OpenVINO™  工具套件官网和下载网站：
 
 https://www.intel.com/content/www/cn/zh/developer/tools/openvino-toolkit/overview.html
 
@@ -537,21 +636,23 @@ https://docs.openvino.ai/latest/index.html
 
 https://docs.openvino.ai/cn/latest/index.html
 
-英特尔® 发行版 OpenVINOTM 工具套件可用于加快计算机视觉和深度学习应用程序的开发。它能够支持各种加速器的深度学习应用程序，包括英特尔® 至强® 处理器平台上的 CPU、GPU、FPGA 以及英特尔® Movidius™ CPU，同时能够直接支持异构的执行。
+英特尔® 发行版 OpenVINO™ 工具套件可用于加快计算机视觉和深度学习应用程序的开发。它能够支持各种加速器的深度学习应用程序，包括英特尔® 至强® 处理器平台上的 CPU、GPU、FPGA 以及英特尔® Movidius™ CPU，同时能够直接支持异构的执行。
 
-深度学习 OpenVINO
+![深度学习 OpenVINO]()
 
 英特尔® 发行版 OpenVINOTM 工具套件旨在提高计算机视觉处理及深度学习推理解决方案的性能，并缩短开发时间。包括计算机视觉和深度学习开发套件两部分。
 
 Deep Learning Deployment Toolkit (DLDT) 是一个加速深度学习推理性能的跨平台工具，包括：
 
-模型优化器：将通过 Caffe*、TensorFlow、Mxnet 及其他框架训练的模型转化为中间表示 (IR)。
-推理引擎：在 CPU、GPU、FPGA、VPU 及其他硬件上执行 IR。自动调用硬件的加速套件实现推理性能的加速。
+- 模型优化器：将通过 Caffe*、TensorFlow、Mxnet 及其他框架训练的模型转化为中间表示 (IR)。
+- 推理引擎：在 CPU、GPU、FPGA、VPU 及其他硬件上执行 IR。自动调用硬件的加速套件实现推理性能的加速。
+
 英特尔® 发行版 OpenVINOTM 工具套件的工作流程：
 
-OpenVino 工作流程
+![](OpenVino 工作流程)
 
-部署英特尔® 发行版 OpenVINO™ 工具套件
+### 部署英特尔® 发行版 OpenVINO™ 工具套件
+
 请参考中文安装文档：
 
 安装适用于 Linux* 的英特尔® 发行版 OpenVINO™ 工具套件：
@@ -559,24 +660,23 @@ OpenVino 工作流程
 使用英特尔® 发行版 OpenVINO™ 工具套件的 Deep Learning Deployment Toolkit (DLDT)
 英特尔® 深度学习部署工具套件简介
 
-图像分类 C++ 示例 (Async)
+[图像分类 C++ 示例 (Async)](https://docs.openvino.ai/downloads/cn/I03030-10-Image%20Classification%20Cpp%20Sample%20Async%20-%20OpenVINO_%20Toolkit.pdf)
 
-对象检测 C++ 示例 (SSD)
+[对象检测 C++ 示例 (SSD)](https://docs.openvino.ai/downloads/cn/I03030-11-Object%20Detection%20Cpp%20Sample%20SSD%20-%20OpenVINO_%20Toolkit.pdf)
 
-自动语音识别 C++ 样本
+[自动语音识别 C++ 样本](https://docs.openvino.ai/downloads/cn/I03030-12-Automatic%20Speech%20Recognition%20Cpp%20%20Sample%20-%20OpenVINO_%20Toolkit.pdf)
+
+[动作识别 Python* 演示](https://docs.openvino.ai/downloads/cn/I03030-13-Action%20Recognition%20Python%20Demo%20-%20OpenVINO_%20Toolkit.pdf)
+
+[十字路口摄像头 C++ 演示](https://docs.openvino.ai/downloads/cn/I03030-14-Crossroad%20Camera%20Cpp%20%20Demo%20-%20OpenVINO_%20Toolkit.pdf)
+
+[人体姿态估计 C++ 演示](https://docs.openvino.ai/downloads/cn/I03030-15-Human%20Pose%20Estimation%20Cpp%20Demo%20-%20OpenVINO_%20Toolkit.pdf)
+
+[交互式人脸检测 C++ 演示](https://docs.openvino.ai/downloads/cn/I03030-16-Interactive%20Face%20Detection%20Cpp%20%20Demo%20-%20OpenVINO_%20Toolkit.pdf)
 
 
-动作识别 Python* 演示
+### 使用英特尔® 发行版 OpenVINO™ 工具套件加速 INT8 的推理
 
-十字路口摄像头 C++ 演示
-
-人体姿态估计 C++ 演示
-
-交互式人脸检测 C++ 演示
-
- 
-
-使用英特尔® 发行版 OpenVINO™ 工具套件加速 INT8 的推理
 使用 INT8 精度的模型运行推理，并通过英特尔® 至强® 可扩展处理器平台的英特尔® 深度学习加速进行加速，可以大幅提升推理效率。同时节约模型推理的计算资源和电力消耗。OpenVINO 的 2020 版本及之后的版本都提供 INT8 量化工具支持 FP32 模型的量化。
 
 OpenVINO 提供的 INT8 模型量化工具是一种训练后优化工具套件 (POT)，用于优化和量化训练后的模型。无需对模型进行重新训练或者微调，无需更改模型结构。下图展示了通过 OpenVINO 对新模型进行优化的主要流程。
@@ -589,7 +689,7 @@ OpenVINO 提供的 INT8 模型量化工具是一种训练后优化工具套件 (
 
 步骤 3：是通过 OpenVINO 的 IE 对模型进行推理。
 
-OpenVINO-ie
+![OpenVINO-ie]()
 
 POT 提供一个独立的命令行工具和 Pythoh AIP，主要支持以下特性：
 
@@ -602,17 +702,21 @@ POT 提供一个独立的命令行工具和 Pythoh AIP，主要支持以下特�
 通过提供的 API 提供客户化的优化方法
 具体操作和使用请参考以下网址：
 
-训练后优化工具套件介绍
+[训练后优化工具套件介绍](https://docs.openvino.ai/latest/pot_README.html)
 
-低精确度优化指南
+[低精确度优化指南](https://docs.openvino.ai/latest/pot_docs_LowPrecisionOptimizationGuide.html)
 
-POT 最佳实践
+[POT 最佳实践]
+(https://docs.openvino.ai/latest/pot_docs_BestPractices.html)
 
-POT 常见问题
+[POT 常见问题]
+(https://docs.openvino.ai/latest/pot_docs_FrequentlyAskedQuestions.html)
 
-通过 DL Workbench 的 web 界面进行 INT8 量化优化
+[通过 DL Workbench 的 web 界面进行 INT8 量化优化]
+(https://docs.openvino.ai/latest/workbench_docs_Workbench_DG_Int_8_Quantization.html)
 
-使用英特尔® DAAL 加速机器学习
+## 使用英特尔® DAAL 加速机器学习
+
 英特尔® Data Analytics Acceleration Library（英特尔® DAAL）
 
 作为人工智能的一个分支，机器学习现在正获得极大的关注。基于机器学习的高级分析也越来越流行。其原因在于，与其它分析方法相比，机器学习能够帮助 IT 人员、数据科学家、各种业务团队及其组织迅速释放优势。并且机器学习提供了许多新的商用开源解决方案，为开发人员提供了一个丰富的生态系统。此外，开发人员可以从各种各样的开源机器学习库中进行选择，如 Scikit-learn、Cloudera* 和 Spark* MLlib。
@@ -620,50 +724,62 @@ POT 常见问题
 英特尔® Distribution for Python*介绍
 英特尔® Distribution for Python* 是一个 Python 开发工具包，面向人工智能软件的开发人员。可以加速 Python 在英特尔® 至强® 可扩展处理器平台的计算速度。 可通过 Anaconda* 获取，也可以与 Conda*、PIP*、APT GET、YUM、Docker* 等一起安装使用。参考、下载网址：https://www.intel.com/content/www/cn/zh/developer/tools/oneapi/distribution-for-python.html
 
-英特尔® Distribution for Python* 的特点：
+### 英特尔® Distribution for Python* 的特点：
 
-开箱即用：只需很少或根本不需要更改代码，即可获得更快的 Python 应用程序性能。
-借助集成的英特尔® 性能库（例如英特尔® 数学核心函数库和英特尔® Data Analytics Acceleration Library）来加速NumPy，SciPy 和 scikit-learn*
-结合最新的向量化和多线程指令，Numba* 和 Cython，提升并行化和向量化效率。
-英特尔® DAAL
+- 开箱即用：只需很少或根本不需要更改代码，即可获得更快的 Python 应用程序性能。
+- 借助集成的英特尔® 性能库（例如英特尔® 数学核心函数库和英特尔® Data Analytics Acceleration Library）来加速NumPy，SciPy 和 scikit-learn*
+- 结合最新的向量化和多线程指令，Numba* 和 Cython，提升并行化和向量化效率。
+
+### 英特尔® DAAL
+
 英特尔® Data Analytics Acceleration Library (英特尔® DAAL) 面向数据科学家，旨在加快数据分析和预测效率，尤其是海量数据。可充分利用向量化和多线程等优化技术，提升机器学习在英特尔平台上的整体性能。
 
 英特尔® DAAL 是可以帮助数据科学家和分析师，快速建立从数据预处理，到数据特征工程、数据建模和部署的一整套端到端软件方案。它提供了建立机器学习和分析所需的各种数据分析及算法所需的高性能构建模块。目前已经支持线性回归、逻辑回归、LASSO、AdaBoost，贝叶斯分类器、支撑向量机、K 近邻、Kmeans 聚类、DBSCAN 聚类、 各种决策树、随机森林、 Gradient Boosting 等经典机器学习算法。这些算法经过高度优化，可在英特尔® 至强® 可扩展处理器上实现高性能。如中国一家领先的大数据分析技术和服务提供商，使用这些资源已将多个数据挖掘算法提高了数倍。
 
-英特尔 DAAL
+![英特尔 DAAL]()
 
 为了使开发人员在基于英特尔技术的环境下，在机器学习应用程序中更轻松地使用英特尔® DAAL，英特尔开源了整个项目 (https://github.com/intel/daal)，并针对不同的大数据使用场景提供了全内存流式和分布式的算法支持。比如 DAAL Kmeans 可以很好和 Spark 结合，在 Spark 集群上进行多节点聚类。另外，英特尔® DAAL 提供了C++、Java 和 python 接口。
 
-DAAL4py
+![DAAL4py]()
 
 为了更好地支持 python 应用最为广泛的 Scikitlearn, 英特尔® DAAL 提供了非常简便的 Python 接口 DAAL4py（更多详细信息请参见开源网站：https://github.com/IntelPython/daal4py）。它可以和 Scikitlearn 无缝的结合，在底层提供机器学习的算法加速。
 
 开发者可以无需修改 Scikitlearn 代码，即可利用自动向量化和多线程化的优势。目前 DAAL4py 在 Scikitlearn 中支持算法有：
 
-Sklearn 线性回归、Sklearn 岭回归和逻辑回归
-PCA
-KMeans
-pairwise_distance
-SVC (SVM 分类)
-安装英特尔® Distribution for Python* 和英特尔® DAAL
-下载和安装英特尔® Distribution for Python*（已包含 英特尔® DAAL）
+- Sklearn 线性回归、Sklearn 岭回归和逻辑回归
+- PCA
+- KMeans
+- pairwise_distance
+- SVC (SVM 分类)
 
-单独安装英特尔® DAAL
+### 安装英特尔® Distribution for Python* 和英特尔® DAAL
 
-英特尔® DAAL 开发者指南
+[下载和安装英特尔® Distribution for Python*（已包含 英特尔® DAAL)](/content/www/us/en/developer/tools/oneapi/distribution-for-python.html)* (Intel&reg; DAAL already included)
 
-使用英特尔® DAAL
+[单独安装英特尔® DAAL](/content/www/us/en/developer/articles/guide/intel-daal-2020-install-guide.html)
+
+[英特尔® DAAL 开发者指南](/content/www/us/en/develop/documentation/dal-developer-guide/top.html)
+
+### 使用英特尔® DAAL
+
 使用英特尔® DAAL 加速 scikit-learn，有两种方式
 
 方法 1：命令行方式
 
+```
 # python -m daal4py <your-scikit-learn-script>
+```
+
 方法 2：在代码中加入
 
+```
 import daal4py.sklearn
 
 daal4py.sklearn.patch_sklearn('kmeans')
+```
+
 参考资料
+
 [1] 英特尔® AVX-512 信息： https://colfaxresearch.com/skl-avx512/
 
 [2] 英特尔® 优化 AI 框架：https://www.intel.com/content/www/cn/zh/developer/tools/frameworks/overview.html
@@ -687,10 +803,8 @@ https://www.intel.com/content/www/cn/zh/developer/articles/technical/lower-numer
 [10] HNSWLib 项目开源资源： https://github.com/nmslib/hnswlib
 
  
+## 通知和免责声明
 
- 
-
-通知和免责声明
 英特尔技术可能需要支持的硬件、软件或服务激活。
 
 没有任何产品或组件能保证绝对安全。
