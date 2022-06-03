@@ -47,11 +47,7 @@
 
 ### 硬件
 
-The configuration described in this article is based on 3rd Generation Intel® Xeon® processor hardware.
-
-第 3 代英特尔® 至强® 可扩展处理器的硬件
-
-根据您的使用要求，选 服务器, 内存, 硬盘 和 网卡.
+这个是第 3 代英特尔® 至强® 可扩展处理器的硬件的配置。 根据您的使用要求，选 服务器, 内存, 硬盘和网卡。
 
 | 硬件 | 型 |
 |----------------------------------|------------------------------------|
@@ -450,11 +446,13 @@ pyTorch 支持的可融合 OP 请参阅：https://github.com/intel/lpot/blob/mas
 
 ![MatMul]()
 
-英特尔® Neural Compressor 介绍
+### 英特尔® Neural Compressor 介绍
 
-Intel® Neural Compressor is one of the key AI software components in the Intel® oneAPI AI Analytics Toolkit. It is an open-source Python library that runs on Intel CPUs and GPUs. This toolkit delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, and knowledge distillation. It supports automatic, accuracy-driven, tuning strategies to quickly find the best model. It also implements different weight pruning algorithms to generate a pruned model with a pre-defined sparsity goal and it supports knowledge distillation from a teacher model to a student model.
+英特尔® Neural Compressor 一个的软件的模块Intel® oneAPI AI Analytics Toolkit很重要。 它是一个开源 Python 库.
 
-英特尔® Neural Compressor 是一个开源 Python 库，提供跨神经网络开发框架的统一的低精度量化 API 入口。旨在提供简单易用和以精度驱动的自动调试工具，对模型进行量化，加速低精度模型在第 2 代英特尔® 至强® 可扩展处理器平台上的推理性能。
+It is an open-source Python library that runs on Intel CPUs and GPUs. This toolkit delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, and knowledge distillation. It supports automatic, accuracy-driven, tuning strategies to quickly find the best model. It also implements different weight pruning algorithms to generate a pruned model with a pre-defined sparsity goal and it supports knowledge distillation from a teacher model to a student model.
+
+
 
 参考网址：https://github.com/intel/neural-compressor
 
