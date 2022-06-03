@@ -11,7 +11,7 @@
 
 典型的深度学习应用程序开发和部署涉及以下阶段：
 
-![深度学习阶段]()
+![深度学习阶段](/content/dam/develop/external/us/en/images/dl-stages.jpg)
 
 这些不同的阶段需要配置以下的资源，选择合适的资源可以大大加速你的AI业务的效率 ：
 
@@ -23,7 +23,7 @@
 
 从数据集准备、模型训练、模型优化及部署等各个环节都可以在基于英特尔® 至强® 可扩展处理器平台的基础架构上实现，同时支持训练和推理的机器学习/深度学习平台。基础架构示意图如下：
 
-![](深度学习基础架构)
+![深度学习基础架构](/content/dam/develop/external/us/en/images/dl-infrastructure.jpg)
 
 ## 英特尔® AVX-512 和英特尔® 深度学习加速介绍
 
@@ -31,7 +31,7 @@
 
 英特尔® 至强® 可扩展处理器可支持多种工作负载，包括复杂的 AI 工作负载； 英特尔® 至强® 可扩展处理器通过英特尔® 深度学习加速 (英特尔® DL Boost) 进一步提升了 AI 计算性能。英特尔® 深度学习加速包含英特尔® AVX-512 VNNI（Vector Neural Network Instructions），是对标准英特尔® AVX-512 指令集的扩展。可以将三条指令合并成一条指令执行，更进一步的发挥新一代英特尔® 至强® 可扩展处理器的计算潜能，提升 INT8 模型的推理性能。目前第 2 代和第 3 代英特尔® 至强 ® 可扩展处理器均支持英特尔® VNNI。
 
-![](深度加速 VNNI)
+![深度加速 VNNI](/content/dam/develop/external/us/en/images/dl-vnni.jpg)
 
 未使用 VNNI 的平台需要 vpmaddubsw、vpmaddwd 和 vpaddd 指令才能完成 INT8 卷积运算中的乘累加：
 
@@ -39,7 +39,7 @@
 
 而拥有 VNNI 的平台上则可以使用一条指令 vpdpbusd 完成 INT8 卷积操作：
 
-![](深度学习 int-8)
+![深度学习 int-8](/content/dam/develop/external/us/en/images/dl-int8-1.jpg)
 
 ## 开发环境
 
@@ -283,25 +283,25 @@ https://github.com/IntelAI/models/blob/master/benchmarks/image_recognition/tenso
 
 以 Wide & Deep 模型为例，它的核心思想是结合线性模型的记忆能力（memorization）和 DNN 模型的泛化能力（generalization），在训练过程中同时优化 2 个模型的参数。从而达到整体模型的预测能力最优。其结构如下所示：
 
-![深度学习架构]()
+![深度学习架构](/content/dam/develop/external/us/en/images/dl-structure.jpg)
 
 Wide 部分
 
 Wide 部分就是一个广义线性模型，输入主要由两部分，一部分是原始特征，另一部分是交互特征。我们可以通过 cross-product transformation 的形式来构造 K 组交互特征：
 
-Wide 部分
+![Wide 部分](/content/dam/develop/external/us/en/images/dl-wide.jpg)
 
 Deep 部分
 
 Deep 部分就是一个 DNN 的模型，每一层计算如下：
 
-Deep 部分
+![Deep 部分](/content/dam/develop/external/us/en/images/dl-deep.jpg)
 
 联合训练
 
 Wide & Deep 模型采用的是联合训练的形式，而非集成。二者的区别就是联合训练共用一个损失函数，然后同时更新各个部分的参数，而集成方法是独立训练 N 个模型，然后进行融合。因此，模型的输出为：
 
-联合训练
+![联合训练](/content/dam/develop/external/us/en/images/dl-cotrain.jpg)
 
 以上是 Wide & Deep 模型的相关背景。接下来介绍如何运行 Wide & Deep 的推理基准测试。
 
@@ -363,7 +363,7 @@ bazel-bin/tensorflow/tools/pip_package/build_pip_package $BUILD_DIR
 
 目前，英特尔 oneDNN 已经集成到 PyTorch 的正式版本中，因此无需额外的安装步骤就可以在英特尔® 至强® 可扩展处理器平台上获取加速性能，在选择 CUDA 的版本时。请将 CUDA 选项设置为 “None”。具体见下图。
 
-![oneDNN]()
+![oneDNN](/content/dam/develop/external/us/en/images/dl-onednn.jpg)
 
 第 3 步：安装
 
@@ -391,13 +391,13 @@ https://github.com/oneapi-src/oneAPI-samples/tree/master/AI-and-Analytics/Featur
 
 推荐系统需要解决的问题是：如何为既定用户生成一个长度为 K 的推荐列表，并使该推荐列表尽量（高准确性）、尽快（低延迟）地满足用户的兴趣和需求？常规的推荐系统包含两部分：矢量召回（vector recall）和重排（ranking）。前者从庞大的推荐池里粗筛出当前用户最可能感兴趣的几百或几千条内容，并将结果交由后者的排序模块进一步排序，得到最终推荐结果。
 
-![矢量召回]()
+![矢量召回](/content/dam/develop/external/us/en/images/dl-vector-recall.jpg)
 
 矢量召回可以转换成高纬度的矢量相似性搜索问题。
 
 HNSW (Hierarchical Navigable Small World) 算法是基于图结构的 ANN (Approximate Nearest Neighbor) 矢量相似度搜索算法之一。也是速度最快精度最高的算法之一。
 
-![HNSW]()
+![HNSW](/content/dam/develop/external/us/en/images/dl-ann.jpg)
 
 矢量原始数据的数据类型常常是 FP32。对于很多业务（如图片检索），矢量数据是可以用 INT8/INT16 表示而且量化误差对最终搜集结果影响有限。这时可以使用 VNNI intrinsic 指令实现矢量 INT8/INT16 的内积计算。大量实验表明 QPS 性能有较大的提升，而且召回率几乎不变。QPS 提升的原因一方面是 INT8/INT16 访问带宽比 FP32 少很多，另一方面距离计算部分由于使用 VNNI 指令得以加速。
 
@@ -444,7 +444,7 @@ pyTorch 支持的可融合 OP 请参阅：https://github.com/intel/lpot/blob/mas
 
 以包含两层 MatMul 的简单模型为例，我们可以观察到量化的过程如下：
 
-![MatMul]()
+![MatMul](/content/dam/develop/external/us/en/images/dl-matmul.jpg)
 
 ### 英特尔® Neural Compressor 介绍
 
@@ -452,8 +452,7 @@ pyTorch 支持的可融合 OP 请参阅：https://github.com/intel/lpot/blob/mas
 
 参考网址：https://github.com/intel/neural-compressor
 
-![人工智能工具]()
-![AI tools](/content/dam/develop/external/us/en/images/dl-ai-tools.jpg)
+![人工智能工具](/content/dam/develop/external/us/en/images/dl-ai-tools.jpg)
 
 目前英特尔® Neural Compressor 支持以下英特尔优化的深度学习框架：
 
@@ -633,7 +632,7 @@ https://docs.openvino.ai/cn/latest/index.html
 
 英特尔® 发行版 OpenVINO™ 工具套件可用于加快计算机视觉和深度学习应用程序的开发。它能够支持各种加速器的深度学习应用程序，包括英特尔® 至强® 处理器平台上的 CPU、GPU、FPGA 以及英特尔® Movidius™ CPU，同时能够直接支持异构的执行。
 
-![深度学习 OpenVINO]()
+![深度学习 OpenVINO](/content/dam/develop/external/us/en/images/dl-openvino.jpg)
 
 英特尔® 发行版 OpenVINOTM 工具套件旨在提高计算机视觉处理及深度学习推理解决方案的性能，并缩短开发时间。包括计算机视觉和深度学习开发套件两部分。
 
@@ -644,7 +643,7 @@ Deep Learning Deployment Toolkit (DLDT) 是一个加速深度学习推理性能�
 
 英特尔® 发行版 OpenVINOTM 工具套件的工作流程：
 
-![](OpenVino 工作流程)
+![OpenVino 工作流程](/content/dam/develop/external/us/en/images/dl-openvino-workflow.jpg)
 
 ### 部署英特尔® 发行版 OpenVINO™ 工具套件
 
@@ -684,7 +683,7 @@ OpenVINO 提供的 INT8 模型量化工具是一种训练后优化工具套件 (
 
 步骤 3：是通过 OpenVINO 的 IE 对模型进行推理。
 
-![OpenVINO-ie]()
+![OpenVINO-ie](/content/dam/develop/external/us/en/images/dl-openvino-ie.jpg)
 
 POT 提供一个独立的命令行工具和 Pythoh AIP，主要支持以下特性：
 
@@ -731,11 +730,11 @@ POT 提供一个独立的命令行工具和 Pythoh AIP，主要支持以下特�
 
 英特尔® DAAL 是可以帮助数据科学家和分析师，快速建立从数据预处理，到数据特征工程、数据建模和部署的一整套端到端软件方案。它提供了建立机器学习和分析所需的各种数据分析及算法所需的高性能构建模块。目前已经支持线性回归、逻辑回归、LASSO、AdaBoost，贝叶斯分类器、支撑向量机、K 近邻、Kmeans 聚类、DBSCAN 聚类、 各种决策树、随机森林、 Gradient Boosting 等经典机器学习算法。这些算法经过高度优化，可在英特尔® 至强® 可扩展处理器上实现高性能。如中国一家领先的大数据分析技术和服务提供商，使用这些资源已将多个数据挖掘算法提高了数倍。
 
-![英特尔 DAAL]()
+![英特尔 DAAL](/content/dam/develop/external/us/en/images/dl-daal.jpg)
 
 为了使开发人员在基于英特尔技术的环境下，在机器学习应用程序中更轻松地使用英特尔® DAAL，英特尔开源了整个项目 (https://github.com/intel/daal)，并针对不同的大数据使用场景提供了全内存流式和分布式的算法支持。比如 DAAL Kmeans 可以很好和 Spark 结合，在 Spark 集群上进行多节点聚类。另外，英特尔® DAAL 提供了C++、Java 和 python 接口。
 
-![DAAL4py]()
+#### DAAL4py
 
 为了更好地支持 python 应用最为广泛的 Scikitlearn, 英特尔® DAAL 提供了非常简便的 Python 接口 DAAL4py（更多详细信息请参见开源网站：https://github.com/IntelPython/daal4py）。它可以和 Scikitlearn 无缝的结合，在底层提供机器学习的算法加速。
 
