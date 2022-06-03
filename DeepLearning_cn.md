@@ -41,28 +41,31 @@
 
 ![](深度学习 int-8)
 
-## Environment
+## 开发环境
 
-Tested hardware and software for this tuning guide include:
+我们用这个i硬件和软件考这本调优指南的建议：
 
 ### 硬件
 
-The configuration described in this article is based on 3rd Generation Intel® Xeon® processor hardware. The server platform, memory, hard drives, and network interface cards can be determined according to your usage requirements.
+The configuration described in this article is based on 3rd Generation Intel® Xeon® processor hardware.
 
-| 硬件 | Model |
+第 3 代英特尔® 至强® 可扩展处理器的硬件
+
+根据您的使用要求，选 服务器, 内存, 硬盘 和 网卡.
+
+| 硬件 | 型 |
 |----------------------------------|------------------------------------|
-| Server Platform Name/Brand/Model | Intel® Coyote Pass Server Platform |
+| 服务器 | Intel® Coyote Pass Server Platform |
 | CPU | Intel® Xeon® PLATINUM 8380 CPU @ 2.30GHz | 
 | 内存 | 8*64 GB DDR4, 3200 MT/s | 
 
-### Software
+### 软件
 
-| Software | Version |
+| 软件 | 版本 |
 |------------------|-------------|
-| Operating System | Ubuntu 20.04.4 LTS | 
+| 操作系统 | Ubuntu 20.04.4 LTS | 
 | Kernel | 5.4.0 | 
 
-Note: The configuration described in this article is based on 3rd Generation Intel Xeon processor hardware. Server platform, memory, hard drives, network interface cards can be determined according to customer usage requirements.  
 
 ### BIOS 设置和硬件选型配置
 
@@ -446,8 +449,6 @@ pyTorch 支持的可融合 OP 请参阅：https://github.com/intel/lpot/blob/mas
 以包含两层 MatMul 的简单模型为例，我们可以观察到量化的过程如下：
 
 ![MatMul]()
-
-==============================
 
 英特尔® Neural Compressor 介绍
 
