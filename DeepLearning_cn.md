@@ -494,9 +494,6 @@ pyTorch 支持的可融合 OP 请参阅：https://github.com/intel/lpot/blob/mas
 
 Intel® Neural Compressor 工作流程是。根据调优策略自动选择与精度损失目标匹配的模型量化参数。然后生成量化模型。
 
-![Tensorflow]()
-
-=====================================================
 
 ### 安装英特尔® Neural Compressor
 
