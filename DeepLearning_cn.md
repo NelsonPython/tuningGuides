@@ -448,11 +448,7 @@ pyTorch 支持的可融合 OP 请参阅：https://github.com/intel/lpot/blob/mas
 
 ### 英特尔® Neural Compressor 介绍
 
-英特尔® Neural Compressor 一个的软件的模块Intel® oneAPI AI Analytics Toolkit很重要。 它是一个开源 Python 库.
-
-It is an open-source Python library that runs on Intel CPUs and GPUs. This toolkit delivers unified interfaces across multiple deep learning frameworks for popular network compression technologies, such as quantization, pruning, and knowledge distillation. It supports automatic, accuracy-driven, tuning strategies to quickly find the best model. It also implements different weight pruning algorithms to generate a pruned model with a pre-defined sparsity goal and it supports knowledge distillation from a teacher model to a student model.
-
-
+英特尔® Neural Compressor 一个的软件的模块 Intel® oneAPI AI Analytics Toolkit 很重要。  您会借助英特尔® Neural Compressor 实现自动化。 它支持调优策略以快速找到最佳模型。 在保证效率的前提下，在常用的框架上更快部署低精度推理解决方案。它是一个开源Python库，可在英特尔 CPU和GPU上运行。 这个有通用界面对于流行的网络压缩技术的多个深度学习框架比如 quantization, pruning, and knowledge distillation。
 
 参考网址：https://github.com/intel/neural-compressor
 
@@ -497,7 +493,7 @@ It is an open-source Python library that runs on Intel CPUs and GPUs. This toolk
 - 随机
 - TPE
 
-The workflow for Intel® Neural Compressor is shown below. The model quantization parameters matching the precision loss target are automatically selected according to the set tuning strategy, and the quantized model is generated:
+Intel® Neural Compressor 工作流程是。根据调优策略自动选择与精度损失目标匹配的模型量化参数。然后生成量化模型。
 
 ![Tensorflow]()
 
