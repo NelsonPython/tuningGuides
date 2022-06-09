@@ -47,7 +47,7 @@
 
 ### 硬件
 
-这个是第 3 代英特尔® 至强® 可扩展处理器的硬件的配置。 根据您的使用要求，选 服务器, 内存, 硬盘和网卡。
+这个配置是第 3 代英特尔®️ 至强®️ 可扩展处理器的硬件。 根据您的使用要求，选择服务器, 内存, 硬盘和网卡。
 
 | 硬件 | 型 |
 |----------------------------------|------------------------------------|
@@ -66,8 +66,6 @@
 ### BIOS 设置和硬件选型配置
 
 #### BIOS 设置
-
-BIOS 可优化配置项及推荐值如下：
 
 设置的影响 | 建议 |
 ------|-------|
@@ -448,7 +446,7 @@ pyTorch 支持的可融合 OP 请参阅：https://github.com/intel/lpot/blob/mas
 
 ### 英特尔® Neural Compressor 介绍
 
-英特尔® Neural Compressor 一个的软件的模块 Intel® oneAPI AI Analytics Toolkit 很重要。  您会借助英特尔® Neural Compressor 实现自动化。 它支持调优策略以快速找到最佳模型。 在保证效率的前提下，在常用的框架上更快部署低精度推理解决方案。它是一个开源Python库，可在英特尔 CPU和GPU上运行。 这个有通用界面对于流行的网络压缩技术的多个深度学习框架比如 quantization, pruning, and knowledge distillation。
+你会借助英特尔®️Neural compressor 实现自动化。它支持调优策略以快速找到最佳模型。 在通用框架上更快地使用此解决方案而不会降低效率。它是一个开源软件Python库，可在英特尔 CPU和GPU上运行。 对于流行的网络压缩技术，比如 quantization, pruning, and knowledge distillation，我们可以用Neural Compressor和深度学习框架
 
 参考网址：https://github.com/intel/neural-compressor
 
