@@ -4,5 +4,5 @@ VERSION 1.0
 python3 intel_robot_link_checker.py
 output goes to tuningGuideLink.log
 
-# TODO - rewrite the comparison because using sets scrambles the data
+TODO - rewrite the comparison because using sets scrambles the data
 python3 compareLog.py
