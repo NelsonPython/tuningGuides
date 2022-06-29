@@ -43,13 +43,13 @@
 
 ## 开发环境
 
-我们用这个i硬件和软件考这本调优指南的建议：
+本调优指南基于以下硬件和软件配置：
 
 ### 硬件
 
-这个配置是第 3 代英特尔®️ 至强®️ 可扩展处理器的硬件。 根据您的使用要求，选择服务器, 内存, 硬盘和网卡。
+硬件配置采用第 3 代英特尔®️ 至强®️ 可扩展处理器。 根据用户要求，选择服务器, 内存, 硬盘和网卡。
 
-| 硬件 | 型 |
+| 硬件 | 型号 |
 |----------------------------------|------------------------------------|
 | 服务器 | Intel® Coyote Pass Server Platform |
 | CPU | Intel® Xeon® PLATINUM 8380 CPU @ 2.30GHz | 
@@ -63,22 +63,31 @@
 | Kernel | 5.4.0 | 
 
 
-### BIOS 设置和硬件选型配置
+### BIOS 设置和硬件配置
 
 #### BIOS 设置
 
-设置的影响 | 建议 |
-------|-------|
-配置项 | 推荐值 |
-超线程 | 启用 |
-SNC (Sub NUMA) | 禁用 |
-启动性能模式 | 最高性能 |
-Turbo 模式 | 启用 |
-硬件 P-State | 原生模式 |
+| 配置项 | 推荐值 |
+| ------ |------- |
+| 超线程 | 启用 |
+| SNC (Sub NUMA) | 禁用 |
+| 启动性能模式 | 最高性能 |
+| Turbo 模式 | 启用 |
+| 硬件 P-State | 原生模式 |
 
- 硬件配置建议
 
-机器学习的工作负载尤其是深度学习工作负载，通常都是计算密集型的应用。因此需要对内存, CPU 及硬盘等计算资源都需要选择合适的类型，以便获取最佳的计算性能。总结一些常用设置建议如下：
+| Configuration item	| Recommended value |
+| ------------------- | ------------------- |
+| Processor configuration: Hyper-Threading	| Enable |
+| SNC (Sub NUMA)	| Disable | 
+| Boot performance mode |	Max Performance |
+| Turbo Mode	| Enable |
+| Power and Performance: Hardware P-States	| Native Mode |
+
+
+硬件配置建议
+
+机器学习工作负载尤其是深度学习工作负载，通常是计算密集型应用。需要对内存, CPU 及硬盘等计算资源合适选择，以便获取最佳的计算性能。常用设置建议总结如下：
 
 ### 内存设置
 
@@ -446,7 +455,7 @@ pyTorch 支持的可融合 OP 请参阅：https://github.com/intel/lpot/blob/mas
 
 ### 英特尔® Neural Compressor 介绍
 
-你会借助英特尔®️Neural compressor 实现自动化。它支持调优策略以快速找到最佳模型。 在通用框架上更快地使用此解决方案而不会降低效率。它是一个开源软件Python库，可在英特尔 CPU和GPU上运行。 对于流行的网络压缩技术，比如 quantization, pruning, and knowledge distillation，我们可以用Neural Compressor和深度学习框架
+借助英特尔®️Neural compressor 可以实现自动化。它支持调优策略以快速找到最佳模型，在通用框架上更快地使用此解决方案而不会降低效率。它是一个开源软件Python库，可在英特尔 CPU和GPU上运行。 对于流行的网络压缩技术，比如 quantization, pruning, and knowledge distillation，我们可以用Neural Compressor和深度学习框架。
 
 参考网址：https://github.com/intel/neural-compressor
 
@@ -461,20 +470,21 @@ pyTorch 支持的可融合 OP 请参阅：https://github.com/intel/lpot/blob/mas
 
 当前已验证的各框架版本如下：
 
-|OS|Python|Framework|Version|
-|-|-|-|-|
-|CentOS 7.8|3.6|TensorFlow|2.2.0|
-|Ubuntu 18.04| 3.7||1.15.0 UP1|
-||||1.15.0 UP2|
-||||2.3.0|
-||||2.1.0|
-||||1.15.2|
-|||PyTorch|1.5.0+cpu|
-|||Apache* MXNet|1.7.0|
-||||1.6.0|
-|||ONNX Runtime|1.6.0|
+| OS | Python | Framework | Version |
+| -- | ------ | --------- | ------- |
+| CentOS 7.8 | 3.6 | TensorFlow | 2.2.0 |
+| Ubuntu 18.04 | 3.7 | | 1.15.0 UP1 |
+| | | | 1.15.0 UP2 |
+| | | | 2.3.0 |
+| | | | 2.1.0 |
+| | | | 1.15.2 |
+| | | PyTorch | 1.5.0+cpu |
+| | | Apache* MXNet | 1.7.0 |
+| | | | 1.6.0 |
+| | | ONNX Runtime | 1.6.0 |
 
-英特尔® Neural Compressor 支持的调优策略有：
+
+英特尔® Neural Compressor 支持的调优策略有:
 
 - [Basic](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#basic)
 - [Bayesian](https://github.com/intel/neural-compressor/blob/master/docs/tuning_strategies.md#bayesian)
@@ -490,7 +500,7 @@ pyTorch 支持的可融合 OP 请参阅：https://github.com/intel/lpot/blob/mas
 - 随机
 - TPE
 
-Intel® Neural Compressor 工作流程是。根据调优策略自动选择与精度损失目标匹配的模型量化参数。然后生成量化模型。
+Intel® Neural Compressor 工作流程主要是根据调优策略自动选择与精度损失目标匹配的模型量化参数，然后生成量化模型。
 
 
 ### 安装英特尔® Neural Compressor
@@ -509,7 +519,7 @@ Intel® Neural Compressor 工作流程是。根据调优策略自动选择与精
 
 第 2 步：安装 lpot；可选择以下 2 种安装方式：
 
-从二进制文件安装：
+直接安装：
 
 ```
 # pip install lpot
@@ -568,7 +578,7 @@ Intel® Neural Compressor 工作流程是。根据调优策略自动选择与精
 
 ### 运行 Tuning：
 
-编辑文件：examples/tensorflow/image_recognition/resnet50_v1.yaml，确保 quantization\calibration、evaluation\accuracy 和 evaluation\performance 的数据集路径是用户的真实本地路径。应为之前数据准备阶段生成的 TFrecord 数据的所在位置。
+编辑文件：examples/tensorflow/image_recognition/resnet50_v1.yaml，确保 quantization\calibration、evaluation\accuracy 和 evaluation\performance 的数据集路径是用户的实际本地路径，为之前数据准备阶段生成的 TFrecord 数据的所在位置。
 
 ```
 # cd examples/tensorflow/image_recognition
@@ -593,11 +603,11 @@ Intel® Neural Compressor 工作流程是。根据调优策略自动选择与精
 
 精确度为 0.739
 
-批次大小 = 32
+批次大小 =32
 
-延迟：（结果可能会有不同）
+延迟：（结果可能会有差异）
 
-吞吐量：（结果可能会有不同）
+吞吐量：（结果可能会有差异）
 
 性能模式基准测试结果：
 
@@ -605,9 +615,9 @@ Intel® Neural Compressor 工作流程是。根据调优策略自动选择与精
 
 批次大小 = 32
 
-延迟：（结果可能会有不同）
+延迟：（结果可能会有差异）
 
-吞吐量：（结果可能会有不同）
+吞吐量：（结果可能会有差异）
 
 ## 使用英特尔® 发行版 OpenVINO™ 工具套件进行推理加速
 
