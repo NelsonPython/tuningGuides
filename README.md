@@ -27,9 +27,13 @@ Please create an issue with questions or additional suggestions.
 
 Deep Learning with Intel® AVX512 and Intel® Deep Learning Boost Tuning Guide on 3rd Generation Intel® Xeon® Scalable Processors
 
+Version 1.0 updated June 2022
+
 ### GATK.md
 
 Tuning Guide for Intel® Select Solutions for Genomics Analytics on 3rd Generation Intel® Xeon® Scalable Processors Based Platform
+
+Version 1.0
 
 ### GATK_es.md
 
@@ -39,6 +43,8 @@ La Guía para optimizar Intel® Select Solutions for Genomics Analytics en la Pl
 
 LAMMPS Tuning Guide on 3rd Generation Intel® Xeon® Scalable Processors Based Platform
 
+Version 1.0 
+
 ### LAMMPS_es.md
 
 La Guía para optimizar el LAMMPS en la Plataforma de Procesadores Escalables Intel®️ Xeon®️ de 3a Generación
@@ -46,4 +52,12 @@ La Guía para optimizar el LAMMPS en la Plataforma de Procesadores Escalables In
 ### OpenVino.md
 
 Intel® Distribution of OpenVINO™ Toolkit Tuning Guide on 3rd Generation Intel® Xeon® Scalable Processors Based Platform
+
+Version 1.0 updated July 2022
+
+### RocksDB_Benchmarking.md
+
+RocksDB* Benchmarking Tuning Guide with 3rd Generation Intel® Xeon® Scalable Processor Platforms
+
+Version 1.0 updated: July 6, 2022
 
