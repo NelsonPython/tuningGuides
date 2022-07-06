@@ -1,5 +1,7 @@
 # RocksDB* Benchmarking Tuning Guide with 3rd Generation Intel® Xeon® Scalable Processor Platforms
 
+Version 1 updated:  July 6, 2022
+
 ## Introduction
 
 This guide is for users who are already familiar with running db_bench.  It contains hardware and software configurations that will provide the best performance for most situations. However, please note that we rely on the users to carefully consider these settings for their specific scenarios, since db_bench can be configured in multiple ways.
@@ -64,9 +66,9 @@ We also recommend setting the read_ahead_kb kernel parameter to 8 kilobytes. Thi
 ``` 
 #!/bin/bashi in {0..3}; do
 
-echo deadline &gt; /sys/block/nvme${i}n1/queue/scheduler
+echo deadline > /sys/block/nvme${i}n1/queue/scheduler
 
-echo 8 &gt; /sys/block/nvme${i}n1/queue/read_ahead_kb
+echo 8 > /sys/block/nvme${i}n1/queue/read_ahead_kb
 
 done
 ```
@@ -87,7 +89,7 @@ To increase db_bench performance, we recommend that users disable swap entirely.
 ``` 
 $ swapoff --all
 
-$ echo 0 &gt; /proc/sys/vm/zone_reclaim_moderecommend running the below script that sets CPU frequency scaling to the performance governor.
+$ echo 0 > /proc/sys/vm/zone_reclaim_moderecommend running the below script that sets CPU frequency scaling to the performance governor.
 
 We also recommend setting the CPU frequency scaling governor to performance.
 
@@ -132,13 +134,13 @@ $ make -j32 release
 
 For all the db_bench workloads, we recommend four separate db_bench processes with two processes per socket and each process using its own NVMe drive.
 
-![]("https://www.intel.com/content/dam/develop/external/us/en/images/rocks-db-configuration.jpg")
+![](https://www.intel.com/content/dam/develop/external/us/en/images/rocks-db-configuration.jpg)
 
 ### db_bench Tuning
 
 Sections 3.3.1 to 3.3.6 provide scripts for running the six selected db_bench workloads:  fillseq, readrandom, overwrite, seekrandom, readrandomwriterandom, and readwhilewriting. To launch four database instances, a script must be executed four times, each using a different value for NUMA node binding, database directory, and WAL directory. The following table may be used as a guide.
 
-![]("https://www.intel.com/content/dam/develop/external/us/en/images/rocks-db-database-and-WAL-table.jpg")
+![](https://www.intel.com/content/dam/develop/external/us/en/images/rocks-db-database-and-WAL-table.jpg)
 
 <em>Table 1. Recommended NUMA node binding and database and WAL directory for the four database instances.</em>
 
@@ -571,7 +573,7 @@ numactl -m $NUMA_NODE -N $NUMA_NODE $ROCKSDB_HOME/db_bench \
 
 ## Encryption in RocksDB
 
-RocksDB currently offers no support for AES-based encryption, but we expect that to change as soon as our [PR for AES encryption]("https://github.com/facebook/rocksdb/pull/7240") is merged. The implementation is based on Intel [IPP-Crypto library]("https://github.com/intel/ipp-crypto") and supports AES-CTR encryption with key sizes of 92, 128, and 256 bits [4].
+RocksDB currently offers no support for AES-based encryption, but we expect that to change as soon as our [PR for AES encryption](https://github.com/facebook/rocksdb/pull/7240) is merged. The implementation is based on Intel [IPP-Crypto library](https://github.com/intel/ipp-crypto) and supports AES-CTR encryption with key sizes of 92, 128, and 256 bits [4].
 
 ### Building Intel IPP-Crypto Library
 
@@ -593,7 +595,7 @@ $ make all -j32
 $ make install
 ```
 
-Detailed build instructions are available on [Github]("https://github.com/intel/ipp-crypto/blob/develop/BUILD.md").
+Detailed build instructions are available on [Github](https://github.com/intel/ipp-crypto/blob/develop/BUILD.md).
 
 ### Building RocksDB with AES Support
 
@@ -640,34 +642,22 @@ options.create_if_missing = true;
 
 // create an IPP_AES encryption provider
 
-std::shared_ptr&lt;EncryptionProvider&gt; provider;
+std::shared_ptr<EncryptionProvider> provider;
 
-Status status = EncryptionProvider::CreateFromString(ConfigOptions(), "IPP_AES", &amp;provider);
+Status status = EncryptionProvider::CreateFromString(ConfigOptions(), "IPP_AES", &provider);
 
 assert(status.ok());
 
 // set the key and its size
 
-status = provider-&gt;AddCipher("", "a6d2ae2816157e2b3c4fcf098815f7xb", 32, false);
-
-assert(status.ok());
-
-// set new encrypted environment
-
-options.env = NewEncryptedEnv(Env::Default(), provider);
-
-// open database
-
-status = DB::Open(options, kDBPath, &amp;db);
-
-assert(status.ok());
+status = provider->AddCipher("", "a6d2ae2816157e2b3c4fcf098815f7xb", 32, false);
 ```
 
-Source: ["https://github.com/mulugetam/rocksdb/blob/aes-encryption/examples/ippcp_encryption_example.cc"](https://github.com/mulugetam/rocksdb/blob/aes-encryption/examples/ippcp_encryption_example.cc)
+Source: [https://github.com/mulugetam/rocksdb/blob/aes-encryption/examples/ippcp_encryption_example.cc](https://github.com/mulugetam/rocksdb/blob/aes-encryption/examples/ippcp_encryption_example.cc)
 
 ## Conclusion
 
-Due to the large number of configuration parameters available in db_bench, the parameter values for the workloads described in sections 3.1.1 to 3.1.6 should be considered as suggestions. Users are highly recommended to run the standard tuning [Advisor]("https://rocksdb.org/blog/2018/08/01/rocksdb-tuning-advisor.html") that is distributed with RocksDB.
+Due to the large number of configuration parameters available in db_bench, the parameter values for the workloads described in sections 3.1.1 to 3.1.6 should be considered as suggestions. Users are highly recommended to run the standard tuning [Advisor](https://rocksdb.org/blog/2018/08/01/rocksdb-tuning-advisor.html) that is distributed with RocksDB.
 
 The performance measurements done with RocksDB demonstrated a significant improvement in throughput and latency when compared to the prior Xeon® generations and other competitive platforms. With 3rd Generation Intel® Xeon® Scalable processor, overall performance further improves as various components, like CPU, memory, and storage work together efficiently for the best user experience.
 
