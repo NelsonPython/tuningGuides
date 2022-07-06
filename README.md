@@ -47,7 +47,7 @@ Version 1.0
 
 ### LAMMPS_es.md
 
-La Guía para optimizar el LAMMPS en la Plataforma de Procesadores Escalables Intel®️ Xeon®️ de 3a Generación
+La Guía para optimizar el LAMMPS en la Plataforma de Procesadores Escalables Intel® Xeon® de 3a Generación
 
 ### OpenVino.md
 
