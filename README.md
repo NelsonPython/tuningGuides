@@ -53,6 +53,10 @@ La Guía para optimizar el LAMMPS en la Plataforma de Procesadores Escalables In
 
 Intel® Distribution of OpenVINO™ Toolkit Tuning Guide on 3rd Generation Intel® Xeon® Scalable Processors Based Platform
 
+### OpenVino_cn.md
+
+借助基于第 3 代英特尔® 至强® 可扩展处理器的英特尔® AVX-512 和英特尔® 深度学习加速调优指南进行深度学习
+
 Version 1.0 updated July 2022
 
 ### RocksDB_Benchmarking.md
