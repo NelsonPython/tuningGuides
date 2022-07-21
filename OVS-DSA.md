@@ -70,7 +70,7 @@ If no specific settings apply, then use this text: (No specific BIOS setting for
 
 If you recommend a BIOS setting, give an explanation of what the setting does and why it matters to the workload.  Here is an example from the HPC Cluster Tuning Guide:
 
-### Description of Settings
+### Description of Settings (Update or remove any of these)
 
 #### Sub-NUMA Cluster (SNC) 
 
