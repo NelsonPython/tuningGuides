@@ -4,11 +4,9 @@
 
 This guide is for users who are already familiar with OVS-DPDK DSA Experience Guide.  It provides recommendations for configuring hardware and software that will provide the best performance in most situations. However, please note that we rely on the users to carefully consider these settings for their specific scenarios, since OVS and DPDK can be deployed in multiple ways. 
 	
-(Describe the workload including version numbers used for testing and list links to get more information.)
+[Open vSwitch](https://www.openvswitch.org/) is a multilayer software switch for monitoring, queuing, and shaping network traffic It can be used for VLAN isolation and traffic filtering.  It is well-suited to function as a virtual switch in VM environments.  [DPDK](https://www.dpdk.org/) is the Data Plane Development Kit used to accelerate packet processing workloads.  
 
-(Describe other software used in the guide including the version numbers and links to more information.)
-	
-(Describe pre-requisites)
+*(Describe pre-requisites)*
 	
 4th Generation Intel® Xeon® Scalable processors lead the industry in delivering workload-optimized platforms with built-in AI acceleration.  They provide seamless performance to speed the transformative impact of data from the intelligent edge to the multi-cloud. Improvements of particular interest to this workload are: 
 
@@ -49,11 +47,11 @@ The configuration described in this article is based on 4th Generation Intel® X
 			
 ## Hardware Tuning
 
-(Enter any other information on general system setup and tuning.)
+*(Enter any other information on general system setup and tuning.)*
 
 ### BIOS Settings
 
-(Use this section to describe BIOS settings that should be changed in order to improve workload performance.)
+*(Use this section to describe BIOS settings that should be changed in order to improve workload performance.)*
 
 Begin by resetting your BIOS to default setting, then follow the suggestions below for changes to the default:
 
@@ -68,9 +66,9 @@ Begin by resetting your BIOS to default setting, then follow the suggestions bel
 
 If no specific settings apply, then use this text: (No specific BIOS setting for this this workload – just use the defaults)
 
-If you recommend a BIOS setting, give an explanation of what the setting does and why it matters to the workload.  Here is an example from the HPC Cluster Tuning Guide:
+*If you recommend a BIOS setting, give an explanation of what the setting does and why it matters to the workload.  Here is an example from the HPC Cluster Tuning Guide:*
 
-### Description of Settings (Update or remove any of these)
+### Description of Settings *(Update or remove any of these)*
 
 #### Sub-NUMA Cluster (SNC) 
 
@@ -95,38 +93,33 @@ If no specific settings apply, then use this text: (No specific workload setting
 
 ### Storage/Disk Configuration/Settings
 
-(Are there any specific settings or recommendations for storage media?)
+*(Are there any specific settings or recommendations for storage media?)*
 
 If no specific suggestions apply, then use this text: (No specific workload setting)
 
 ### Network Configuration/Setting
 
-(Are there any specific settings or recommendations for the network setup?  Does your workload use multiple systems? Any advice on how many clients? For example, how much CPU and memory will they need and how they should it be setup?). 
+*(Are there any specific settings or recommendations for the network setup?  Does your workload use multiple systems? Any advice on how many clients? For example, how much CPU and memory will they need and how they should it be setup?).* 
 
-Example: In the Redis application scenario, performance is usually restricted more by the bandwidth of the network than the performance of memory and Intel persistent memory. Therefore, when you run Redis across networks, you need an NIC with a highest possible network bandwidth. It is recommended that the value is above 10GB/s
-
-If no specific suggestions apply, then use this text: (No specific workload setting for this topic)
+*If no specific suggestions apply, then use this text: (No specific workload setting for this topic)*
 
 ## Software Tuning 
 
-Software configuration tuning is essential. From the operating system to (the workload) configuration settings, they are all designed for general purpose applications and default settings are almost never tuned for best performance.
+Software configuration tuning is essential.  The general purpose, default settings are almost never yield the best performance for specialized workloads.
 
 ### Linux Kernel Optimization Settings
 
-Recommend Linux kernel is 5.15.0-18-generic. Also, it’s recommended to fix uncore frequency to max. For example: 
-
-Set to 2.3 GHZ:  ```wrmsr -a 0x620 0x1717``` 
-
-To ensure the setting is working, use ```rdmsr 0x621``` to check the uncore frequency.  It should return ```xxxx0017```, where ```17``` represents 2.3 GHZ. More details over [here](https://stackoverflow.com/questions/66084371/reading-current-uncore-frequency-and-setting-uncore-frequency-multipliers).
+The 5.15.0-18-generic kernel is recommended along with setting the uncore frequency to max. For example, set it to 2.3 GHZ:  ```wrmsr -a 0x620 0x1717``` 
+To ensure the setting is working, run ```rdmsr 0x621``` to check the uncore frequency.  It should return ```xxxx0017```, where ```17``` represents 2.3 GHZ. Read more details [here](https://stackoverflow.com/questions/66084371/reading-current-uncore-frequency-and-setting-uncore-frequency-multipliers).
 
 In addition, Linux boot parameters are also listed below:
 
->>>this must be text rather than an image<<<
+*this must be text rather than an image*
 
 
 ### OVS-DSA Architecture
 
-The OVS-DSA ???
+The OVS-DSA ??? *an architecture diagram would be great*
 
 #### DPDK
 
